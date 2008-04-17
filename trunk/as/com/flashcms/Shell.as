@@ -77,19 +77,27 @@ public class Shell extends MovieClip {
 		}
 		function onModuleLoaded(event:LoadEvent)
 		{
-			trace("onModuleLoaded : "+event.target );
-			var loaderInfo:LoaderInfo = event.target as LoaderInfo;
-            var oModule:Object = loaderInfo.content;
-            switch(oModule.sName)
+			trace("onModuleLoaded: " + event.loaderTarget);
+			//var loaderInfo:LoaderInfo = event.as LoaderInfo;
+            //trace(" loaderinfo : "+loaderInfo);
+			//event.loaderTarget.
+			var oModule= event.loaderTarget.content;
+			           
+			switch(oModule.sName)
 			{
 				case "Header":
-				//	mcRoot.addChild(event.mcTarget);
+					mcRoot.addChild(Module(oModule));
 					trace("Header was loaded!!!");
 				break;
-				default:
-					trace(oModule.sName+"was loaded!!!");
+				case "Footer":
+					Module(oModule).y = 250;	
+					mcRoot.addChild(Module(oModule));	
 				break;
-			}		
+				default:
+					trace(oModule.sName + "was loaded!!!");
+					mcRoot.addChild(Module(oModule));
+				break;
+			}	
 		}
 		
 		function ioErrorHandler(event:IOErrorEvent)
