@@ -87,17 +87,17 @@ public class Shell extends MovieClip {
 			{
 				case "Header":
 					mcRoot.addChild(Module(oModule));
-					trace("Header was loaded!!!");
 				break;
 				case "Footer":
 					Module(oModule).y = 250;	
 					mcRoot.addChild(Module(oModule));	
 				break;
 				default:
-					trace(oModule.sName + "was loaded!!!");
 					mcRoot.addChild(Module(oModule));
 				break;
-			}	
+			}
+			
+			
 		}
 		
 		function ioErrorHandler(event:IOErrorEvent)
