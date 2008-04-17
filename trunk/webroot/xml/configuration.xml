@@ -1,0 +1,40 @@
+<configuration>
+	<modules>
+		<id>1</id>
+		<sName>header</sName>
+		<sURL><![CDATA[swf/core/header.swf]]></sURL>
+	</modules>
+	<modules>
+		<id>2</id>
+		<sName>footer</sName>
+		<sURL><![CDATA[swf/core/footer.swf]]></sURL>
+	</modules>
+	
+	<modules>
+		<id>3</id>
+		<sName>main</sName>
+		<sURL><![CDATA[swf/core/main.swf]]></sURL>
+	</modules>
+	
+	<popups>
+		<sName>login</sName>
+		<sURL><![CDATA[swf/login/login.swf]]></sURL>
+	</popups>
+
+	<popups>
+		<sName>birthday</sName>
+		<sURL><![CDATA[swf/popups/birthday.swf]]></sURL>
+	</popups>
+
+	<popups>
+		<sName>test</sName>
+		<sURL><![CDATA[swf/popups/test.swf]]></sURL>
+	</popups>
+
+	<urls>
+		<login><![CDATA[../login.xml]]></login>
+		<language><![CDATA[../language.xml]]></language>
+	</urls>
+		
+	
+</configuration>

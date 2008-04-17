@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<menu>
+		<id>1</id>
+		<label>Main</label>
+	</menu>
+	<menu>
+		<id>2</id>
+		<label>Users and Groups</label>
+	</menu>
+	<menu>
+		<id>3</id>
+		<label>Content</label>
+	</menu>
+	
+	<menu>
+		<id>4</id>
+		<label>Layout</label>
+	</menu>
+	<menu>
+		<id>5</id>
+		<label>Preferences</label>
+	</menu>
+	<menu>
+		<id>5</id>
+		<label>View Site</label>
+	</menu>
+	
+	<main>
+		<icon></icon>
+		<title>Users</title>
+		<name>This is where you can change users</name>
+		<description></description>
+		<items>
+			<id>1</id>
+			<name>Subitem1</name>
+		</items>
+		<items>
+			<id>2</id>
+			<name>Subitem1</name>
+		</items>
+	</main>
+	<main>
+		<icon></icon>
+		<title>Users</title>
+		<name>users</name>
+		<description></description>
+		<items>
+			<id>4</id>
+			<name>Subitem1</name>
+		</items>
+		<items>
+			<id>5</id>
+			<name>Subitem1</name>
+		</items>
+	</main>
+	
+</data>
