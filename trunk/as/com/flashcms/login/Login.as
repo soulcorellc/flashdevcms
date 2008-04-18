@@ -19,7 +19,7 @@
 		{
 			trace(sName);
 			//txtNombre.text = sName;
-			oShell.getInfo();
+			//oShell.getInfo();
 		
 		}
 		
