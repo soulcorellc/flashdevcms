@@ -61,17 +61,15 @@
 		{
 			trace("Dispatched Load");
 			aMovies.shift();
+			var loaderInfo:LoaderInfo = event.target as LoaderInfo;
 			if (aMovies.length != 0)
 			{
-				
-				var loaderInfo:LoaderInfo = event.target as LoaderInfo;
 				dispatchEvent(new LoadEvent(false,loaderInfo));
 				loadNext();
 				
 			}
 			else
 			{
-				var loaderInfo:LoaderInfo = event.target as LoaderInfo;
 				dispatchEvent(new LoadEvent(true,loaderInfo));
 			}
 			

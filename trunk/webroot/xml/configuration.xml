@@ -1,4 +1,5 @@
 <configuration>
+	
 	<modules>
 		<id>1</id>
 		<sName>header</sName>
@@ -21,16 +22,7 @@
 		<sURL><![CDATA[swf/login/login.swf]]></sURL>
 	</popups>
 
-	<popups>
-		<sName>birthday</sName>
-		<sURL><![CDATA[swf/popups/birthday.swf]]></sURL>
-	</popups>
-
-	<popups>
-		<sName>test</sName>
-		<sURL><![CDATA[swf/popups/test.swf]]></sURL>
-	</popups>
-
+	
 	<urls>
 		<login><![CDATA[../login.xml]]></login>
 		<language><![CDATA[../language.xml]]></language>
