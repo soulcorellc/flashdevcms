@@ -1,6 +1,5 @@
 ﻿package com.flashcms.home {
 	import com.flashcms.core.Module;
-	import flash.display.Sprite;
 	import com.flashcms.data.MultiLoader;
 	/**
 	* ...
@@ -11,11 +10,11 @@
 		private var oLoader:MultiLoader;
 		public function Header() {
 			super("Header");
+			trace("Header called");
 		}
 		
 		public function init(){
 			oLoader = new MultiLoader();
-			
 		}
 	}
 	

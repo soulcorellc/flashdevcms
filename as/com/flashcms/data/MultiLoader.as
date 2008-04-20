@@ -19,8 +19,6 @@
 		public function MultiLoader()
 		{
 			aMovies = new Array();
-			
-			
 		}
 		
 		public function add(url:String)
