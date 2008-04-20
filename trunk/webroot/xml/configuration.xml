@@ -1,14 +1,13 @@
 <configuration>
-	
 	<modules>
 		<id>1</id>
 		<sName>header</sName>
-		<sURL><![CDATA[swf/core/header.swf]]></sURL>
+		<sURL><![CDATA[swf/home/header.swf]]></sURL>
 	</modules>
 	<modules>
 		<id>2</id>
 		<sName>footer</sName>
-		<sURL><![CDATA[swf/core/footer.swf]]></sURL>
+		<sURL><![CDATA[swf/home/footer.swf]]></sURL>
 	</modules>
 	
 	<modules>
@@ -24,9 +23,14 @@
 
 	
 	<urls>
-		<login><![CDATA[../login.xml]]></login>
-		<language><![CDATA[../language.xml]]></language>
+		<login>
+			<main></main>
+		</login>
+		<language>
+			<main></main>
+		</language>
+		<home>
+			<main><![CDATA[../main.xml]]></main>
+		</home>
 	</urls>
-		
-	
 </configuration>

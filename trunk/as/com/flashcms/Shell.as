@@ -13,9 +13,11 @@ package com.flashcms{
 	import flash.display.LoaderInfo;	
 	import flash.system.ApplicationDomain;
 	import com.flashcms.events.LoadEvent;
+	
 public class Shell extends MovieClip {
 		private var oXML:XML;
 		private var xModules:XMLList;
+		private var xURLs:XMLList;
 		private var sConfigurationURL:String;
 		private var oRequest:URLRequest;
 		private var oLoader:URLLoader;
@@ -41,9 +43,8 @@ public class Shell extends MovieClip {
 			oTopMenu = new TopMenu();
 			oModuleLoader = new MultiLoader();
 			oModuleLoader.addEventListener(LoadEvent.LOAD_EVENT, onModuleLoaded);
-			
-			
 		}
+		
 		public function startApplication()
 		{
 			loadModule("header");
@@ -53,20 +54,17 @@ public class Shell extends MovieClip {
 		
 		private function loadModule(name:String)
 		{
-			trace("loadModule : " + name);
-			
 			var url = xModules.(sName == name).sURL;
 			oModuleLoader.add(url);
-			//oRequest.url = xModules.(sName == name).sURL;
-			/*oModuleLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onModuleError);
-			oModuleLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onModuleLoaded);
-			oModuleLoader.load(oRequest);
-			*/
 		}
 		private function onConfiguration(event:Event):void
 		{
 			oXML = XML(oLoader.data);
 			xModules = oXML.modules;
+			xURLs = oXML.urls;
+			
+			trace("geturl: "+getURL("main","home"));
+			
 			oPopupManager = new PopupManager(mcRoot, this,oXML.popups,stage);
 			oPopupManager.show("login");
 		}
@@ -75,28 +73,26 @@ public class Shell extends MovieClip {
 		{
 			trace("Error loading : "+event);
 		}
+		
 		function onModuleLoaded(event:LoadEvent)
 		{
-			trace("onModuleLoaded: " + event.loaderTarget);
-			//var loaderInfo:LoaderInfo = event.as LoaderInfo;
-            //trace(" loaderinfo : "+loaderInfo);
-			//event.loaderTarget.
-			var oModule= event.loaderTarget.content;
-			           
+			var oModule:Module= Module(event.loaderTarget.content);
+			
 			switch(oModule.sName)
 			{
 				case "Header":
-					mcRoot.addChild(Module(oModule));
+					mcRoot.addChild(oModule);
 				break;
 				case "Footer":
 					Module(oModule).y = 250;	
-					mcRoot.addChild(Module(oModule));	
+					mcRoot.addChild(oModule);	
 				break;
 				default:
-					mcRoot.addChild(Module(oModule));
+					mcRoot.addChild(oModule);
 				break;
 			}
 			
+			oModule.start(this);
 			
 		}
 		
@@ -107,11 +103,18 @@ public class Shell extends MovieClip {
 		}
 		function onStageChange(oEvent:Event) {
 			oPopupManager.update();
-			
 		}
-		public function getInfo()
+		
+		public function getURL(name:String,section:String=null)
 		{
-			trace("YOUR INFO");
+			if (section == null)
+			{
+				return xURLs[name];
+			}
+			else
+			{
+				return xURLs[section][name];
+			}
 		}
 	}
 }

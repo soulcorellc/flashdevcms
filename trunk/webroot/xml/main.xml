@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data>
+	<logo><![CDATA[images/logo.jpg]]></logo>
+	
 	<menu>
 		<id>1</id>
 		<label>Main</label>
