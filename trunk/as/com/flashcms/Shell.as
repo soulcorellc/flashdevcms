@@ -13,6 +13,7 @@ package com.flashcms{
 	import flash.display.LoaderInfo;	
 	import flash.system.ApplicationDomain;
 	import com.flashcms.events.LoadEvent;
+	import com.flashcms.deeplinking.Navigation;
 	
 public class Shell extends MovieClip {
 		private var oXML:XML;
@@ -25,10 +26,12 @@ public class Shell extends MovieClip {
 		private var oPopupManager:PopupManager;
 		private var oTopMenu:TopMenu;
 		private var mcRoot:MovieClip;
+		private var oNavigation:Navigation;
 		
 		public function Shell(){
 			super();
 			init();
+			
 		}
 		private function init()
 		{
@@ -44,15 +47,32 @@ public class Shell extends MovieClip {
 			oTopMenu = new TopMenu();
 			oModuleLoader = new MultiLoader();
 			oModuleLoader.addEventListener(LoadEvent.LOAD_EVENT, onModuleLoaded);
+			
 		}
 		
 		public function startApplication()
 		{
-			loadModule("header");
-			loadModule("footer");
+			
+			//oPopupManager = new PopupManager(mcRoot, this,oXML.popups,stage);
+			//oPopupManager.show("login");
+			
+		}
+		public function setModule(module:String,parameters:Object=null)
+		{
+			switch(module)
+			{
+			case "/":
+				loadModule("header");
+				loadModule("footer");
+				loadModule("home"); //add parameters to load login if not loaded
+			break;
+			
+			default:
+				trace("loading " + module + "parameters : " + parameters);
+			break;
+			}	
 			oModuleLoader.start();
 		}
-		
 		private function loadModule(name:String)
 		{
 			var url = xModules.(sName == name).sURL;
@@ -60,11 +80,10 @@ public class Shell extends MovieClip {
 		}
 		private function onConfiguration(event:Event):void
 		{
+			oNavigation = new Navigation(this);
 			oXML = XML(oLoader.data);
 			xModules = oXML.modules;
 			xURLs = oXML.urls;
-			oPopupManager = new PopupManager(mcRoot, this,oXML.popups,stage);
-			oPopupManager.show("login");
 		}
 		
 		function onModuleError(event:IOErrorEvent)
@@ -90,7 +109,6 @@ public class Shell extends MovieClip {
 				break;
 			}
 			oModule.init();
-			
 		}
 		
 		function ioErrorHandler(event:IOErrorEvent)
@@ -98,6 +116,7 @@ public class Shell extends MovieClip {
 			trace("ioErrorHandler: " + event.text);
 			
 		}
+		
 		function onStageChange(oEvent:Event) {
 			oPopupManager.update();
 		}

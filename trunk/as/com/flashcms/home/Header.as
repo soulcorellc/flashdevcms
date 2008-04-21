@@ -8,8 +8,7 @@
 	public class Header extends Module{
 		
 		public var oXML:XML;
-		
-		
+			
 		public function Header() {
 			super("Header");
 			
