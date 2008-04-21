@@ -1,20 +1,24 @@
 ﻿package com.flashcms.home {
 	import com.flashcms.core.Module;
-	import com.flashcms.data.MultiLoader;
+	import flash.events.Event;
 	/**
 	* ...
 	* @author Default
 	*/
 	public class Header extends Module{
 		
-		private var oLoader:MultiLoader;
+		public var oXML:XML;
+		
+		
 		public function Header() {
 			super("Header");
-			trace("Header called");
+			
 		}
-		
-		public function init(){
-			oLoader = new MultiLoader();
+				
+		override public function init()
+		{
+			var sURL = this.getURL("main", "home");
+			trace("main url of header: "+sURL);
 		}
 	}
 	

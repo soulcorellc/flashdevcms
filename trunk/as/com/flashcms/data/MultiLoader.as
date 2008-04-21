@@ -35,12 +35,13 @@
 		private function loadNext()
 		{
 			
-			var oLoader = new Loader();
+			var oLoader:Loader = new Loader();
 			oLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
 			oLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoaded);
 			trace("loading ... " + aMovies[0]);
 			oRequest = new URLRequest(aMovies[0]);
 			oLoader.load(oRequest);
+			
 		}
 		
 		private function onError(event:IOErrorEvent)

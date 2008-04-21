@@ -25,6 +25,7 @@ public class Shell extends MovieClip {
 		private var oPopupManager:PopupManager;
 		private var oTopMenu:TopMenu;
 		private var mcRoot:MovieClip;
+		
 		public function Shell(){
 			super();
 			init();
@@ -62,9 +63,6 @@ public class Shell extends MovieClip {
 			oXML = XML(oLoader.data);
 			xModules = oXML.modules;
 			xURLs = oXML.urls;
-			
-			trace("geturl: "+getURL("main","home"));
-			
 			oPopupManager = new PopupManager(mcRoot, this,oXML.popups,stage);
 			oPopupManager.show("login");
 		}
@@ -76,23 +74,22 @@ public class Shell extends MovieClip {
 		
 		function onModuleLoaded(event:LoadEvent)
 		{
-			var oModule:Module= Module(event.loaderTarget.content);
-			
+			var oModule:Module = Module(event.loaderTarget.content);
+			oModule.oShell = this;
 			switch(oModule.sName)
 			{
 				case "Header":
 					mcRoot.addChild(oModule);
 				break;
 				case "Footer":
-					Module(oModule).y = 250;	
+					oModule.y = 250;	
 					mcRoot.addChild(oModule);	
 				break;
 				default:
 					mcRoot.addChild(oModule);
 				break;
 			}
-			
-			oModule.start(this);
+			oModule.init();
 			
 		}
 		
@@ -105,7 +102,7 @@ public class Shell extends MovieClip {
 			oPopupManager.update();
 		}
 		
-		public function getURL(name:String,section:String=null)
+		public function getURL(name:String,section:String=null):String
 		{
 			if (section == null)
 			{

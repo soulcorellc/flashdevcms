@@ -68,7 +68,7 @@
 		{
 			oShell.startApplication();
 			mcRoot.removeChild(mcHolder);
-			trace("DONE closed");
+			
 		}
 		private function onMaskClick(oEvent:MouseEvent) {
 			//trace("ok" + oEvent);
