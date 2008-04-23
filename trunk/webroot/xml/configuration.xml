@@ -30,7 +30,7 @@
 			<main></main>
 		</language>
 		<home>
-			<main><![CDATA[../main.xml]]></main>
+			<main><![CDATA[../webroot/xml/main.xml]]></main>
 		</home>
 	</urls>
 </configuration>

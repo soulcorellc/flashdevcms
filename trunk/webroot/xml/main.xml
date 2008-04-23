@@ -2,31 +2,30 @@
 <data>
 	<logo><![CDATA[images/logo.jpg]]></logo>
 	
-	<menu>
-		<id>1</id>
-		<label>Main</label>
-	</menu>
-	<menu>
-		<id>2</id>
-		<label>Users and Groups</label>
-	</menu>
-	<menu>
-		<id>3</id>
-		<label>Content</label>
-	</menu>
-	
-	<menu>
-		<id>4</id>
-		<label>Layout</label>
-	</menu>
-	<menu>
-		<id>5</id>
-		<label>Preferences</label>
-	</menu>
-	<menu>
-		<id>5</id>
-		<label>View Site</label>
-	</menu>
+	<menus>
+			<menu label="Main">
+				<menuitem label="Home" />
+			</menu>
+			<menu label="Content">
+				<menuitem label="Create"/>
+				<menuitem label="Edit"/>
+			</menu>
+			<menu label="Layout">
+				<menuitem label="Create"/>
+			</menu>
+			<menu label="Users And Groups">
+				<menuitem label="Create"/>
+			</menu>
+			<menu label="Administration">
+				<menuitem label="Create"/>
+			</menu>
+			<menu label="Preferences">
+				<menuitem label="Create"/>
+			</menu>
+			<menu label="View Site">
+				<menuitem label="Create"/>
+			</menu>
+		</menus>
 	
 	<main>
 		<icon></icon>
