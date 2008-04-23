@@ -24,7 +24,6 @@ public class Shell extends MovieClip {
 		private var oLoader:URLLoader;
 		private var oModuleLoader:MultiLoader;
 		private var oPopupManager:PopupManager;
-		private var oTopMenu:TopMenu;
 		private var mcRoot:MovieClip;
 		private var oNavigation:Navigation;
 		
@@ -44,7 +43,6 @@ public class Shell extends MovieClip {
 			oLoader.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			oLoader.addEventListener(Event.COMPLETE, onConfiguration);
 			stage.addEventListener(Event.RESIZE, onStageChange);
-			oTopMenu = new TopMenu();
 			oModuleLoader = new MultiLoader();
 			oModuleLoader.addEventListener(LoadEvent.LOAD_EVENT, onModuleLoaded);
 			
@@ -132,5 +130,6 @@ public class Shell extends MovieClip {
 				return xURLs[section][name];
 			}
 		}
+		
 	}
 }
