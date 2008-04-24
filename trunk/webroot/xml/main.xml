@@ -4,14 +4,14 @@
 	
 	<menus>
 			<menu label="Main">
-				<menuitem label="Home" />
+				<menuitem label="Home" id="home" />
 			</menu>
 			<menu label="Content">
 				<menuitem label="Create"/>
 				<menuitem label="Edit"/>
 			</menu>
 			<menu label="Layout">
-				<menuitem label="Create"/>
+				<menuitem label="Create" id="50" />
 			</menu>
 			<menu label="Users And Groups">
 				<menuitem label="Create"/>
