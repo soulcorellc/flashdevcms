@@ -5,11 +5,11 @@
 
     public class LoadError extends flash.events.Event {
 		public static const LOAD_ERROR:String = "loadError";
-		public var message:String;
+		public var text:String;
 		
-		public function LoadError(message:String=null) {
+		public function LoadError(text:String=null) {
 			super(LOAD_ERROR);
-			this.message = message;
+			this.text = text;
 		}
     }
 }
