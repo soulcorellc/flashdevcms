@@ -5,6 +5,7 @@
 	import com.flashcms.events.LoadEvent;
 	import flash.events.Event;
 	import com.yahoo.astra.fl.controls.MenuBar;
+	import com.yahoo.astra.fl.events.MenuEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.events.IOErrorEvent;
@@ -30,6 +31,7 @@
 		override public function init()
 		{
 			oMenu = new MenuBar(this);
+			oMenu.addEventListener(MenuEvent.ITEM_CLICK, onItemClick);
 			oMenu.y = 60;
 			sMainURL = this.getURL("main", "home");
 			oRequest = new URLRequest(sMainURL);
@@ -41,9 +43,14 @@
 			oMultiLoader.addEventListener(LoadError.LOAD_ERROR, onError);
 			
 		}
+		
 		private function onError(event:LoadError)
 		{
 			trace("Error at load::::::::::::: "+event.text);
+		}
+		
+		private function onItemClick(event:MenuEvent):void{
+			trace("Clicked: "+event.item.id);
 		}
 		private function onLoadImage(event:LoadEvent)
 		{

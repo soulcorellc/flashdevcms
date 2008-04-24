@@ -3,6 +3,7 @@ package com.flashcms{
 	import com.flashcms.data.MultiLoader;
 	import flash.display.Loader;
 	import flash.display.MovieClip;
+	import flash.display.Stage;
 	import flash.events.IOErrorEvent;
 	import flash.events.Event;
 	import flash.net.URLLoader;
@@ -14,6 +15,7 @@ package com.flashcms{
 	import flash.system.ApplicationDomain;
 	import com.flashcms.events.LoadEvent;
 	import com.flashcms.deeplinking.Navigation;
+	import com.flashcms.layout.StageManager;
 	
 public class Shell extends MovieClip {
 		private var oXML:XML;
@@ -26,16 +28,17 @@ public class Shell extends MovieClip {
 		private var oPopupManager:PopupManager;
 		private var mcRoot:MovieClip;
 		private var oNavigation:Navigation;
-		
+			
 		public function Shell(){
 			super();
 			init();
 			
 		}
+		/**
+		 * Initializes class members
+		 */
 		private function init()
 		{
-			mcRoot = new MovieClip();
-			stage.addChild(mcRoot);
 			oXML= new XML();
 			sConfigurationURL="./xml/configuration.xml";
 			oRequest = new URLRequest(sConfigurationURL);
@@ -47,7 +50,9 @@ public class Shell extends MovieClip {
 			oModuleLoader.addEventListener(LoadEvent.LOAD_EVENT, onModuleLoaded);
 			
 		}
-		
+		/**
+		 * 
+		 */
 		public function startApplication()
 		{
 			
@@ -55,6 +60,11 @@ public class Shell extends MovieClip {
 			//oPopupManager.show("login");
 			
 		}
+		/**
+		 * 
+		 * @param	module name of the module to be loaded
+		 * @param	parameters additional parameters to be set on the module
+		 */
 		public function setModule(module:String,parameters:Object=null)
 		{
 			switch(module)
@@ -71,11 +81,19 @@ public class Shell extends MovieClip {
 			}	
 			oModuleLoader.start();
 		}
+		/**
+		 * Add a SWF file to multiloader
+		 * @param	name
+		 */
 		private function loadModule(name:String)
 		{
 			var url = xModules.(sName == name).sURL;
 			oModuleLoader.add(url);
 		}
+		/**
+		 * 
+		 * @param	event
+		 */
 		private function onConfiguration(event:Event):void
 		{
 			oNavigation = new Navigation(this);
@@ -83,12 +101,18 @@ public class Shell extends MovieClip {
 			xModules = oXML.modules;
 			xURLs = oXML.urls;
 		}
-		
+		/**
+		 * 
+		 * @param	event
+		 */
 		function onModuleError(event:IOErrorEvent)
 		{
 			trace("Error loading : "+event);
 		}
-		
+		/**
+		 * 
+		 * @param	event
+		 */
 		function onModuleLoaded(event:LoadEvent)
 		{
 			var oModule:Module = Module(event.loaderTarget.content);
@@ -96,30 +120,42 @@ public class Shell extends MovieClip {
 			switch(oModule.sName)
 			{
 				case "Header":
-					mcRoot.addChild(oModule);
+					addChild(oModule);
+					addChild(new StageManager(oModule, 0, 0, 0, 0, true));
 				break;
 				case "Footer":
-					oModule.y = 250;	
-					mcRoot.addChild(oModule);	
+					addChild(oModule);	
+					addChild(new StageManager(oModule, 0, 100, 0, 100, true));
 				break;
 				default:
 					mcRoot.addChild(oModule);
 				break;
 			}
-			oModule.init();
+			oModule.init();	
 		}
-		
+		/**
+		 * 
+		 * @param	event
+		 */
 		function ioErrorHandler(event:IOErrorEvent)
 		{
 			trace("ioErrorHandler: " + event.text);
 			
 		}
-		
+		/**
+		 * 
+		 * @param	oEvent
+		 */
 		function onStageChange(oEvent:Event) {
 			//oPopupManager.update();
 			
 		}
-		
+		/**
+		 * 
+		 * @param	name
+		 * @param	section
+		 * @return
+		 */
 		public function getURL(name:String,section:String=null):String
 		{
 			if (section == null)
