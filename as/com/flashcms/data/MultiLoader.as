@@ -28,17 +28,17 @@
 		
 		public function start()
 		{
-			trace("start ... " );
 			loadNext();
 		}
 		
 		private function loadNext()
 		{
-			
 			var oLoader:Loader = new Loader();
 			oLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
 			oLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoaded);
-			trace("loading ... " + aMovies[0]);
+			oLoader.contentLoaderInfo.addEventListener(Event.OPEN, onOpen);
+			
+			trace("loading :<" + aMovies[0]+">");
 			oRequest = new URLRequest(aMovies[0]);
 			oLoader.load(oRequest);
 			
@@ -46,19 +46,20 @@
 		
 		private function onError(event:IOErrorEvent)
 		{
-			trace("Dispatched Error");
 			aMovies.shift();
-			dispatchEvent(new LoadError(event.toString()));
+			dispatchEvent(new LoadError(event.text));
 			if (aMovies.length != 0)
 			{
 				loadNext();
 			}
 			
-			
+		}
+		private function onOpen(event:Event)
+		{
+			trace("OPEN :" + event);
 		}
 		private function onLoaded(event:Event)
 		{
-			trace("Dispatched Load");
 			aMovies.shift();
 			var loaderInfo:LoaderInfo = event.target as LoaderInfo;
 			if (aMovies.length != 0)
@@ -71,7 +72,6 @@
 			{
 				dispatchEvent(new LoadEvent(true,loaderInfo));
 			}
-			
 			
 		}
 		

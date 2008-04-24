@@ -62,7 +62,7 @@ public class Shell extends MovieClip {
 			case "/":
 				loadModule("header");
 				loadModule("footer");
-				loadModule("home"); //add parameters to load login if not loaded
+				loadModule("main"); //add parameters to load login if not loaded
 			break;
 			
 			default:
@@ -116,7 +116,8 @@ public class Shell extends MovieClip {
 		}
 		
 		function onStageChange(oEvent:Event) {
-			oPopupManager.update();
+			//oPopupManager.update();
+			
 		}
 		
 		public function getURL(name:String,section:String=null):String
