@@ -46,6 +46,7 @@
 		
 		private function onError(event:IOErrorEvent)
 		{
+			trace("error on :<" + aMovies[0]+">");
 			aMovies.shift();
 			dispatchEvent(new LoadError(event.text));
 			if (aMovies.length != 0)
@@ -56,10 +57,11 @@
 		}
 		private function onOpen(event:Event)
 		{
-			trace("OPEN :" + event);
+			//trace("OPEN :" + event);
 		}
 		private function onLoaded(event:Event)
 		{
+			trace("loaded OK :<" + aMovies[0]+">");
 			aMovies.shift();
 			var loaderInfo:LoaderInfo = event.target as LoaderInfo;
 			if (aMovies.length != 0)

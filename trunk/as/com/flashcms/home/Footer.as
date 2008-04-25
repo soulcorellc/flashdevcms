@@ -6,7 +6,9 @@
 	* @author Default
 	*/
 	public class Footer extends Module{
-		
+		/**
+		 * Class Constructor
+		 */
 		public function Footer() {
 			super("Footer");
 		}

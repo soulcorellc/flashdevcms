@@ -127,8 +127,11 @@ public class Shell extends MovieClip {
 					addChild(oModule);	
 					addChild(new StageManager(oModule, 0, 100, 0, 100, true));
 				break;
+				case "Main":
+					addChild(oModule);
+					addChild(new StageManager(oModule, 25, 25, 0, 0, true));
 				default:
-					mcRoot.addChild(oModule);
+				
 				break;
 			}
 			oModule.init();	

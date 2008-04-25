@@ -9,11 +9,10 @@
 		<sName>footer</sName>
 		<sURL><![CDATA[swf/home/footer.swf]]></sURL>
 	</modules>
-	
 	<modules>
 		<id>3</id>
 		<sName>main</sName>
-		<sURL><![CDATA[swf/core/main.swf]]></sURL>
+		<sURL><![CDATA[swf/home/main.swf]]></sURL>
 	</modules>
 	
 	<popups>
