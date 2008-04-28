@@ -27,6 +27,11 @@
 		{
 		
 		}
+		
+		public function onResize(event:Event)
+		{
+			trace(sName + " resized!!!");
+		}
 		public function get oShell() {
 			return _oShell; 
 		};

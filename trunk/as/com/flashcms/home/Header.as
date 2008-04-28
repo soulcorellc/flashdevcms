@@ -27,41 +27,49 @@
 			super("Header");
 			
 		}
-				
+		/**
+		 * Starts Header functionallity
+		 */		
 		override public function init()
 		{
 			oMenu = new MenuBar(this);
 			oMenu.addEventListener(MenuEvent.ITEM_CLICK, onItemClick);
 			oMenu.y = 60;
-			sMainURL = this.getURL("main", "home");
-			oRequest = new URLRequest(sMainURL);
-			oLoader = new URLLoader(oRequest);
-			oLoader.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
-			oLoader.addEventListener(Event.COMPLETE, onMain);
 			oMultiLoader = new MultiLoader();
 			oMultiLoader.addEventListener(LoadEvent.LOAD_EVENT, onLoadImage);
 			oMultiLoader.addEventListener(LoadError.LOAD_ERROR, onError);
-			
+			oMenu.dataProvider = XML(oShell.xMenu);
+			oMultiLoader.add(oShell.sLogo);
+			oMultiLoader.start();
+			draw();
 		}
-		
+		/**
+		 * Called when stage is resized
+		 * @param	event
+		 */
+		override public function onResize(event:Event)
+		{
+			draw();	
+		}
+		private function draw()
+		{
+			this.graphics.clear();
+			this.graphics.lineStyle(1,0xCCCCCC,1);
+			this.graphics.drawRect(0, 60, stage.stageWidth, 21);
+			this.graphics.endFill();
+		}
 		private function onError(event:LoadError)
 		{
-			trace("Error at load::::::::::::: "+event.text);
+			trace("Header error "+event.text);
 		}
 		
 		private function onItemClick(event:MenuEvent):void{
 			trace("Clicked: "+event.item.id);
 		}
+		
 		private function onLoadImage(event:LoadEvent)
 		{
 			this.addChild(event.loaderTarget.content);
-		}
-		private function onMain(event:Event):void
-		{
-			oXML = XML(oLoader.data);
-			oMenu.dataProvider = XML(oXML.menus);
-			oMultiLoader.add(oXML.logo);
-			oMultiLoader.start();
 		}
 		
 		function ioErrorHandler(event:IOErrorEvent)

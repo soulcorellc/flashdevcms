@@ -30,8 +30,8 @@
 	<main>
 		<icon></icon>
 		<title>Users</title>
-		<name>This is where you can change users</name>
-		<description></description>
+		<name></name>
+		<description>This is where you can change users</description>
 		<items>
 			<id>1</id>
 			<name>Subitem1</name>
@@ -43,9 +43,9 @@
 	</main>
 	<main>
 		<icon></icon>
-		<title>Users</title>
-		<name>users</name>
-		<description></description>
+		<title>Content</title>
+		<name>content</name>
+		<description>This is where you can change content</description>
 		<items>
 			<id>4</id>
 			<name>Subitem1</name>

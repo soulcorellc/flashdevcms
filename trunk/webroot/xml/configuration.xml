@@ -14,6 +14,11 @@
 		<sName>main</sName>
 		<sURL><![CDATA[swf/home/main.swf]]></sURL>
 	</modules>
+	<modules>
+		<id>4</id>
+		<sName>user</sName>
+		<sURL><![CDATA[swf/home/user.swf]]></sURL>
+	</modules>
 	
 	<popups>
 		<sName>login</sName>
