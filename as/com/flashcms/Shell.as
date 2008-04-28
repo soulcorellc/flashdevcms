@@ -28,7 +28,13 @@ public class Shell extends MovieClip {
 		private var oPopupManager:PopupManager;
 		private var mcRoot:MovieClip;
 		private var oNavigation:Navigation;
-			
+		private var oHeader:Module;
+		private var oFooter:Module;
+		private var oMain:Module;
+		private var oUser:Module;
+		public var xMenu:XMLList;
+		public var xMain:XMLList;
+		public var sLogo:String;
 		public function Shell(){
 			super();
 			init();
@@ -71,8 +77,9 @@ public class Shell extends MovieClip {
 			{
 			case "/":
 				loadModule("header");
-				loadModule("footer");
+				loadModule("user");
 				loadModule("main"); //add parameters to load login if not loaded
+				loadModule("footer");
 			break;
 			
 			default:
@@ -96,10 +103,28 @@ public class Shell extends MovieClip {
 		 */
 		private function onConfiguration(event:Event):void
 		{
-			oNavigation = new Navigation(this);
 			oXML = XML(oLoader.data);
 			xModules = oXML.modules;
 			xURLs = oXML.urls;
+			oLoader.removeEventListener(Event.COMPLETE, onConfiguration);
+			loadMain();
+		}
+		private function loadMain()
+		{
+			oRequest = new URLRequest(getURL("main", "home"));
+			oLoader = new URLLoader(oRequest);
+			oLoader.addEventListener(Event.COMPLETE, onMainData);
+		}
+		private function onMainData(event:Event)
+		{
+			oXML = new XML();
+			oXML = XML(oLoader.data);
+			xMenu = oXML.menus;
+			xMain = oXML.main;
+			sLogo = oXML.logo;
+			//start deeplinking
+			oNavigation = new Navigation(this);
+			
 		}
 		/**
 		 * 
@@ -115,27 +140,50 @@ public class Shell extends MovieClip {
 		 */
 		function onModuleLoaded(event:LoadEvent)
 		{
-			var oModule:Module = Module(event.loaderTarget.content);
-			oModule.oShell = this;
-			switch(oModule.sName)
-			{
-				case "Header":
-					addChild(oModule);
-					addChild(new StageManager(oModule, 0, 0, 0, 0, true));
-				break;
-				case "Footer":
-					addChild(oModule);	
-					addChild(new StageManager(oModule, 0, 100, 0, 100, true));
-				break;
-				case "Main":
-					addChild(oModule);
-					addChild(new StageManager(oModule, 25, 25, 0, 0, true));
-				default:
+			try{
 				
-				break;
+				switch(Module(event.loaderTarget.content).sName)
+				{
+					case "Header":
+						oHeader = Module(event.loaderTarget.content);
+						initModule(oHeader);
+						addChild(new StageManager(oHeader, 0, 0, 0, 0, true));
+					break;
+					case "Footer":
+						oFooter = Module(event.loaderTarget.content);
+						initModule(oFooter);
+						addChild(new StageManager(oFooter, 0, 100, 0, 100, true));
+					break;
+					case "User":
+						oUser = Module(event.loaderTarget.content);
+						initModule(oUser);
+						addChild(new StageManager(oUser, 0, 20, 0, 0, true));
+					break;
+					default:
+						oMain = Module(event.loaderTarget.content);
+						initModule(oMain);
+						addChild(new StageManager(oMain, 25, 20, 0, 0, true));
+					break;
+				}
 			}
-			oModule.init();	
+			catch (err:Error)
+			{
+				trace("Shell Exception : " + err.message);
+			}
 		}
+		/**
+		 * 
+		 * @param	oModule
+		 */
+		private function initModule(oModule:Module)
+		{
+			oModule.oShell = this;
+			addChild(oModule);
+			oModule.init();
+			stage.addEventListener(Event.RESIZE, oModule.onResize);
+		}
+		private function unloadModule()
+		{}
 		/**
 		 * 
 		 * @param	event
@@ -151,7 +199,6 @@ public class Shell extends MovieClip {
 		 */
 		function onStageChange(oEvent:Event) {
 			//oPopupManager.update();
-			
 		}
 		/**
 		 * 
