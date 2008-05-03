@@ -1,6 +1,5 @@
-package com.flashcms{
-	//import com.flashcms.header.Header;
-	import com.flashcms.data.MultiLoader;
+package com.flashcms {
+	
 	import flash.display.Loader;
 	import flash.display.MovieClip;
 	import flash.display.Stage;
@@ -8,14 +7,17 @@ package com.flashcms{
 	import flash.events.Event;
 	import flash.net.URLLoader;
     import flash.net.URLRequest;
-	import com.flashcms.core.PopupManager;
-	import com.flashcms.core.Module;
-	import com.flashcms.core.TopMenu;
 	import flash.display.LoaderInfo;	
 	import flash.system.ApplicationDomain;
+	import com.flashcms.data.MultiLoader;
+	import com.flashcms.core.PopupManager;
+	import com.flashcms.core.Module;
 	import com.flashcms.events.LoadEvent;
 	import com.flashcms.deeplinking.Navigation;
 	import com.flashcms.layout.StageManager;
+	import com.flashcms.core.User;
+	import com.flashcms.events.LoginEvent;
+	
 	
 public class Shell extends MovieClip {
 		private var oXML:XML;
@@ -31,10 +33,11 @@ public class Shell extends MovieClip {
 		private var oHeader:Module;
 		private var oFooter:Module;
 		private var oMain:Module;
-		private var oUser:Module;
+		private var oUserModule:Module;
 		public var xMenu:XMLList;
 		public var xMain:XMLList;
 		public var sLogo:String;
+		private var oUser:User;
 		public function Shell(){
 			super();
 			init();
@@ -54,18 +57,9 @@ public class Shell extends MovieClip {
 			stage.addEventListener(Event.RESIZE, onStageChange);
 			oModuleLoader = new MultiLoader();
 			oModuleLoader.addEventListener(LoadEvent.LOAD_EVENT, onModuleLoaded);
-			
+			oUser = new User();
 		}
-		/**
-		 * 
-		 */
-		public function startApplication()
-		{
-			
-			//oPopupManager = new PopupManager(mcRoot, this,oXML.popups,stage);
-			//oPopupManager.show("login");
-			
-		}
+	
 		/**
 		 * 
 		 * @param	module name of the module to be loaded
@@ -78,7 +72,7 @@ public class Shell extends MovieClip {
 			case "/":
 				loadModule("header");
 				loadModule("user");
-				loadModule("main"); //add parameters to load login if not loaded
+				loadModule("main"); 
 				loadModule("footer");
 			break;
 			
@@ -107,7 +101,17 @@ public class Shell extends MovieClip {
 			xModules = oXML.modules;
 			xURLs = oXML.urls;
 			oLoader.removeEventListener(Event.COMPLETE, onConfiguration);
+			oPopupManager = new PopupManager(this, this, oXML.popups, stage);
+			oPopupManager.addEventListener(LoginEvent.LOGIN_EVENT, onLogin);
 			loadMain();
+		}
+		private function onLogin(e:LoginEvent)
+		{
+			oUser.sName = e.sName;
+			oUser.bLogged = true;
+			oPopupManager.closeAll();
+			//start navigation
+			oNavigation = new Navigation(this);
 		}
 		private function loadMain()
 		{
@@ -122,9 +126,7 @@ public class Shell extends MovieClip {
 			xMenu = oXML.menus;
 			xMain = oXML.main;
 			sLogo = oXML.logo;
-			//start deeplinking
-			oNavigation = new Navigation(this);
-			
+			oPopupManager.show("login");
 		}
 		/**
 		 * 
@@ -155,9 +157,9 @@ public class Shell extends MovieClip {
 						addChild(new StageManager(oFooter, 0, 100, 0, 100, true));
 					break;
 					case "User":
-						oUser = Module(event.loaderTarget.content);
-						initModule(oUser);
-						addChild(new StageManager(oUser, 0, 20, 0, 0, true));
+						oUserModule = Module(event.loaderTarget.content);
+						initModule(oUserModule);
+						addChild(new StageManager(oUserModule, 0, 20, 0, 0, true));
 					break;
 					default:
 						oMain = Module(event.loaderTarget.content);
@@ -198,7 +200,7 @@ public class Shell extends MovieClip {
 		 * @param	oEvent
 		 */
 		function onStageChange(oEvent:Event) {
-			//oPopupManager.update();
+			oPopupManager.update();
 		}
 		/**
 		 * 
