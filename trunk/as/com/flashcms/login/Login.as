@@ -1,7 +1,10 @@
 ﻿package com.flashcms.login {
 	import com.flashcms.core.Module;
+	import fl.controls.Button;
 	import flash.display.MovieClip;
+	import flash.events.Event;
 	import flash.text.TextField;
+	import flash.events.MouseEvent;
 	
 	/**
 	* ...
@@ -10,17 +13,20 @@
 	public class Login extends Module{
 		
 		public var txtNombre:TextField;
+		public var btEnter:Button;
+		public var sName:String="usuario";
 		
 		public function Login() {
-		
+			super("Login");
 		}
 		
-		public function start()
+		public override function init()
 		{
-			trace(sName);
-			//txtNombre.text = sName;
-			//oShell.getInfo();
-		
+			btEnter.addEventListener(MouseEvent.CLICK, onEnter);
+		}
+		public function onEnter(e:Event)
+		{
+			dispatchEvent(new Event("closepopup"));	
 		}
 		
 	}

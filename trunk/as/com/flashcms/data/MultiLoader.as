@@ -28,7 +28,10 @@
 		
 		public function start()
 		{
-			loadNext();
+			if (aMovies.length > 0)
+			{
+				loadNext();
+			}
 		}
 		
 		private function loadNext()
@@ -38,7 +41,6 @@
 			oLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoaded);
 			oLoader.contentLoaderInfo.addEventListener(Event.OPEN, onOpen);
 			
-			trace("loading :<" + aMovies[0]+">");
 			oRequest = new URLRequest(aMovies[0]);
 			oLoader.load(oRequest);
 			
