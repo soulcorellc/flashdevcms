@@ -14,7 +14,7 @@
 		
 		public var txtNombre:TextField;
 		public var btEnter:Button;
-		public var sName:String="usuario";
+		public var sUserName:String="usuario";
 		
 		public function Login() {
 			super("Login");

@@ -15,6 +15,7 @@
 		
 		private var oRequest:URLRequest;
 		private var aMovies:Array;
+		private var oLoader:Loader;
 				
 		public function MultiLoader()
 		{
@@ -36,7 +37,7 @@
 		
 		private function loadNext()
 		{
-			var oLoader:Loader = new Loader();
+			oLoader = new Loader();
 			oLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
 			oLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoaded);
 			oLoader.contentLoaderInfo.addEventListener(Event.OPEN, onOpen);
@@ -55,6 +56,9 @@
 			{
 				loadNext();
 			}
+			else {
+				oLoader = null;
+			}
 			
 		}
 		private function onOpen(event:Event)
@@ -63,7 +67,6 @@
 		}
 		private function onLoaded(event:Event)
 		{
-			trace("loaded OK :<" + aMovies[0]+">");
 			aMovies.shift();
 			var loaderInfo:LoaderInfo = event.target as LoaderInfo;
 			if (aMovies.length != 0)
@@ -74,7 +77,8 @@
 			}
 			else
 			{
-				dispatchEvent(new LoadEvent(true,loaderInfo));
+				dispatchEvent(new LoadEvent(true, loaderInfo));
+				oLoader = null;
 			}
 			
 		}

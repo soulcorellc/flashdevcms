@@ -19,6 +19,11 @@
 		<sName>user</sName>
 		<sURL><![CDATA[swf/home/user.swf]]></sURL>
 	</modules>
+	<modules>
+		<id>5</id>
+		<sName>admin</sName>
+		<sURL><![CDATA[swf/admin/admin.swf]]></sURL>
+	</modules>
 	
 	<popups>
 		<sName>login</sName>
@@ -36,5 +41,8 @@
 		<home>
 			<main><![CDATA[../webroot/xml/main.xml]]></main>
 		</home>
+		<users>
+			<main><![CDATA[../webroot/xml/users.xml]]></main>
+		</users>
 	</urls>
 </configuration>

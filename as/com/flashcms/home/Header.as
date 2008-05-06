@@ -1,15 +1,17 @@
 ﻿package com.flashcms.home {
+	import flash.events.Event;
+	import com.yahoo.astra.fl.controls.MenuBar;
+	import com.yahoo.astra.fl.events.MenuEvent;
 	import com.flashcms.core.Module;
 	import com.flashcms.data.MultiLoader;
 	import com.flashcms.events.LoadError;
 	import com.flashcms.events.LoadEvent;
-	import flash.events.Event;
-	import com.yahoo.astra.fl.controls.MenuBar;
-	import com.yahoo.astra.fl.events.MenuEvent;
+	import com.flashcms.events.NavigationEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.events.IOErrorEvent;
 	import flash.events.Event;
+	
 	/**
 	* ...
 	* @author Default
@@ -64,7 +66,7 @@
 		}
 		
 		private function onItemClick(event:MenuEvent):void{
-			trace("Clicked: "+event.item.id);
+			dispatchEvent(new NavigationEvent(event.item.id,null));
 		}
 		
 		private function onLoadImage(event:LoadEvent)
@@ -75,7 +77,6 @@
 		function ioErrorHandler(event:IOErrorEvent)
 		{
 			trace("ioErrorHandler: " + event.text);
-			
 		}
 	}
 	
