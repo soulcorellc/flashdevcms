@@ -24,7 +24,6 @@
 			this.graphics.beginFill(0xCCCCCC);
 			this.graphics.drawRect(0, 0, stage.stageWidth, 25);
 			this.graphics.endFill();
-			trace(stage.stageWidth + " from footer");
 		}
 		public override function onResize(event:Event)
 		{

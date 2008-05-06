@@ -78,10 +78,7 @@
 		public function closeAll()
 		{
 			mcRoot.removeChild(mcMask);
-			oTweenOut= new Tween(mcHolder, "scaleX", Regular.easeIn, 1, 0, 0.3, true);
-			oTweenOut.addEventListener(TweenEvent.MOTION_FINISH, onCloseModule);
-			new Tween(mcHolder, "scaleY", Regular.easeIn, 1, 0, .3, true);
-			
+			hideWindow(mcHolder);
 		}
 		/**
 		 * 
@@ -97,7 +94,7 @@
 		 * @param	oEvent
 		 */
 		private function onMaskClick(oEvent:MouseEvent) {
-			closeAll();
+			//closeAll();
 		}
 		/**
 		 * 
@@ -146,9 +143,23 @@
 			oModule = Module(oEvent.target.content);
 			oModule.init();
 			oModule.addEventListener("closepopup", onWindowEvent);
-
-			var oTween:Tween = new Tween(mcHolder, "scaleX", Back.easeOut, .5, 1, 0.5, true);
-			new Tween(mcHolder, "scaleY", Back.easeOut, .5, 1, .5, true);
+			
+			showWindow(mcHolder);
+		}
+		/**
+		 * 
+		 * @param	mcClip clip to be displayed
+		 */
+		private function showWindow(mcClip:Sprite)
+		{
+			var oTween:Tween = new Tween(mcClip, "scaleX", Back.easeOut, .5, 1, 0.5, true);
+			new Tween(mcClip, "scaleY", Back.easeOut, .5, 1, .5, true);
+		}
+		private function hideWindow(mcClip:Sprite)
+		{
+			oTweenOut = new Tween(mcClip, "scaleX", Regular.easeIn, 1, 0, 0.3, true);
+			oTweenOut.addEventListener(TweenEvent.MOTION_FINISH, onCloseModule);
+			new Tween(mcClip, "scaleY", Regular.easeIn, 1, 0, .3, true);
 		}
 		/**
 		 * 
@@ -159,7 +170,7 @@
 			switch(e.target.sName)
 			{
 				case "Login":
-					dispatchEvent(new LoginEvent(e.target.sName));
+					dispatchEvent(new LoginEvent(e.target.sUserName));
 				break;
 				default:
 				break;
