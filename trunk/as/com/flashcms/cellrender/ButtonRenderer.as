@@ -24,7 +24,7 @@
         }
 		public function set listData(ld:ListData):void {
             _listData = ld;
-			this.label= DataGrid(listData.owner).getColumnAt(listData.column).headerText;
+			this.label= DataGrid(listData.owner).getColumnAt(listData.column).dataField;
         }
         public function get listData():ListData {
             return _listData;

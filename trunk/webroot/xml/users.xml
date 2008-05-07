@@ -3,19 +3,13 @@
 	<user>
 		<id>1</id>
 		<name>David Barrios</name>
-		<edit>true</edit>
-		<delete>true</delete>
 	</user>
 	<user>
 		<id>2</id>
 		<name>Pedro Perez</name>
-		<edit>true</edit>
-		<delete>true</delete>
 	</user>
 	<user>
 		<id>3</id>
 		<name>Juan Martinez</name>
-		<edit>true</edit>
-		<delete>true</delete>
 	</user>
 </data>

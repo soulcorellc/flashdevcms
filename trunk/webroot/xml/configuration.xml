@@ -30,6 +30,11 @@
 		<sURL><![CDATA[swf/login/login.swf]]></sURL>
 	</popups>
 
+	<popups>
+		<sName>edit</sName>
+		<sURL><![CDATA[swf/popups/edit.swf]]></sURL>
+	</popups>
+
 	
 	<urls>
 		<login>

@@ -2,6 +2,8 @@
 	import com.flashcms.core.Module;
 	import com.flashcms.utils.XMLLoader;
 	import fl.controls.DataGrid;
+	import fl.events.ListEvent;
+	import fl.controls.dataGridClasses.DataGridColumn;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import fl.data.DataProvider;
@@ -22,12 +24,42 @@
 		private function onXMLData(event:Event)
 		{
 			var myDP:DataProvider = new DataProvider(XML(event.target.data));
+			
+			var col1:DataGridColumn = new DataGridColumn("name");
+			col1.headerText = "Name";
+			col1.width = 300;
+			
+			var col2:DataGridColumn = new DataGridColumn("edit");
+			col2.headerText = "";
+			col2.cellRenderer = ButtonRenderer;
+			
+			var col3:DataGridColumn = new DataGridColumn("delete");
+			col3.headerText= "";
+			col3.cellRenderer = ButtonRenderer;
+			
+			dgMain.addColumn(col1);
+			dgMain.addColumn(col2);
+			dgMain.addColumn(col3);
+			
 			dgMain.dataProvider = myDP;
-			dgMain.getColumnAt(1).width= 300;
-			dgMain.getColumnAt(2).cellRenderer = ButtonRenderer;
-			dgMain.getColumnAt(3).cellRenderer = ButtonRenderer;
-			dgMain.getColumnAt(0).visible = false;
+			dgMain.addEventListener(ListEvent.ITEM_CLICK , onClickItem);
+			
 		}
+		
+		private function onClickItem(event:ListEvent)
+		{
+			switch(event.columnIndex)
+			{
+				case 1:
+				trace("1 " + event.item.id);
+				oShell.showPopup("edit");
+				break;
+				case 2:
+				trace("2 "+event.item.id);
+				break;
+			}
+		}
+		
 		private function onError(event:IOErrorEvent)
 		{
 			trace("ioErrorHandler: " + event.text);
