@@ -101,6 +101,8 @@
 		 */
 		public function update()
 		{
+			trace("updating pmanager "+mcMask);
+			
 			mcMask.x = - (oStage.stageWidth-800)/2;
 			mcMask.y = - (oStage.stageHeight-600)/2;
 			
@@ -118,10 +120,13 @@
 		{
 			try {
 				createMask();
+				oLoader = new Loader();
 				oRequest.url = xmlPopups.(sName == name).sURL;
 				oLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onErrorWindow);
 				oLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadWindow);
+				trace("before load");
 				oLoader.load(oRequest);
+				trace("after load");
 			}
 			catch (e:Error){
 				trace("PopupManager exception : " + e);

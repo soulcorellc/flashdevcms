@@ -150,6 +150,11 @@ public class Shell extends MovieClip {
 			oXMLLoader.remove();
 			oPopupManager.show("login");
 		}
+		
+		public function showPopup(name:String)
+		{
+			oPopupManager.show(name);
+		}
 		/**
 		 * 
 		 * @param	event
