@@ -52,7 +52,7 @@ public class Shell extends MovieClip {
 			sConfigurationURL = "./xml/configuration.xml";
 			oXMLLoader=new XMLLoader(sConfigurationURL, onConfiguration, ioErrorHandler);
 			
-			stage.addEventListener(Event.RESIZE, onStageChange);
+			
 			oModuleLoader = new MultiLoader();
 			oModuleLoader.addEventListener(LoadEvent.LOAD_EVENT, onModuleLoaded);
 			oUser = new User();
@@ -206,8 +206,9 @@ public class Shell extends MovieClip {
 		private function removeMainSection()
 		{
 			try{
-				removeChildAt(getChildIndex(oMain));
+				oMain.sManager.remove();
 				removeChildAt(getChildIndex(oMain.sManager));
+				removeChildAt(getChildIndex(oMain));
 				stage.removeEventListener(Event.RESIZE, oMain.onResize);
 				oMain = null;
 			}
@@ -242,13 +243,7 @@ public class Shell extends MovieClip {
 			trace("ioErrorHandler: " + event.text);
 			oXMLLoader.remove();
 		}
-		/**
-		 * 
-		 * @param	oEvent
-		 */
-		function onStageChange(oEvent:Event) {
-			oPopupManager.update();
-		}
+		
 		/**
 		 * 
 		 * @param	name

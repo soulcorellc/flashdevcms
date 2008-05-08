@@ -15,6 +15,7 @@
 	import com.flashcms.Shell;
 	import com.flashcms.login.Login;
 	import flash.display.LoaderInfo;
+	import com.flashcms.layout.StageManager;
 	/**
 	* ...
 	* @author David Barrios
@@ -32,6 +33,7 @@
 		private var oShell:Shell;
 		private var oTweenOut:Tween;
 		private var oModule:Module;
+		private var oManager:StageManager;
 		/**
 		 * 
 		 * @param	root
@@ -63,14 +65,15 @@
 		 */
 		private function createMask()
 		{
+			oManager = new StageManager(mcMask, 0, 0, 0, 0, true,true);
 			mcRoot.addChild(mcMask);
+			mcRoot.addChild(oManager);
 			mcMask.addEventListener(MouseEvent.CLICK, onMaskClick);
 			mcMask.graphics.clear();
 			mcMask.graphics.beginFill(0x000000, .5);
 			mcMask.graphics.drawRect(0, 0, oStage.stageWidth, oStage.stageHeight);
 			mcMask.graphics.endFill();
-			mcMask.x = - (oStage.width-800)/2;
-			mcMask.y = - (oStage.height-600)/2;
+			
 		}
 		/**
 		 * 
@@ -79,6 +82,9 @@
 		{
 			mcRoot.removeChild(mcMask);
 			hideWindow(mcHolder);
+			//mcRoot.removeChild(oManager);
+			//oManager.remove();
+			
 		}
 		/**
 		 * 
@@ -95,21 +101,6 @@
 		 */
 		private function onMaskClick(oEvent:MouseEvent) {
 			//closeAll();
-		}
-		/**
-		 * 
-		 */
-		public function update()
-		{
-			trace("updating pmanager "+mcMask);
-			
-			mcMask.x = - (oStage.stageWidth-800)/2;
-			mcMask.y = - (oStage.stageHeight-600)/2;
-			
-			mcMask.graphics.clear();
-			mcMask.graphics.beginFill(0x000000, .5);
-			mcMask.graphics.drawRect(0, 0, oStage.stageWidth, oStage.stageHeight);
-			mcMask.graphics.endFill();
 		}
 		/**
 		 * 
