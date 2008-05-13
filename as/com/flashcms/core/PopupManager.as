@@ -21,12 +21,9 @@
 	* @author David Barrios
 	*/
 	public class PopupManager extends Sprite {
-		private var mcRoot:MovieClip;
 		private var mcMask:Sprite;
 		private var mcHolder:MovieClip;
-		private var bVisible:Boolean;
 		private var oStage:Stage;
-		private var aWindows:Array;
 		private var xmlPopups:XMLList;
 		private var oLoader:Loader;
 		private var oRequest:URLRequest;
@@ -34,6 +31,8 @@
 		private var oTweenOut:Tween;
 		private var oModule:Module;
 		private var oManager:StageManager;
+		private var oManagerCenter:StageManager;
+		private var nextevent:Event;
 		/**
 		 * 
 		 * @param	root
@@ -41,9 +40,8 @@
 		 * @param	popups
 		 * @param	stageref
 		 */
-		public function PopupManager(root:MovieClip, shell:Shell , popups:XMLList, stageref:Stage) {
+		public function PopupManager(shell:Shell , popups:XMLList, stageref:Stage) {
 			trace("popupmanager");
-			mcRoot = root;
 			oStage = stageref;
 			xmlPopups = popups;
 			oShell = shell;
@@ -53,54 +51,76 @@
 		 * initialize class members
 		 */
 		private function init() {
-			bVisible = false;
-			aWindows = new Array();
+			
 			mcMask = new Sprite();
 			mcHolder = new MovieClip();
 			oRequest = new URLRequest();
 			oLoader = new Loader();
+			addChild(mcMask);
+			
 		}
 		/**
-		 * 
+		 * create black mask under the window
 		 */
 		private function createMask()
 		{
-			oManager = new StageManager(mcMask, 0, 0, 0, 0, true,true);
-			mcRoot.addChild(mcMask);
-			mcRoot.addChild(oManager);
+			oManager = new StageManager(mcMask, 0, 0, 0, 0, true);
+			oManagerCenter = new StageManager(mcHolder, 50, 50, 0, 0, true);
+			addChild(oManager);
+			addChild(oManagerCenter);
+			oStage.addEventListener(Event.RESIZE, onResize);
 			mcMask.addEventListener(MouseEvent.CLICK, onMaskClick);
+			onResize();
+		}
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function onResize(e:Event=null)
+		{
 			mcMask.graphics.clear();
 			mcMask.graphics.beginFill(0x000000, .5);
 			mcMask.graphics.drawRect(0, 0, oStage.stageWidth, oStage.stageHeight);
 			mcMask.graphics.endFill();
-			
-		}
-		/**
-		 * 
-		 */
-		public function closeAll()
-		{
-			mcRoot.removeChild(mcMask);
-			hideWindow(mcHolder);
-			//mcRoot.removeChild(oManager);
-			//oManager.remove();
-			
 		}
 		/**
 		 * 
 		 * @param	event
 		 */
-		private function onCloseModule(event:TweenEvent)
+		public function onCloseModule(event:TweenEvent=null)
 		{
 			oModule.removeEventListener("closepopup", onWindowEvent);
-			mcRoot.removeChild(mcHolder);
+			oStage.removeEventListener(Event.RESIZE, onResize);
+			oManager.remove();
+			oManagerCenter.remove();
+			removeChild(mcHolder);
+			removeChild(oManagerCenter);
+			removeChild(oManager);
+			oShell.removeChild(this);
+			
+			executeEvent();
+			
+		}
+		/**
+		 * Disptach the right event from the window
+		 */
+		private function executeEvent()
+		{
+			switch(nextevent.target.sName)
+			{
+				case "Login":
+					dispatchEvent(new LoginEvent(nextevent.target.sUserName));
+				break;
+				default:
+				break;
+			}
 		}
 		/**
 		 * 
 		 * @param	oEvent
 		 */
 		private function onMaskClick(oEvent:MouseEvent) {
-			//closeAll();
+			
 		}
 		/**
 		 * 
@@ -111,17 +131,25 @@
 		{
 			try {
 				createMask();
-				oLoader = new Loader();
-				oRequest.url = xmlPopups.(sName == name).sURL;
-				oLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onErrorWindow);
-				oLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadWindow);
-				trace("before load");
-				oLoader.load(oRequest);
-				trace("after load");
+				loadModule(name,parameters);
 			}
 			catch (e:Error){
 				trace("PopupManager exception : " + e);
 			}
+		}
+		
+		/**
+		 * 
+		 * @param	name
+		 * @param	parameters
+		 */
+		private function loadModule(name:String,parameters:Object)
+		{
+			oLoader = new Loader();
+			oRequest.url = xmlPopups.(sName == name).sURL;
+			oLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onErrorWindow);
+			oLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadWindow);
+			oLoader.load(oRequest);
 		}
 		/**
 		 * 
@@ -129,17 +157,13 @@
 		 */
 		private function onLoadWindow(oEvent:Event)
 		{
-			mcHolder.addChild(oLoader.content);
-			mcRoot.addChild(mcHolder);
-			oLoader.content.x-= oLoader.content.width / 2
-			oLoader.content.y-= oLoader.content.height / 2;
-			mcHolder.x = (800/2) ;
-			mcHolder.y = (600/2);
-			
+			addChild(mcHolder);
 			oModule = Module(oEvent.target.content);
+			mcHolder.addChild(oModule);
+			oModule.x-= oModule.width / 2
+			oModule.y-= oModule.height/ 2;
 			oModule.init();
 			oModule.addEventListener("closepopup", onWindowEvent);
-			
 			showWindow(mcHolder);
 		}
 		/**
@@ -163,17 +187,11 @@
 		 */
 		public function onWindowEvent(e:Event)
 		{
-			switch(e.target.sName)
-			{
-				case "Login":
-					dispatchEvent(new LoginEvent(e.target.sUserName));
-				break;
-				default:
-				break;
-			}
+			nextevent = e;
+			hideWindow(mcHolder);
 		}
 		/**
-		 * 
+		 * Handle IO Error for loaded windows
 		 * @param	oEvent
 		 */
 		private function onErrorWindow(oEvent:IOErrorEvent)
