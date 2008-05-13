@@ -105,7 +105,7 @@ public class Shell extends MovieClip {
 			oXML = XML(event.target.data);
 			xModules = oXML.modules;
 			xURLs = oXML.urls;
-			oPopupManager = new PopupManager(this, this, oXML.popups, stage);
+			oPopupManager = new PopupManager( this, oXML.popups, stage);
 			oPopupManager.addEventListener(LoginEvent.LOGIN_EVENT, onLogin);
 			oXMLLoader.remove();
 			loadMain();
@@ -116,12 +116,18 @@ public class Shell extends MovieClip {
 		 */
 		private function onLogin(e:LoginEvent)
 		{
-			oUser.sName = e.sName;
-			oUser.bLogged = true;
-			oPopupManager.closeAll();
-			//start navigation
-			oNavigation = new Navigation(this);
-			oNavigation.addEventListener(NavigationEvent.ON_NAVIGATION, onModuleChange);
+			try{
+				
+				oUser.sName = e.sName;
+				oUser.bLogged = true;
+				//start navigation
+				oNavigation = new Navigation(this);
+				oNavigation.addEventListener(NavigationEvent.ON_NAVIGATION, onModuleChange);
+			}
+			catch (e:Error)
+			{
+				trace("ONLOGIN exception " + e);
+			}
 		}
 		
 		public function setModule(event:NavigationEvent)
@@ -148,11 +154,12 @@ public class Shell extends MovieClip {
 			xMain = oXML.main;
 			sLogo = oXML.logo;
 			oXMLLoader.remove();
-			oPopupManager.show("login");
+			showPopup("login");
 		}
 		
 		public function showPopup(name:String)
 		{
+			addChild(oPopupManager);
 			oPopupManager.show(name);
 		}
 		/**
