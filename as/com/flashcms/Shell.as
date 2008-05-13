@@ -1,14 +1,14 @@
 package com.flashcms {
 
+	import com.flashcms.events.ErrorEvent;
 	import flash.display.Loader;
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.events.IOErrorEvent;
 	import flash.events.Event;
-	import flash.net.URLLoader;
-    import flash.net.URLRequest;
+	import com.flashcms.events.PopupEvent;
 	import flash.display.LoaderInfo;	
-	import flash.system.ApplicationDomain;
+	
 	import com.flashcms.data.MultiLoader;
 	import com.flashcms.core.PopupManager;
 	import com.flashcms.core.Module;
@@ -19,7 +19,7 @@ package com.flashcms {
 	import com.flashcms.core.User;
 	import com.flashcms.events.LoginEvent;
 	import com.flashcms.utils.XMLLoader;
-	
+		
 public class Shell extends MovieClip {
 		private var oXML:XML;
 		private var xModules:XMLList;
@@ -41,7 +41,6 @@ public class Shell extends MovieClip {
 		public function Shell(){
 			super();
 			init();
-			
 		}
 		/**
 		 * Initializes class members
@@ -50,9 +49,7 @@ public class Shell extends MovieClip {
 		{
 			oXML= new XML();
 			sConfigurationURL = "./xml/configuration.xml";
-			oXMLLoader=new XMLLoader(sConfigurationURL, onConfiguration, ioErrorHandler);
-			
-			
+			oXMLLoader=new XMLLoader(sConfigurationURL, onConfiguration,onDataError, ioErrorHandler);
 			oModuleLoader = new MultiLoader();
 			oModuleLoader.addEventListener(LoadEvent.LOAD_EVENT, onModuleLoaded);
 			oUser = new User();
@@ -106,7 +103,7 @@ public class Shell extends MovieClip {
 			xModules = oXML.modules;
 			xURLs = oXML.urls;
 			oPopupManager = new PopupManager( this, oXML.popups, stage);
-			oPopupManager.addEventListener(LoginEvent.LOGIN_EVENT, onLogin);
+			oPopupManager.addEventListener(PopupEvent.CLOSE, onClose);
 			oXMLLoader.remove();
 			loadMain();
 		}
@@ -114,11 +111,10 @@ public class Shell extends MovieClip {
 		 * 
 		 * @param	e
 		 */
-		private function onLogin(e:LoginEvent)
+		private function onClose(e:PopupEvent)
 		{
 			try{
-				
-				oUser.sName = e.sName;
+				oUser.sName = e.parameters.sName;
 				oUser.bLogged = true;
 				//start navigation
 				oNavigation = new Navigation(this);
@@ -129,18 +125,21 @@ public class Shell extends MovieClip {
 				trace("ONLOGIN exception " + e);
 			}
 		}
-		
+		/**
+		 * 
+		 * 
+		 * @param	event
+		 */
 		public function setModule(event:NavigationEvent)
 		{
-			trace("setting navigation to " + event.sModule);
-			oNavigation.setURL(event.sModule,event.oParameters)
+			oNavigation.setURL(event.sModule, event.oParameters);
 		}
 		/**
 		 * 
 		 */
 		private function loadMain()
 		{
-			oXMLLoader=new XMLLoader(getURL("main", "home"), onMainData, ioErrorHandler);
+			oXMLLoader=new XMLLoader(getURL("main", "home"), onMainData, onDataError, ioErrorHandler);
 		}
 		/**
 		 * 
@@ -155,6 +154,11 @@ public class Shell extends MovieClip {
 			sLogo = oXML.logo;
 			oXMLLoader.remove();
 			showPopup("login");
+		}
+		
+		private function onDataError(e:ErrorEvent)
+		{
+			trace("DATAERROR : "+e.message);
 		}
 		
 		public function showPopup(name:String)
@@ -221,7 +225,7 @@ public class Shell extends MovieClip {
 			}
 			catch (e:Error)
 			{
-			//trace("Error unloading!!!!!!!!!! ");
+				//trace("Error unloading!!!!!!!!!! ");
 			}
 		}
 		/**
@@ -237,6 +241,9 @@ public class Shell extends MovieClip {
 			oModule.show();
 			stage.addEventListener(Event.RESIZE, oModule.onResize);
 		}
+		/**
+		 * 
+		 */
 		private function unloadModule()
 		{
 		
@@ -259,14 +266,7 @@ public class Shell extends MovieClip {
 		 */
 		public function getURL(name:String,section:String=null):String
 		{
-			if (section == null)
-			{
-				return xURLs[name];
-			}
-			else
-			{
-				return xURLs[section][name];
-			}
+			return section == null? xURLs[name] : xURLs[section][name];
 		}
 		
 	}

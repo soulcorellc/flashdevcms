@@ -1,4 +1,9 @@
 <configuration>
+	<result>
+		<success>true</success>
+		<message>Unable to load configuration file</message>
+	</result>
+	
 	<modules>
 		<id>1</id>
 		<sName>header</sName>
@@ -38,7 +43,7 @@
 	
 	<urls>
 		<login>
-			<main></main>
+			<main><![CDATA[../webroot/xml/login.xml]]></main>
 		</login>
 		<language>
 			<main></main>
@@ -48,6 +53,7 @@
 		</home>
 		<users>
 			<main><![CDATA[../webroot/xml/users.xml]]></main>
+			<getUser><![CDATA[../webroot/xml/getUser.xml]]></getUser>
 		</users>
 	</urls>
 </configuration>

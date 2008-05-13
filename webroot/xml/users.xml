@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data>
+	<result>
+		<success>true</success>
+	</result>
 	<user>
 		<id>1</id>
 		<name>David Barrios</name>
