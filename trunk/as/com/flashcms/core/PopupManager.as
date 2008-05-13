@@ -1,21 +1,26 @@
 ﻿package com.flashcms.core {
-	import com.flashcms.events.LoginEvent;
+	
+	import com.flashcms.data.MultiLoader;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.Stage;
-	import flash.events.MouseEvent;
+	
+	import flash.display.Loader;
 	import fl.transitions.Tween;
 	import fl.transitions.TweenEvent;
 	import fl.transitions.easing.*;
-	import flash.display.Loader;
-	import flash.net.URLRequest;
+	import flash.events.MouseEvent;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent
 	import flash.net.URLVariables;
+	import flash.net.URLRequest;
+	
 	import com.flashcms.Shell;
 	import com.flashcms.login.Login;
-	import flash.display.LoaderInfo;
 	import com.flashcms.layout.StageManager;
+	import com.flashcms.events.PopupEvent;
+	import com.flashcms.events.LoginEvent;
+	import com.flashcms.events.LoadEvent;
 	/**
 	* ...
 	* @author David Barrios
@@ -25,10 +30,9 @@
 		private var mcHolder:MovieClip;
 		private var oStage:Stage;
 		private var xmlPopups:XMLList;
-		private var oLoader:Loader;
-		private var oRequest:URLRequest;
 		private var oShell:Shell;
 		private var oTweenOut:Tween;
+		private var oMultiLoader:MultiLoader;
 		private var oModule:Module;
 		private var oManager:StageManager;
 		private var oManagerCenter:StageManager;
@@ -52,10 +56,12 @@
 		 */
 		private function init() {
 			
+			oMultiLoader = new MultiLoader();
+			oMultiLoader.addEventListener(LoadEvent.LOAD_EVENT, onLoadWindow);
 			mcMask = new Sprite();
 			mcHolder = new MovieClip();
-			oRequest = new URLRequest();
-			oLoader = new Loader();
+			
+			
 			addChild(mcMask);
 			
 		}
@@ -89,13 +95,14 @@
 		 */
 		public function onCloseModule(event:TweenEvent=null)
 		{
-			oModule.removeEventListener("closepopup", onWindowEvent);
+			oModule.removeEventListener(PopupEvent.CLOSE, onWindowEvent);
 			oStage.removeEventListener(Event.RESIZE, onResize);
 			oManager.remove();
 			oManagerCenter.remove();
 			removeChild(mcHolder);
 			removeChild(oManagerCenter);
 			removeChild(oManager);
+			
 			oShell.removeChild(this);
 			
 			executeEvent();
@@ -109,7 +116,7 @@
 			switch(nextevent.target.sName)
 			{
 				case "Login":
-					dispatchEvent(new LoginEvent(nextevent.target.sUserName));
+					dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{sName:nextevent.target.sUserName}));
 				break;
 				default:
 				break;
@@ -145,25 +152,25 @@
 		 */
 		private function loadModule(name:String,parameters:Object)
 		{
-			oLoader = new Loader();
-			oRequest.url = xmlPopups.(sName == name).sURL;
-			oLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onErrorWindow);
-			oLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadWindow);
-			oLoader.load(oRequest);
+			
+			oMultiLoader.add(xmlPopups.(sName == name).sURL);
+			oMultiLoader.start();
 		}
 		/**
 		 * 
 		 * @param	oEvent
 		 */
-		private function onLoadWindow(oEvent:Event)
+		private function onLoadWindow(oEvent:LoadEvent)
 		{
+			
 			addChild(mcHolder);
-			oModule = Module(oEvent.target.content);
+			oModule = Module(oEvent.loaderTarget.content);
+			oModule.oShell = oShell;
 			mcHolder.addChild(oModule);
 			oModule.x-= oModule.width / 2
 			oModule.y-= oModule.height/ 2;
 			oModule.init();
-			oModule.addEventListener("closepopup", onWindowEvent);
+			oModule.addEventListener(PopupEvent.CLOSE, onWindowEvent);
 			showWindow(mcHolder);
 		}
 		/**
@@ -175,6 +182,10 @@
 			var oTween:Tween = new Tween(mcClip, "scaleX", Back.easeOut, .5, 1, 0.5, true);
 			new Tween(mcClip, "scaleY", Back.easeOut, .5, 1, .5, true);
 		}
+		/**
+		 * 
+		 * @param	mcClip
+		 */
 		private function hideWindow(mcClip:Sprite)
 		{
 			oTweenOut = new Tween(mcClip, "scaleX", Regular.easeIn, 1, 0, 0.3, true);

@@ -1,5 +1,6 @@
 ﻿package com.flashcms.admin {
 	import com.flashcms.core.Module;
+	import com.flashcms.events.ErrorEvent;
 	import com.flashcms.utils.XMLLoader;
 	import fl.controls.DataGrid;
 	import fl.events.ListEvent;
@@ -17,10 +18,19 @@
 		public function Admin() {
 			super("Admin");
 		}
+		/**
+		 * 
+		 */
 		public override function init()
 		{
-			new XMLLoader(oShell.getURL("main", "users"), onXMLData,onError);
+			new XMLLoader(oShell.getURL("main", "users"), onXMLData,onDataError,onError);
 		}
+		/**
+		 * 
+		 * 
+		 * 
+		 * @param	event
+		 */
 		private function onXMLData(event:Event)
 		{
 			var myDP:DataProvider = new DataProvider(XML(event.target.data));
@@ -45,21 +55,34 @@
 			dgMain.addEventListener(ListEvent.ITEM_CLICK , onClickItem);
 			
 		}
-		
+		private function onDataError(e:ErrorEvent)
+		{
+		trace("Admin Error : " + e.message);
+		}
+		/**
+		 * 
+		 * 
+		 * 
+		 * @param	event
+		 */
 		private function onClickItem(event:ListEvent)
 		{
 			switch(event.columnIndex)
 			{
 				case 1:
-				trace("1 " + event.item.id);
-				oShell.showPopup("edit");
+					oShell.showPopup("edit");
 				break;
 				case 2:
-				trace("2 "+event.item.id);
+					trace("2 "+event.item.id);
 				break;
 			}
 		}
-		
+		/**
+		 * 
+		 * 
+		 * 
+		 * @param	event
+		 */
 		private function onError(event:IOErrorEvent)
 		{
 			trace("ioErrorHandler: " + event.text);

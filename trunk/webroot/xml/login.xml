@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<result>
+		<success>false</success>
+		<message>Usuario no valido</message>
+	</result>
+	<user>
+		<id>1</id>
+		<nombre>pedro perez</nombre>
+	</user>
+		
+</data>
