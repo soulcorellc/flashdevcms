@@ -161,10 +161,10 @@ public class Shell extends MovieClip {
 			trace("DATAERROR : "+e.message);
 		}
 		
-		public function showPopup(name:String)
+		public function showPopup(name:String,parameters:Object=null)
 		{
 			addChild(oPopupManager);
-			oPopupManager.show(name);
+			oPopupManager.show(name,parameters);
 		}
 		/**
 		 * 

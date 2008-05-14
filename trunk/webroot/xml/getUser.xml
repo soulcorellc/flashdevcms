@@ -2,11 +2,12 @@
 <data>
 	<result>
 		<success>true</success>
-		<message>Usuario no valido</message>
 	</result>
 	<user>
-		<id>1</id>
-		<nombre>pedro perez</nombre>
+		<idUser>david9922</idUser>
+		<name></name>
+		<password></password>
+		<active></active>
+		<idProfile></idProfile>
 	</user>
-		
 </data>

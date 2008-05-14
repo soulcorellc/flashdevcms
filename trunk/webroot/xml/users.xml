@@ -3,6 +3,7 @@
 	<result>
 		<success>true</success>
 	</result>
+	
 	<user>
 		<id>1</id>
 		<name>David Barrios</name>
@@ -15,4 +16,18 @@
 		<id>3</id>
 		<name>Juan Martinez</name>
 	</user>
+	
+	<profile>
+		<id>1</id>
+		<name>profile1</name>
+	</profile>
+	<profile>
+		<id>2</id>
+		<name>profile2</name>
+	</profile>
+	<profile>
+		<id>3</id>
+		<name>profile3</name>
+	</profile>
+		
 </data>
