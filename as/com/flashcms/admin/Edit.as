@@ -15,7 +15,9 @@
 		public function Edit() {
 			
 		}
-		
+		/**
+		 * 
+		 */
 		public override function init()
 		{
 			switch(parameters.name)
@@ -25,17 +27,31 @@
 				break;
 			}
 		}
-		
+		/**
+		 * 
+		 * @param	event
+		 */
 		private function onXMLData(event:Event)
 		{
-			oXML=(XML(event.target.data));
+			oXML = (XML(event.target.data));
+			for each(var column:XML in oXML.user.children())
+			{
+				trace(column.name()+" = "+column.text()+ "type : "+column.@type);
+			}
+			
 		}
-		
+		/**
+		 * 
+		 * @param	event
+		 */
 		private function onErrorData(event:ErrorEvent)
 		{
 			trace("ok xml but error");
 		}
-		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onError(e:Event)
 		{
 			trace("error xml");

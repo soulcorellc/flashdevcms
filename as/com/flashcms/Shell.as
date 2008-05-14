@@ -155,12 +155,19 @@ public class Shell extends MovieClip {
 			oXMLLoader.remove();
 			showPopup("login");
 		}
-		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onDataError(e:ErrorEvent)
 		{
 			trace("DATAERROR : "+e.message);
 		}
-		
+		/**
+		 * 
+		 * @param	name
+		 * @param	parameters
+		 */
 		public function showPopup(name:String,parameters:Object=null)
 		{
 			addChild(oPopupManager);
@@ -213,7 +220,9 @@ public class Shell extends MovieClip {
 				trace("Shell Exception : " + err.message);
 			}
 		}
-		
+		/**
+		 * 
+		 */
 		private function removeMainSection()
 		{
 			try{
