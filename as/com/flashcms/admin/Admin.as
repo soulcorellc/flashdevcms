@@ -15,6 +15,9 @@
 	*/
 	public class Admin extends Module{
 		public var dgMain:DataGrid;
+		public var tableName:String = "user";
+		public var xmlData:XML;
+	
 		public function Admin() {
 			super("Admin");
 		}
@@ -33,7 +36,8 @@
 		 */
 		private function onXMLData(event:Event)
 		{
-			var myDP:DataProvider = new DataProvider(XML(event.target.data));
+			xmlData = XML(event.target.data);
+			var myDP:DataProvider = new DataProvider(<data>{xmlData[tableName]}</data>);
 			
 			var col1:DataGridColumn = new DataGridColumn("name");
 			col1.headerText = "Name";
@@ -57,7 +61,7 @@
 		}
 		private function onDataError(e:ErrorEvent)
 		{
-		trace("Admin Error : " + e.message);
+			trace("Admin Error : " + e.message);
 		}
 		/**
 		 * 
@@ -70,7 +74,7 @@
 			switch(event.columnIndex)
 			{
 				case 1:
-					oShell.showPopup("edit");
+					oShell.showPopup("edit",{name:tableName,data:xmlData});
 				break;
 				case 2:
 					trace("2 "+event.item.id);

@@ -14,10 +14,13 @@
 	*/
 	public class Module extends MovieClip {
 		private var _oShell;
-		public var sName:String;
-		public var sManager:StageManager;
 		private var oXML:XML; 
 		private var oLoader:URLLoader;
+		
+		public var sName:String;
+		public var sManager:StageManager;
+		public var parameters:Object;
+		
 		public function Module(name:String=null) {
 			
 			sName = name;

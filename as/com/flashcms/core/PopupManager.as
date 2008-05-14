@@ -37,6 +37,7 @@
 		private var oManager:StageManager;
 		private var oManagerCenter:StageManager;
 		private var nextevent:Event;
+		private var nextparameters:Object;
 		/**
 		 * 
 		 * @param	root
@@ -60,8 +61,6 @@
 			oMultiLoader.addEventListener(LoadEvent.LOAD_EVENT, onLoadWindow);
 			mcMask = new Sprite();
 			mcHolder = new MovieClip();
-			
-			
 			addChild(mcMask);
 			
 		}
@@ -153,6 +152,8 @@
 		private function loadModule(name:String,parameters:Object)
 		{
 			
+			nextparameters = parameters;
+			//trace("nextparameters : "+nextparameters.name);
 			oMultiLoader.add(xmlPopups.(sName == name).sURL);
 			oMultiLoader.start();
 		}
@@ -166,6 +167,7 @@
 			addChild(mcHolder);
 			oModule = Module(oEvent.loaderTarget.content);
 			oModule.oShell = oShell;
+			oModule.parameters = nextparameters;
 			mcHolder.addChild(oModule);
 			oModule.x-= oModule.width / 2
 			oModule.y-= oModule.height/ 2;
