@@ -32,6 +32,10 @@
 			oLoader.addEventListener(Event.COMPLETE, onComplete);
 			oLoader.addEventListener(IOErrorEvent.IO_ERROR, errorhandler);
 		}
+		/**
+		 * 
+		 * @param	event
+		 */
 		private function onComplete(event:Event)
 		{
 			oXML = XML(event.target.data);

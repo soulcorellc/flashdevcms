@@ -59,6 +59,10 @@
 			dgMain.addEventListener(ListEvent.ITEM_CLICK , onClickItem);
 			
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onDataError(e:ErrorEvent)
 		{
 			trace("Admin Error : " + e.message);
