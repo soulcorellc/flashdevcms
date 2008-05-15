@@ -1,8 +1,8 @@
 ﻿package com.flashcms.admin {
 	import com.flashcms.core.Module;
 	import com.flashcms.events.ErrorEvent;
+	import com.flashcms.layout.Layout;
 	import com.flashcms.utils.XMLLoader;
-	import fl.accessibility.UIComponentAccImpl;
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import com.flashcms.forms.ComponentFactory;
@@ -13,9 +13,10 @@
 	public class Edit extends Module{
 		var oXMLLoader:XMLLoader;
 		var oXML:XML;
+		var oLayout:Layout;
 		
 		public function Edit() {
-			
+			oLayout = new Layout(this,2, 40, 60);
 		}
 		/**
 		 * 
@@ -37,7 +38,6 @@
 		{
 			oXML = (XML(event.target.data));
 			createForm();
-			
 		}
 		/**
 		 * 
@@ -54,14 +54,11 @@
 		{
 			for each(var component:XML in oXML.user.children())
 			{
-				setComponent(ComponentFactory.getComponent(component.@type),component);
-				//trace(column.name()+" = "+column.text()+ "type : "+column.@type);
+				var obj = addChild(ComponentFactory.getComponent(component));
+				oLayout.addComponent(obj,component.name());
 			}
 		}
-		private function setComponent(component:DisplayObject,properties:XML)
-		{
-		component.x
-		}
+		
 		/**
 		 * 
 		 * @param	e

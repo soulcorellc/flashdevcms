@@ -9,26 +9,34 @@
 	* @author Default
 	*/
 	public class ComponentFactory {
-		
 		public function ComponentFactory() {
-			
+		
 		}
 		
-		public static function getComponent(type:String):DisplayObject
+		public static function getComponent(data:XML):DisplayObject
 		{
-			switch(type)
+			var component;
+			trace("type: "+data.@type );
+			switch(data.@type.toString())
 			{
 				case ComponentTypes.ComboBox:
-					return new ComboBox();
+					component = new ComboBox();
 				break;
 				case ComponentTypes.Textfield:
-					return new TextInput();
+					component = new TextInput();
+					component.text = data.text();
 				break;
 				case ComponentTypes.CheckBox:
-					return new CheckBox();
+					component = new CheckBox();
+					component.label = data.name();
+					trace("onckeck " + data.text());
+					component.selected = data.text() == "true"? true:false;
 				break;
 			}
+			return component;
 		}
+		
+		
 		
 	}
 	

@@ -6,7 +6,7 @@
 	<user>
 		<idUser type="textfield">david9922</idUser>
 		<name type="textfield">pedro perez</name>
-		<password type="textfield">abcdef</password>
+		<password type="textfield" password="true">abcdef</password>
 		<active type="checkbox">true</active>
 		<idProfile type="combobox" related="profiles">1</idProfile>
 	</user>

@@ -227,8 +227,8 @@ public class Shell extends MovieClip {
 		{
 			try{
 				oMain.sManager.remove();
-				removeChildAt(getChildIndex(oMain.sManager));
-				removeChildAt(getChildIndex(oMain));
+				removeChild(oMain.sManager);
+				removeChild(oMain);
 				stage.removeEventListener(Event.RESIZE, oMain.onResize);
 				oMain = null;
 			}
