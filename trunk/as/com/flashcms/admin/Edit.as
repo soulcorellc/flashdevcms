@@ -2,6 +2,8 @@
 	import com.flashcms.core.Module;
 	import com.flashcms.events.ErrorEvent;
 	import com.flashcms.utils.XMLLoader;
+	import fl.accessibility.UIComponentAccImpl;
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import com.flashcms.forms.ComponentFactory;
 	/**
@@ -34,10 +36,7 @@
 		private function onXMLData(event:Event)
 		{
 			oXML = (XML(event.target.data));
-			for each(var column:XML in oXML.user.children())
-			{
-				trace(column.name()+" = "+column.text()+ "type : "+column.@type);
-			}
+			createForm();
 			
 		}
 		/**
@@ -47,6 +46,21 @@
 		private function onErrorData(event:ErrorEvent)
 		{
 			trace("ok xml but error");
+		}
+		/**
+		 * 
+		 */
+		private function createForm()
+		{
+			for each(var component:XML in oXML.user.children())
+			{
+				setComponent(ComponentFactory.getComponent(component.@type),component);
+				//trace(column.name()+" = "+column.text()+ "type : "+column.@type);
+			}
+		}
+		private function setComponent(component:DisplayObject,properties:XML)
+		{
+		component.x
 		}
 		/**
 		 * 
