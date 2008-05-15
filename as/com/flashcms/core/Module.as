@@ -2,9 +2,6 @@
 	import com.flashcms.layout.StageManager;
 	import flash.display.MovieClip;
 	import flash.events.Event;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
-	import flash.system.ApplicationDomain;
 	import fl.transitions.Tween;
 	import fl.transitions.TweenEvent;
 	import fl.transitions.easing.*;
@@ -15,14 +12,13 @@
 	public class Module extends MovieClip {
 		private var _oShell;
 		private var oXML:XML; 
-		private var oLoader:URLLoader;
+		
 		
 		public var sName:String;
 		public var sManager:StageManager;
 		public var parameters:Object;
 		
 		public function Module(name:String=null) {
-			
 			sName = name;
 		}
 				
