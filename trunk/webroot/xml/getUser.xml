@@ -8,6 +8,6 @@
 		<name type="textfield">pedro perez</name>
 		<password type="textfield" password="true">abcdef</password>
 		<active type="checkbox">true</active>
-		<idProfile type="combobox" related="profiles">1</idProfile>
+		<idProfile type="combobox" provider="profile" label="name">1</idProfile>
 	</user>
 </data>
