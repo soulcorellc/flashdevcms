@@ -4,9 +4,7 @@
 	import com.flashcms.core.Module;
 	import com.flashcms.events.ErrorEvent;
 	import com.flashcms.layout.Layout;
-	import com.flashcms.utils.XMLLoader;
-	
-	
+	import com.flashcms.data.XMLLoader;
 	import com.flashcms.forms.ComponentFactory;
 	import com.flashcms.forms.ComponentData;
 	/**

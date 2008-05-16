@@ -7,7 +7,7 @@
 	import flash.text.TextField;
 	import com.flashcms.events.PopupEvent;
 	import flash.events.MouseEvent;
-	import com.flashcms.utils.XMLLoader;
+	import com.flashcms.data.XMLLoader;
 	/**
 	* ...
 	* @author David Barrios
@@ -36,8 +36,7 @@
 		 */
 		public function onEnter(e:Event)
 		{
-			oXMLLoader = new XMLLoader(oShell.getURL("main", "login"), onXMLData, onDataError,onError);
-			
+			oXMLLoader = new XMLLoader(oShell.getURL("main", "login"), onXMLData, onDataError,onError,{usuario:"david",password:"123456"});
 		}
 		private function onXMLData(event:Event)
 		{
