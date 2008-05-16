@@ -1,7 +1,7 @@
 ﻿package com.flashcms.admin {
 	import com.flashcms.core.Module;
 	import com.flashcms.events.ErrorEvent;
-	import com.flashcms.utils.XMLLoader;
+	import com.flashcms.data.XMLLoader;
 	import fl.controls.DataGrid;
 	import fl.events.ListEvent;
 	import fl.controls.dataGridClasses.DataGridColumn;

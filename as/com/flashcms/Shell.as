@@ -18,7 +18,7 @@ package com.flashcms {
 	import com.flashcms.layout.StageManager;
 	import com.flashcms.core.User;
 	import com.flashcms.events.LoginEvent;
-	import com.flashcms.utils.XMLLoader;
+	import com.flashcms.data.XMLLoader;
 		
 public class Shell extends MovieClip {
 		private var oXML:XML;
