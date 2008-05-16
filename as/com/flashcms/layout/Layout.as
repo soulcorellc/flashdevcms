@@ -1,5 +1,6 @@
 package com.flashcms.layout{
 	import fl.controls.Label;
+	import com.flashcms.forms.ComponentTypes;
 	import flash.display.Sprite;
 	
 	public class Layout{
@@ -33,10 +34,12 @@ package com.flashcms.layout{
 		 * 
 		 * @param	component
 		 */
-		public function addComponent(component,title:String)
+		public function addComponent(component,title:String,type:String)
 		{
+			
 			component.x = xmargin+(col*defaultwidth)+(xspacing*col);
 			component.y = ymargin + (yspacing * row);
+			if (requireLabel(type))
 			createLabel(title,component.x,component.y-20);
 			component.width = defaultwidth;
 			
@@ -63,6 +66,22 @@ package com.flashcms.layout{
 			oLabel.x = xpos;
 			oLabel.y = ypos;
 			controller.addChild(oLabel);
+		}
+		/**
+		 * 
+		 * @param	type
+		 */
+		private function requireLabel(type:String)
+		{
+			switch(type)
+			{
+				case ComponentTypes.CheckBox:
+					return false;
+				break;
+				default:
+					return true;
+				break;
+			}
 		}
 	}
 }

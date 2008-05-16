@@ -1,11 +1,14 @@
 ﻿package com.flashcms.admin {
+	import flash.events.Event;	
+	import flash.display.DisplayObject;
 	import com.flashcms.core.Module;
 	import com.flashcms.events.ErrorEvent;
 	import com.flashcms.layout.Layout;
 	import com.flashcms.utils.XMLLoader;
-	import flash.display.DisplayObject;
-	import flash.events.Event;
+	
+	
 	import com.flashcms.forms.ComponentFactory;
+	import com.flashcms.forms.ComponentData;
 	/**
 	* ...
 	* @author Default
@@ -16,7 +19,7 @@
 		var oLayout:Layout;
 		
 		public function Edit() {
-			oLayout = new Layout(this,2, 40, 60);
+			oLayout = new Layout(this,2, 50, 90);
 		}
 		/**
 		 * 
@@ -55,9 +58,14 @@
 			for each(var component:XML in oXML.user.children())
 			{
 				var obj = addChild(ComponentFactory.getComponent(component));
-				oLayout.addComponent(obj,component.name());
+				oLayout.addComponent(obj, component.name(), component.@type);
+				ComponentData.setData(obj, component,parameters.data);
 			}
+			
 		}
+		/**
+		 * 
+		 */
 		
 		/**
 		 * 
