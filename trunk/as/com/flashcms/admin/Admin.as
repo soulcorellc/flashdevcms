@@ -2,6 +2,7 @@
 	import com.flashcms.core.Module;
 	import com.flashcms.events.ErrorEvent;
 	import com.flashcms.data.XMLLoader;
+	import com.flashcms.events.PopupEvent;
 	import fl.controls.DataGrid;
 	import fl.events.ListEvent;
 	import fl.controls.dataGridClasses.DataGridColumn;
@@ -78,11 +79,24 @@
 			switch(event.columnIndex)
 			{
 				case 1:
-					oShell.showPopup("edit",{name:tableName,data:xmlData});
+					oShell.showPopup("edit",{name:tableName,data:xmlData},onEdit);
 				break;
 				case 2:
-					trace("2 "+event.item.id);
+					oShell.showPopup("confirmation",{message:"Do you want to delete this user?"},onConfirmation);
 				break;
+			}
+		}
+		
+		private function onEdit(e:PopupEvent)
+		{
+			trace("edit closed");
+		}
+		
+		private function onConfirmation(e:PopupEvent)
+		{
+			if (e.parameters.type == "yes")
+			{
+				trace("DELETING");
 			}
 		}
 		/**

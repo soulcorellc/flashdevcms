@@ -28,7 +28,6 @@
 		public override function init()
 		{
 			btEnter.addEventListener(MouseEvent.CLICK, onEnter);
-			
 		}
 		/**
 		 * 
@@ -40,7 +39,7 @@
 		}
 		private function onXMLData(event:Event)
 		{
-			dispatchEvent(new PopupEvent(PopupEvent.CLOSE));	
+			dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{sName:sUserName}));	
 		}
 		private function onDataError(event:ErrorEvent)
 		{

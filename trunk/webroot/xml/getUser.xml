@@ -4,10 +4,10 @@
 		<success>true</success>
 	</result>
 	<user>
-		<idUser type="textfield" required="true">david9922</idUser>
-		<name type="textfield" required="true">pedro perez</name>
-		<password type="textfield" password="true" required="true">abcdef</password>
-		<active type="checkbox" required="true">true</active>
-		<idProfile type="combobox" provider="profile" label="name" required="true">1</idProfile>
+		<idUser>david9922</idUser>
+		<name>pedro perez</name>
+		<password>abcdef</password>
+		<active>true</active>
+		<idProfile>1</idProfile>
 	</user>
 </data>

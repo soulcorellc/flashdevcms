@@ -103,7 +103,7 @@ public class Shell extends MovieClip {
 			xModules = oXML.modules;
 			xURLs = oXML.urls;
 			oPopupManager = new PopupManager( this, oXML.popups, stage);
-			oPopupManager.addEventListener(PopupEvent.CLOSE, onClose);
+			//oPopupManager.addEventListener(PopupEvent.CLOSE, onClose);
 			oXMLLoader.remove();
 			loadMain();
 		}
@@ -153,7 +153,7 @@ public class Shell extends MovieClip {
 			xMain = oXML.main;
 			sLogo = oXML.logo;
 			oXMLLoader.remove();
-			showPopup("login");
+			showPopup("login",null,onClose);
 		}
 		/**
 		 * 
@@ -168,10 +168,10 @@ public class Shell extends MovieClip {
 		 * @param	name
 		 * @param	parameters
 		 */
-		public function showPopup(name:String,parameters:Object=null)
+		public function showPopup(name:String,parameters:Object=null,callback:Function=null)
 		{
 			addChild(oPopupManager);
-			oPopupManager.show(name,parameters);
+			oPopupManager.show(name,parameters,callback);
 		}
 		/**
 		 * 
@@ -199,7 +199,7 @@ public class Shell extends MovieClip {
 					break;
 					case "Footer":
 						oFooter = Module(event.loaderTarget.content);
-						oFooter.sManager = new StageManager(oFooter, 0, 100, 0, 100, true)
+						oFooter.sManager = new StageManager(oFooter, 0, 100, 0, 100, false)
 						initModule(oFooter);
 					break;
 					case "User":

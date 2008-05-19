@@ -1,5 +1,6 @@
 ﻿package com.flashcms.core {
 	import com.flashcms.layout.StageManager;
+	import flash.display.LoaderInfo;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import fl.transitions.Tween;
@@ -17,6 +18,7 @@
 		public var sName:String;
 		public var sManager:StageManager;
 		public var parameters:Object;
+		public var oLoader:LoaderInfo;
 		
 		public function Module(name:String=null) {
 			sName = name;
@@ -49,6 +51,7 @@
 			//new Tween(this, "scaleY", Back.easeOut, .5, 1, .5, true);
 		
 		}
+
 	}
 	
 }
