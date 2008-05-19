@@ -49,7 +49,7 @@
 		 * @param	stageref
 		 */
 		public function PopupManager(shell:Shell , popups:XMLList, stageref:Stage) {
-			trace("popupmanager");
+			
 			oStage = stageref;
 			xmlPopups = popups;
 			oShell = shell;

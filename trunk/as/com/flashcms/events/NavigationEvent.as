@@ -8,12 +8,12 @@
 	public class NavigationEvent extends Event {
 		
 		public static const ON_NAVIGATION:String = "onNavigation";
-		public var oParameters:Object;
+		public var parameters:Object;
 		public var sModule:String;
 		public function NavigationEvent(module:String,parameters:Object=null) {
 			super(ON_NAVIGATION);
 			sModule = module;
-			oParameters = parameters;
+			this.parameters = parameters;
 		}
 		
 	}
