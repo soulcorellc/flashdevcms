@@ -9,19 +9,21 @@
 	import com.flashcms.forms.ComponentData;
 	import com.flashcms.components.ButtonBar;
 	import com.flashcms.events.PopupEvent;
+	import as.com.flashcms.forms.Validator;
 	/**
 	* ...
 	* @author Default
 	*/
 	public class Edit extends Module{
-		var oXMLLoader:XMLLoader;
-		var oXML:XML;
-		var oXMLSchema:XML;
-		var oLayout:Layout;
-		var oBar:ButtonBar;
+		private var oXMLLoader:XMLLoader;
+		private var oXML:XML;
+		private var oXMLSchema:XML;
+		private var oLayout:Layout;
+		private var oBar:ButtonBar;
+		
 		
 		public function Edit() {
-			oLayout = new Layout(this,2, 50, 90);
+			oLayout = new Layout(this,1, 50, 90);
 		}
 		/**
 		 * 
@@ -32,7 +34,7 @@
 			
 			oBar = new ButtonBar(send,close,"Save","Cancel");
 			oBar.x = 50;
-			oBar.y = 300;
+			oBar.y = 350;
 			addChild(oBar);
 		}
 		/**
@@ -85,7 +87,7 @@
 		
 		private function send(e:Event)
 		{
-			trace("send form");
+			
 		}
 		
 		private function close(e:Event)

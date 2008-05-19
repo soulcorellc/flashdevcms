@@ -6,6 +6,7 @@
 	import fl.transitions.Tween;
 	import fl.transitions.TweenEvent;
 	import fl.transitions.easing.*;
+	import flash.events.MouseEvent;
 	/**
 	* ...
 	* @author David Barrios
@@ -13,8 +14,6 @@
 	public class Module extends MovieClip {
 		private var _oShell;
 		private var oXML:XML; 
-		
-		
 		public var sName:String;
 		public var sManager:StageManager;
 		public var parameters:Object;
@@ -27,6 +26,7 @@
 		public function getURL(name:String, section:String = null):String
 		{
 			return oShell.getURL(name, section);
+			
 		}
 		
 		public function init()
