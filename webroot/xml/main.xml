@@ -11,8 +11,8 @@
 				<menuitem label="Home" id="home" />
 			</menu>
 			<menu label="Users And Groups">
-				<menuitem label="Manage Users" id="users"/>
-				<menuitem label="Manage Groups" id="groups"/>
+				<menuitem label="Manage Users" id="admin" type="users" />
+				<menuitem label="Manage Groups" id="admin" type="groups" />
 				<menuitem label="Assign Users to Groups" id="assign" />
 				<menuitem label="Assign Permissions to Groups" id="assignn" />
 			</menu>

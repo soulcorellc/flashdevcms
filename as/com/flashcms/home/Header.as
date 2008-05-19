@@ -23,7 +23,6 @@
 		public var oMenu:MenuBar;	
 		private var sMainURL:String;
 		private var oRequest:URLRequest;
-		private var oLoader:URLLoader;
 		private var oMultiLoader:MultiLoader;
 		public function Header() {
 			super("Header");
@@ -66,7 +65,7 @@
 		}
 		
 		private function onItemClick(event:MenuEvent):void{
-			dispatchEvent(new NavigationEvent(event.item.id,null));
+			dispatchEvent(new NavigationEvent(event.item.id,event.item));
 		}
 		
 		private function onLoadImage(event:LoadEvent)

@@ -3,11 +3,11 @@
 	<result>
 		<success>true</success>
 	</result>
-	<user>
+	<users>
 		<idUser>david9922</idUser>
 		<name>pedro perez</name>
 		<password>abcdef</password>
 		<active>true</active>
 		<idProfile>1</idProfile>
-	</user>
+	</users>
 </data>

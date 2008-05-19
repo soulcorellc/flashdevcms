@@ -28,12 +28,8 @@
 		 */
 		public override function init()
 		{
-			switch(parameters.name)
-			{
-				case "user":
-					new XMLLoader(oShell.getURL("schema", "users"), onXMLSchema, onErrorData, onError);
-				break;
-			}
+			new XMLLoader(oShell.getURL("schema", parameters.name), onXMLSchema, onErrorData, onError);
+			
 			oBar = new ButtonBar(send,close,"Save","Cancel");
 			oBar.x = 50;
 			oBar.y = 300;
@@ -46,12 +42,7 @@
 		private function onXMLSchema(event:Event)
 		{
 			oXMLSchema = XML(event.target.data);
-			switch(parameters.name)
-			{
-				case "user":
-					new XMLLoader(oShell.getURL("getUser", "users"), onXMLData, onErrorData, onError);
-				break;
-			}
+			new XMLLoader(oShell.getURL("getData", parameters.name), onXMLData, onErrorData, onError);
 		}
 		/**
 		 * 
@@ -75,11 +66,11 @@
 		 */
 		private function createForm()
 		{
-			for each(var component:XML in oXMLSchema.user.children())
+			for each(var component:XML in oXMLSchema[parameters.name].children())
 			{
 				var obj = addChild(ComponentFactory.getComponent(component));
 				oLayout.addComponent(obj, component.name(), component.@type);
-				ComponentData.setData(obj, component,XML(oXML.user[component.name()]),parameters.data);
+				ComponentData.setData(obj, component,XML(oXML[parameters.name][component.name()]),parameters.data);
 			}
 		}
 		

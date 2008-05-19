@@ -74,9 +74,7 @@
 		 */
 		private function onLoaded(event:Event)
 		{
-			trace("event.target :"+event.target);
 			aMovies.shift();
-			//loaderInfo = event.target as LoaderInfo;
 			
 			if (aMovies.length != 0)
 			{

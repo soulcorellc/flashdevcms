@@ -1,4 +1,4 @@
-package com.flashcms {
+﻿package com.flashcms {
 
 	import com.flashcms.events.ErrorEvent;
 	import flash.display.Loader;
@@ -34,6 +34,7 @@ public class Shell extends MovieClip {
 		private var oFooter:Module;
 		private var oMain:Module;
 		private var oUserModule:Module;
+		private var oParameters:Object;
 		public var xMenu:XMLList;
 		public var xMain:XMLList;
 		public var sLogo:String;
@@ -62,23 +63,22 @@ public class Shell extends MovieClip {
 		 */
 		public function onModuleChange(event:NavigationEvent)
 		{
-			trace("module changed " + event.sModule);
+			trace("Module " + event.sModule);
 			switch(event.sModule)
 			{
-			case "/":
-				loadModule("user");
-				loadModule("main"); 
-				loadModule("footer");
-				loadModule("header");
-			break;
-			case "/users":
-			case "/groups":
-				loadModule("admin");
-			break;
-			
-			default:
-				trace("loading: " + event.sModule + " parameters : " + event.oParameters);
-			break;
+				case "/":
+					loadModule("user");
+					loadModule("main"); 
+					loadModule("footer");
+					loadModule("header");
+				break;
+				case "/admin":
+					loadModule("admin",event.parameters);
+				break;
+				
+				default:
+					trace("loading: " + event.sModule + " parameters : " + event.parameters);
+				break;
 			}	
 			oModuleLoader.start();
 		}
@@ -86,11 +86,10 @@ public class Shell extends MovieClip {
 		 * Add a SWF file to multiloader
 		 * @param	name
 		 */
-		private function loadModule(name:String)
+		private function loadModule(name:String,parameters:Object=null)
 		{
-			trace("onloadmodule " + name);
+			oParameters = parameters;
 			var url = xModules.(sName == name).sURL;
-			trace("onloadmodule url " + url);
 			oModuleLoader.add(url);
 		}
 		/**
@@ -103,7 +102,6 @@ public class Shell extends MovieClip {
 			xModules = oXML.modules;
 			xURLs = oXML.urls;
 			oPopupManager = new PopupManager( this, oXML.popups, stage);
-			//oPopupManager.addEventListener(PopupEvent.CLOSE, onClose);
 			oXMLLoader.remove();
 			loadMain();
 		}
@@ -132,7 +130,7 @@ public class Shell extends MovieClip {
 		 */
 		public function setModule(event:NavigationEvent)
 		{
-			oNavigation.setURL(event.sModule, event.oParameters);
+			oNavigation.setURL(event.sModule, event.parameters);
 		}
 		/**
 		 * 
@@ -244,6 +242,7 @@ public class Shell extends MovieClip {
 		private function initModule(oModule:Module)
 		{
 			oModule.oShell = this;
+			oModule.parameters = oParameters;
 			addChild(oModule);
 			addChild(oModule.sManager);
 			oModule.init();

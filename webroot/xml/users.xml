@@ -4,18 +4,18 @@
 		<success>true</success>
 	</result>
 	
-	<user>
+	<users>
 		<id>1</id>
 		<name>David Barrios</name>
-	</user>
-	<user>
+	</users>
+	<users>
 		<id>2</id>
 		<name>Pedro Perez</name>
-	</user>
-	<user>
+	</users>
+	<users>
 		<id>3</id>
 		<name>Juan Martinez</name>
-	</user>
+	</users>
 	
 	<profile>
 		<id>1</id>

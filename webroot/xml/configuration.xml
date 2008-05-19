@@ -57,8 +57,15 @@
 		</home>
 		<users>
 			<main><![CDATA[../webroot/xml/users.xml]]></main>
-			<getUser><![CDATA[../webroot/xml/getUser.xml]]></getUser>
+			<getData><![CDATA[../webroot/xml/getUser.xml]]></getData>
 			<schema><![CDATA[../webroot/xml/getUserSchema.xml]]></schema>
 		</users>
+		
+		<groups>
+			<main><![CDATA[../webroot/xml/groups.xml]]></main>
+			<getData><![CDATA[../webroot/xml/getGroup.xml]]></getData>
+			<schema><![CDATA[../webroot/xml/getGroupSchema.xml]]></schema>
+		</groups>
+		
 	</urls>
 </configuration>

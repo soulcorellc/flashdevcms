@@ -15,16 +15,20 @@
 		}
 		public function onChange(event:SWFAddressEvent)
 		{
-			var module:String = SWFAddress.getValue() == ""? "/":SWFAddress.getValue();
-			var parameters:Object = new Object;
-			var oEvent = new NavigationEvent(module, parameters);
+			var module:String = SWFAddress.getValue() == ""? "/":SWFAddress.getPath();
+			var oparams:Object=new Object();
+			oparams.section = SWFAddress.getParameter("section");
+			var oEvent = new NavigationEvent(module, oparams);
 			dispatchEvent(oEvent);
 		}
 		
 		public function setURL(module:String, parameters:Object=null)
 		{
-			SWFAddress.setValue("/" + module);
-			SWFAddress.setTitle(":: "+module+" ::");
+			var sparams:String="section="+parameters.type;
+			
+			SWFAddress.setValue("/" + module+"?"+sparams);
+			SWFAddress.setTitle(":: " + module + " ::");
+			
 		}
 	}
 }

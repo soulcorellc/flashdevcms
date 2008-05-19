@@ -16,7 +16,7 @@
 	*/
 	public class Admin extends Module{
 		public var dgMain:DataGrid;
-		public var tableName:String = "user";
+		public var tableName:String;
 		public var xmlData:XML;
 	
 		public function Admin() {
@@ -27,7 +27,10 @@
 		 */
 		public override function init()
 		{
-			new XMLLoader(oShell.getURL("main", "users"), onXMLData,onDataError,onError);
+			tableName = parameters.section;
+			trace("tabla : " + tableName);
+			trace("URL : " + oShell.getURL("main", tableName));
+			new XMLLoader(oShell.getURL("main", tableName), onXMLData,onDataError,onError);
 		}
 		/**
 		 * 
