@@ -7,6 +7,7 @@
 		<idUser>david9922</idUser>
 		<name>pedro perez</name>
 		<password>abcdef</password>
+		<confirmpassword>abcdef</confirmpassword>
 		<active>true</active>
 		<idProfile>1</idProfile>
 	</users>
