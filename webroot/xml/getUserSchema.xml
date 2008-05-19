@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<result>
+		<success>true</success>
+	</result>
+	<user>
+		<idUser type="textfield" required="true"/>
+		<name type="textfield" required="true"/>
+		<password type="textfield" password="true" required="true"/>
+		<active type="checkbox" required="true"/>
+		<idProfile type="combobox" provider="profile" label="name" required="true"/>
+	</user>
+</data>

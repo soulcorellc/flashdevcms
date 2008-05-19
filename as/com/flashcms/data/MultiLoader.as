@@ -15,8 +15,10 @@
 		
 		private var oRequest:URLRequest;
 		private var aMovies:Array;
+		private var aLoaders:Array;
 		private var oLoader:Loader;
-				
+		private var oEvent:LoadEvent;
+		private var oError:LoadError;
 		public function MultiLoader()
 		{
 			aMovies = new Array();
@@ -25,6 +27,7 @@
 		public function add(url:String)
 		{
 			aMovies.push(url);
+			
 		}
 		
 		public function start()
@@ -40,47 +43,65 @@
 			oLoader = new Loader();
 			oLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
 			oLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoaded);
-			oLoader.contentLoaderInfo.addEventListener(Event.OPEN, onOpen);
-			
 			oRequest = new URLRequest(aMovies[0]);
 			oLoader.load(oRequest);
 			
 		}
-		
+		/**
+		 * 
+		 * @param	event
+		 */
 		private function onError(event:IOErrorEvent)
 		{
 			trace("error on :<" + aMovies[0]+">");
 			aMovies.shift();
-			dispatchEvent(new LoadError(event.text));
+			oError = new LoadError(event.text);
+			dispatchEvent(oError);
 			if (aMovies.length != 0)
 			{
 				loadNext();
 			}
 			else {
-				oLoader = null;
+				
+				dispose();
 			}
 			
 		}
-		private function onOpen(event:Event)
-		{
-			//trace("OPEN :" + event);
-		}
+		
+		/**
+		 * 
+		 * @param	event
+		 */
 		private function onLoaded(event:Event)
 		{
+			trace("event.target :"+event.target);
 			aMovies.shift();
-			var loaderInfo:LoaderInfo = event.target as LoaderInfo;
+			//loaderInfo = event.target as LoaderInfo;
+			
 			if (aMovies.length != 0)
 			{
-				dispatchEvent(new LoadEvent(false,loaderInfo));
+				oEvent = new LoadEvent(false, event.target);
+				dispatchEvent(oEvent);
 				loadNext();
 				
 			}
 			else
 			{
-				dispatchEvent(new LoadEvent(true, loaderInfo));
-				oLoader = null;
+				oEvent = new LoadEvent(true, event.target);
+				dispatchEvent(oEvent);
+				dispose();
 			}
+
 			
+		}
+		/**
+		 * 
+		 */
+		private function dispose()
+		{
+			oLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onError);
+			oLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoaded);	
+			oEvent = null;
 		}
 		
 	}

@@ -24,12 +24,10 @@
 				break;
 				case ComponentTypes.Textfield:
 					component = new TextInput();
-					component.text = data.text();
+					
 				break;
 				case ComponentTypes.CheckBox:
 					component = new CheckBox();
-					component.label = data.name();
-					component.selected = data.text() == "true"? true:false;
 				break;
 			}
 			return component;

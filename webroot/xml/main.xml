@@ -11,10 +11,10 @@
 				<menuitem label="Home" id="home" />
 			</menu>
 			<menu label="Users And Groups">
-				<menuitem label="Manage Users" id="users" />
+				<menuitem label="Manage Users" id="users"/>
 				<menuitem label="Manage Groups" id="groups"/>
-				<menuitem label="Assign Users to Groups"/>
-				<menuitem label="Assign Permissions to Groups"/>
+				<menuitem label="Assign Users to Groups" id="assign" />
+				<menuitem label="Assign Permissions to Groups" id="assignn" />
 			</menu>
 			
 			<menu label="Content">
@@ -22,7 +22,7 @@
 				<menuitem label="Edit"/>
 			</menu>
 			<menu label="Layout">
-				<menuitem label="Create" id="50" />
+				<menuitem label="Create" id="50"/>
 			</menu>
 			
 			<menu label="Administration">

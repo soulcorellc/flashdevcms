@@ -40,6 +40,10 @@
 		<sURL><![CDATA[swf/popups/edit.swf]]></sURL>
 	</popups>
 
+	<popups>
+		<sName>confirmation</sName>
+		<sURL><![CDATA[swf/popups/confirmation.swf]]></sURL>
+	</popups>
 	
 	<urls>
 		<login>
@@ -54,6 +58,7 @@
 		<users>
 			<main><![CDATA[../webroot/xml/users.xml]]></main>
 			<getUser><![CDATA[../webroot/xml/getUser.xml]]></getUser>
+			<schema><![CDATA[../webroot/xml/getUserSchema.xml]]></schema>
 		</users>
 	</urls>
 </configuration>

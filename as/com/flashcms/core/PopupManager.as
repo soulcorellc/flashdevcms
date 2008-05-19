@@ -1,6 +1,7 @@
 ﻿package com.flashcms.core {
 	
 	import com.flashcms.data.MultiLoader;
+	import flash.display.LoaderInfo;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -32,12 +33,14 @@
 		private var xmlPopups:XMLList;
 		private var oShell:Shell;
 		private var oTweenOut:Tween;
+		private var oTween:Tween;
 		private var oMultiLoader:MultiLoader;
 		private var oModule:Module;
 		private var oManager:StageManager;
 		private var oManagerCenter:StageManager;
 		private var nextevent:Event;
 		private var nextparameters:Object;
+		private var callback:Function;
 		/**
 		 * 
 		 * @param	root
@@ -99,11 +102,11 @@
 			oManager.remove();
 			oManagerCenter.remove();
 			removeChild(mcHolder);
+			mcHolder.removeChild(oModule);
 			removeChild(oManagerCenter);
 			removeChild(oManager);
-			
+			oManager = null;
 			oShell.removeChild(this);
-			
 			executeEvent();
 			
 		}
@@ -112,14 +115,7 @@
 		 */
 		private function executeEvent()
 		{
-			switch(nextevent.target.sName)
-			{
-				case "Login":
-					dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{sName:nextevent.target.sUserName}));
-				break;
-				default:
-				break;
-			}
+			callback.call(this, nextevent);
 		}
 		/**
 		 * 
@@ -133,9 +129,10 @@
 		 * @param	name
 		 * @param	parameters
 		 */
-		public function show(name:String,parameters:Object=null)
+		public function show(name:String,parameters:Object=null,callback:Function=null)
 		{
 			try {
+				this.callback = callback;
 				createMask();
 				loadModule(name,parameters);
 			}
@@ -167,11 +164,11 @@
 			addChild(mcHolder);
 			oModule = Module(oEvent.loaderTarget.content);
 			oModule.oShell = oShell;
+			oModule.oLoader = oEvent.loaderTarget as LoaderInfo;
 			oModule.parameters = nextparameters;
 			mcHolder.addChild(oModule);
 			oModule.x-= oModule.width / 2
 			oModule.y-= oModule.height/ 2;
-			oModule.init();
 			oModule.addEventListener(PopupEvent.CLOSE, onWindowEvent);
 			showWindow(mcHolder);
 		}
@@ -181,8 +178,13 @@
 		 */
 		private function showWindow(mcClip:Sprite)
 		{
-			var oTween:Tween = new Tween(mcClip, "scaleX", Back.easeOut, .5, 1, 0.5, true);
+			oTween = new Tween(mcClip, "scaleX", Back.easeOut, .5, 1, 0.5, true);
+			oTween.addEventListener(TweenEvent.MOTION_FINISH, onModuleDisplayed);
 			new Tween(mcClip, "scaleY", Back.easeOut, .5, 1, .5, true);
+		}
+		private function onModuleDisplayed(event:TweenEvent)
+		{
+			oModule.init();
 		}
 		/**
 		 * 
