@@ -13,17 +13,18 @@
 	public class UserPanel extends Module {
 		
 		private var oXMLLoader:XMLLoader;
-		
+		private var oXMLForm:XML;
 		public function UserPanel() {
 			super("User");
 		}
 		public override function init()
 		{
-			oXMLLoader = new XMLLoader(oShell.getURL("getData", "groups"),onXMLData);
+			oXMLLoader = new XMLLoader(oShell.getURL("main", "groups"),onXMLData);
 		}
 		
 		private function onXMLData(e:Event)
 		{
+			oXMLForm = XML(e.target.data);
 			txtUser.text = "Welcome, " + oShell.oUser.sName;
 			btProfile.addEventListener(MouseEvent.CLICK, onProfile);
 			btPassword.addEventListener(MouseEvent.CLICK, onPassword);
@@ -31,20 +32,19 @@
 		}
 		private function onProfile(e:Event)
 		{
-			
-			oShell.showPopup("edit",{name:"users"},onEdit);
+			oShell.showPopup("edit",{name:"users",data:oXMLForm},onEdit);
 		}
 		private function onEdit(e:PopupEvent)
 		{
-		
+			
 		}
 		private function onPassword(e:Event)
 		{
-			//oShell.showPopup("edit",{name:"users"},onEdit);
+			oShell.showPopup("edit",{name:"password"},onEdit);
 		}
 		private function onLogout(e:Event)
 		{
-			//oShell.showPopup("edit",{name:"users"},onEdit);
+			oShell.logout();
 		}
 		
 	}

@@ -28,8 +28,6 @@
 		public override function init()
 		{
 			tableName = parameters.section;
-			trace("tabla : " + tableName);
-			trace("URL : " + oShell.getURL("main", tableName));
 			new XMLLoader(oShell.getURL("main", tableName), onXMLData,onDataError,onError);
 		}
 		/**

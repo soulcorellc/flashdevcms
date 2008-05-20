@@ -9,7 +9,7 @@
 	import com.flashcms.forms.ComponentData;
 	import com.flashcms.components.ButtonBar;
 	import com.flashcms.events.PopupEvent;
-	import as.com.flashcms.forms.Validator;
+	import com.flashcms.forms.Validator;
 	/**
 	* ...
 	* @author Default
@@ -68,11 +68,13 @@
 		 */
 		private function createForm()
 		{
+			
 			for each(var component:XML in oXMLSchema[parameters.name].children())
 			{
+				trace("adding component: " + component.@type);
 				var obj = addChild(ComponentFactory.getComponent(component));
 				oLayout.addComponent(obj, component.name(), component.@type);
-				ComponentData.setData(obj, component,XML(oXML[parameters.name][component.name()]),parameters.data);
+				ComponentData.setData(obj, component, XML(oXML[parameters.name][component.name()]) ,parameters.data);
 			}
 		}
 		

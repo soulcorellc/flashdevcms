@@ -67,5 +67,10 @@
 			<schema><![CDATA[../webroot/xml/getGroupSchema.xml]]></schema>
 		</groups>
 		
+		<password>
+			<schema><![CDATA[../webroot/xml/getPasswordSchema.xml]]></schema>
+			<getData><![CDATA[../webroot/xml/getPassword.xml]]></getData>
+		</password>
+		
 	</urls>
 </configuration>

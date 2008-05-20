@@ -17,17 +17,17 @@
 		<name>Juan Martinez</name>
 	</users>
 	
-	<profile>
+	<groups>
 		<id>1</id>
 		<name>profile1</name>
-	</profile>
-	<profile>
+	</groups>
+	<groups>
 		<id>2</id>
 		<name>profile2</name>
-	</profile>
-	<profile>
+	</groups>
+	<groups>
 		<id>3</id>
 		<name>profile3</name>
-	</profile>
+	</groups>
 		
 </data>

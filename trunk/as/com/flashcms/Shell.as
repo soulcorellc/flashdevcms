@@ -111,12 +111,19 @@ public class Shell extends MovieClip {
 		 */
 		private function onClose(e:PopupEvent)
 		{
-			try{
+			try {
 				oUser.sName = e.parameters.sName;
 				oUser.bLogged = true;
 				//start navigation
-				oNavigation = new Navigation(this);
-				oNavigation.addEventListener(NavigationEvent.ON_NAVIGATION, onModuleChange);
+				if (oNavigation == null) {
+					oNavigation = new Navigation(this);
+					oNavigation.addEventListener(NavigationEvent.ON_NAVIGATION, onModuleChange);
+				}
+				else
+				{
+					onModuleChange(new NavigationEvent("/"));
+					oNavigation.reset();
+				}
 			}
 			catch (e:Error)
 			{
@@ -206,7 +213,7 @@ public class Shell extends MovieClip {
 						initModule(oUserModule);
 					break;
 					default:
-						removeMainSection();
+						removeSection(oMain);
 						oMain = Module(event.loaderTarget.content);
 						oMain.sManager = new StageManager(oMain, 25, 20, 0, 0, true);
 						initModule(oMain);
@@ -221,18 +228,18 @@ public class Shell extends MovieClip {
 		/**
 		 * 
 		 */
-		private function removeMainSection()
+		private function removeSection(oSection:Module)
 		{
 			try{
-				oMain.sManager.remove();
-				removeChild(oMain.sManager);
-				removeChild(oMain);
-				stage.removeEventListener(Event.RESIZE, oMain.onResize);
-				oMain = null;
+				oSection.sManager.remove();
+				removeChild(oSection.sManager);
+				removeChild(oSection);
+				stage.removeEventListener(Event.RESIZE, oSection.onResize);
+				oSection= null;
 			}
 			catch (e:Error)
 			{
-				//trace("Error unloading!!!!!!!!!! ");
+				trace("Error removing "+oSection);
 			}
 		}
 		/**
@@ -252,9 +259,23 @@ public class Shell extends MovieClip {
 		/**
 		 * 
 		 */
+		public function logout()
+		{
+			oUser.bLogged = false;
+			oUser.sName = "";
+			removeSection(oMain);
+			removeSection(oFooter);
+			removeSection(oUserModule);
+			removeSection(oHeader);
+			showPopup("login", null, onClose);
+			
+		}
+		/**
+		 * 
+		 */
 		private function unloadModule()
 		{
-		
+			
 		}
 		/**
 		 * 
