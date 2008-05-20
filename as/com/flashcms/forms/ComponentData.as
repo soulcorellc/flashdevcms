@@ -13,6 +13,8 @@
 			switch(schema.@type.toString())
 			{
 				case ComponentTypes.ComboBox:
+					trace(":::DATA COMBO");
+					trace(formdata);
 					var myDP:DataProvider = new DataProvider(<data>{formdata[schema.@provider]}</data>);	
 					component.dataProvider = myDP;
 					component.labelField = schema.@label;

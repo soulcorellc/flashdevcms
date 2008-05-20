@@ -46,6 +46,10 @@
 				
 			oLoader = new URLLoader(oRequest);
 			oLoader.addEventListener(Event.COMPLETE, onComplete);
+			if (errorhandler == null)
+			{
+				errorhandler = onError;
+			}
 			oLoader.addEventListener(IOErrorEvent.IO_ERROR, errorhandler);
 		}
 		/**
@@ -74,6 +78,11 @@
 			oLoader.removeEventListener(IOErrorEvent.IO_ERROR, errorhandler);
 			this.errorhandler = null;
 			this.handler = null;
+		}
+		
+		private function onError(event:IOErrorEvent)
+		{
+			trace("XMLERROR :"+event.text);
 		}
 		
 	}

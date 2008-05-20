@@ -25,10 +25,14 @@
 		public function setURL(module:String, parameters:Object=null)
 		{
 			var sparams:String="section="+parameters.type;
-			
 			SWFAddress.setValue("/" + module+"?"+sparams);
 			SWFAddress.setTitle(":: " + module + " ::");
-			
+		}
+		
+		public function reset()
+		{
+			//SWFAddress.removeEventListener(SWFAddressEvent.CHANGE, onChange);
+			SWFAddress.setValue("");
 		}
 	}
 }
