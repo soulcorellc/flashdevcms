@@ -24,6 +24,7 @@
 				break;
 				case ComponentTypes.Textfield:
 					component = new TextInput();
+					component.displayAsPassword = data.@password == "true"? true : false;
 					
 				break;
 				case ComponentTypes.CheckBox:

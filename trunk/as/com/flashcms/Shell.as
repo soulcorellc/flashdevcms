@@ -75,7 +75,9 @@ public class Shell extends MovieClip {
 				case "/admin":
 					loadModule("admin",event.parameters);
 				break;
-				
+				case "/sections":
+					loadModule("sections");
+				break;
 				default:
 					trace("loading: " + event.sModule + " parameters : " + event.parameters);
 				break;

@@ -13,8 +13,6 @@
 			switch(schema.@type.toString())
 			{
 				case ComponentTypes.ComboBox:
-					trace(":::DATA COMBO");
-					trace(formdata);
 					var myDP:DataProvider = new DataProvider(<data>{formdata[schema.@provider]}</data>);	
 					component.dataProvider = myDP;
 					component.labelField = schema.@label;
@@ -22,7 +20,6 @@
 				break;
 				case ComponentTypes.Textfield:
 					component.text = data.text();
-					component.displayAsPassword = schema.@password == "true"? true : false;
 				break;
 				case ComponentTypes.CheckBox:
 					component.label = data.name();
