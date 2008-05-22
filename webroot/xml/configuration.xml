@@ -30,6 +30,11 @@
 		<sURL><![CDATA[swf/admin/admin.swf]]></sURL>
 	</modules>
 	
+	<modules>
+		<id>6</id>
+		<sName>sections</sName>
+		<sURL><![CDATA[swf/admin/sections.swf]]></sURL>
+	</modules>
 	<popups>
 		<sName>login</sName>
 		<sURL><![CDATA[swf/login/login.swf]]></sURL>
@@ -50,26 +55,25 @@
 			<main><![CDATA[../webroot/xml/login.xml]]></main>
 		</login>
 		<language>
-			<main></main>
+			<main><![CDATA[]]></main>
 		</language>
 		<home>
 			<main><![CDATA[../webroot/xml/main.xml]]></main>
 		</home>
 		<users>
 			<main><![CDATA[../webroot/xml/users.xml]]></main>
-			<getData><![CDATA[../webroot/xml/getUser.xml]]></getData>
-			<schema><![CDATA[../webroot/xml/getUserSchema.xml]]></schema>
+			<data><![CDATA[../webroot/xml/getUser.xml]]></data>
+			<schema><![CDATA[../webroot/xml/forms/users.xml]]></schema>
 		</users>
 		
 		<groups>
 			<main><![CDATA[../webroot/xml/groups.xml]]></main>
-			<getData><![CDATA[../webroot/xml/getGroup.xml]]></getData>
-			<schema><![CDATA[../webroot/xml/getGroupSchema.xml]]></schema>
+			<data><![CDATA[../webroot/xml/getGroup.xml]]></data>
+			<schema><![CDATA[../webroot/xml/forms/groups.xml]]></schema>
 		</groups>
 		
 		<password>
-			<schema><![CDATA[../webroot/xml/getPasswordSchema.xml]]></schema>
-			<getData><![CDATA[../webroot/xml/getPassword.xml]]></getData>
+			<schema><![CDATA[../webroot/xml/forms/password.xml]]></schema>
 		</password>
 		
 	</urls>

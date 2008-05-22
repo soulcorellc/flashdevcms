@@ -16,8 +16,9 @@
 			</menu>
 			
 			<menu label="Content">
-				<menuitem label="Create"/>
-				<menuitem label="Edit"/>
+				<menuitem label="Manage Sections" id="sections"/>
+				<menuitem label="Create Content"/>
+				<menuitem label="Edit Content"/>
 			</menu>
 			<menu label="Layout">
 				<menuitem label="Create" id="50"/>
@@ -32,7 +33,7 @@
 			<menu label="View Site">
 				<menuitem label="Create"/>
 			</menu>
-		</menus>
+	</menus>
 	
 	<main>
 		<icon></icon>

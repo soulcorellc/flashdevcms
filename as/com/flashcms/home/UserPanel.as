@@ -6,6 +6,7 @@
 	import flash.text.TextField;
 	import flash.events.MouseEvent;
 	import flash.display.SimpleButton;
+	import com.flashcms.forms.FormData;
 	/**
 	* ...
 	* @author Default
@@ -14,14 +15,21 @@
 		
 		private var oXMLLoader:XMLLoader;
 		private var oXMLForm:XML;
+		private var oForm:FormData;
 		public function UserPanel() {
 			super("User");
 		}
+		/**
+		 * 
+		 */
 		public override function init()
 		{
 			oXMLLoader = new XMLLoader(oShell.getURL("main", "groups"),onXMLData);
 		}
-		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onXMLData(e:Event)
 		{
 			oXMLForm = XML(e.target.data);
@@ -30,18 +38,37 @@
 			btPassword.addEventListener(MouseEvent.CLICK, onPassword);
 			btLogout.addEventListener(MouseEvent.CLICK, onLogout);
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onProfile(e:Event)
 		{
-			oShell.showPopup("edit",{name:"users",data:oXMLForm},onEdit);
+			oForm = new FormData("users", "users", true,oXMLForm);
+			oShell.showPopup("edit",oForm,onEdit);
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onEdit(e:PopupEvent)
 		{
 			
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onPassword(e:Event)
 		{
-			oShell.showPopup("edit",{name:"password"},onEdit);
+			
+			oForm = new FormData("password", "password");
+			oShell.showPopup("edit",oForm,onEdit);
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onLogout(e:Event)
 		{
 			oShell.logout();

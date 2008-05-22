@@ -10,6 +10,7 @@
 	import flash.events.IOErrorEvent;
 	import fl.data.DataProvider;
 	import com.flashcms.cellrender.ButtonRenderer;
+	import com.flashcms.forms.FormData;
 	/**
 	* ...
 	* @author Default
@@ -18,6 +19,7 @@
 		public var dgMain:DataGrid;
 		public var tableName:String;
 		public var xmlData:XML;
+		private var oFormData:FormData;
 	
 		public function Admin() {
 			super("Admin");
@@ -80,7 +82,8 @@
 			switch(event.columnIndex)
 			{
 				case 1:
-					oShell.showPopup("edit",{name:tableName,data:xmlData},onEdit);
+					oFormData = new FormData(tableName, tableName, true, xmlData);
+					oShell.showPopup("edit",oFormData,onEdit);
 				break;
 				case 2:
 					oShell.showPopup("confirmation",{message:"Do you want to delete this user?"},onConfirmation);
