@@ -1,4 +1,5 @@
-﻿package com.flashcms.admin {
+﻿package com.flashcms.popups {
+	import com.flashcms.forms.FormData;
 	import flash.events.Event;	
 	import flash.display.DisplayObject;
 	import com.flashcms.core.Module;
@@ -20,8 +21,11 @@
 		private var oXMLSchema:XML;
 		private var oLayout:Layout;
 		private var oBar:ButtonBar;
+		private var oForm:FormData;
 		
-		
+		/**
+		 * 
+		 */
 		public function Edit() {
 			oLayout = new Layout(this,1, 50, 90);
 		}
@@ -30,7 +34,9 @@
 		 */
 		public override function init()
 		{
-			new XMLLoader(oShell.getURL("schema", parameters.name), onXMLSchema, onErrorData, onError);
+			oForm = new FormData(parameters.table, parameters.section, parameters.requiredata, parameters.data);
+			var urlschema:String = oShell.getURL("schema", oForm.section);
+			new XMLLoader(urlschema, onXMLSchema, onErrorData, onError);
 			
 			oBar = new ButtonBar(send,close,"Save","Cancel");
 			oBar.x = 50;
@@ -44,7 +50,15 @@
 		private function onXMLSchema(event:Event)
 		{
 			oXMLSchema = XML(event.target.data);
-			new XMLLoader(oShell.getURL("getData", parameters.name), onXMLData, onErrorData, onError);
+			if (oForm.requiredata)
+			{
+				var urldata = oShell.getURL("data", oForm.section);
+				new XMLLoader(urldata, onXMLData, onErrorData, onError);
+			}
+			else
+			{
+				createForm();
+			}
 		}
 		/**
 		 * 
@@ -69,12 +83,13 @@
 		private function createForm()
 		{
 			
-			for each(var component:XML in oXMLSchema[parameters.name].children())
+			for each(var component:XML in oXMLSchema[oForm.table].children())
 			{
-				trace("adding component: " + component.@type);
 				var obj = addChild(ComponentFactory.getComponent(component));
 				oLayout.addComponent(obj, component.name(), component.@type);
-				ComponentData.setData(obj, component, XML(oXML[parameters.name][component.name()]) ,parameters.data);
+				if(oForm.requiredata){
+					ComponentData.setData(obj, component, XML(oXML[oForm.table][component.name()]) , oForm.data);
+				}
 			}
 		}
 		
@@ -86,12 +101,18 @@
 		{
 			trace("error xml");
 		}
-		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function send(e:Event)
 		{
 			
 		}
-		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function close(e:Event)
 		{
 			dispatchEvent(new PopupEvent(PopupEvent.CLOSE));
