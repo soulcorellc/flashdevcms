@@ -75,6 +75,8 @@
 		<password>
 			<schema><![CDATA[../webroot/xml/forms/password.xml]]></schema>
 		</password>
-		
+		<sections>
+			<main><![CDATA[../webroot/xml/sections.xml]]></main>
+		</sections>
 	</urls>
 </configuration>

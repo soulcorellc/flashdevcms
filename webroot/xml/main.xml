@@ -10,16 +10,16 @@
 			<menu label="Main">
 				<menuitem label="Home" id="" />
 			</menu>
+			<menu label="Content">
+				<menuitem label="Sections" id="sections"/>
+				<menuitem label="Files Manager" id="files"/>
+			</menu>
+					
 			<menu label="Users And Groups">
 				<menuitem label="Manage Users" id="admin" type="users" />
 				<menuitem label="Manage Groups" id="admin" type="groups" />
 			</menu>
 			
-			<menu label="Content">
-				<menuitem label="Manage Sections" id="sections"/>
-				<menuitem label="Create Content"/>
-				<menuitem label="Edit Content"/>
-			</menu>
 			<menu label="Layout">
 				<menuitem label="Create" id="50"/>
 			</menu>
