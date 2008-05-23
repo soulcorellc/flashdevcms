@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<result>
+		<success>true</success>
+	</result>
+	
+	<templates>
+		<id>1</id>
+		<name>Template 1</name>
+	</templates>
+	<templates>
+		<id>2</id>
+		<name>Template 2</name>
+	</templates>
+	<templates>
+		<id>3</id>
+		<name>Template 3</name>
+	</templates>
+</data>
