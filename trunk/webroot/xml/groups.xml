@@ -16,5 +16,8 @@
 		<id>3</id>
 		<name>Reader</name>
 	</groups>
-		
+			
+	<parameters>
+		<editpopup>edit</editpopup>
+	</parameters>
 </data>

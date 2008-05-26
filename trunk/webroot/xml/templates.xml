@@ -16,4 +16,9 @@
 		<id>3</id>
 		<name>Template 3</name>
 	</templates>
+	
+		
+	<parameters>
+		<editpopup>templates</editpopup>
+	</parameters>
 </data>
