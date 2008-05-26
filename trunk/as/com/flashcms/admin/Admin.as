@@ -3,24 +3,32 @@
 	import com.flashcms.events.ErrorEvent;
 	import com.flashcms.data.XMLLoader;
 	import com.flashcms.events.PopupEvent;
-	import fl.controls.DataGrid;
-	import fl.events.ListEvent;
-	import fl.controls.dataGridClasses.DataGridColumn;
-	import flash.events.Event;
-	import flash.events.IOErrorEvent;
-	import fl.data.DataProvider;
 	import com.flashcms.cellrender.ButtonRenderer;
 	import com.flashcms.forms.FormData;
+	import fl.controls.Button;
+	import fl.controls.DataGrid;
+	import fl.events.ListEvent;
+	import fl.data.DataProvider;
+	import fl.controls.dataGridClasses.DataGridColumn;
+	import flash.events.MouseEvent;
+	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	
 	/**
 	* ...
 	* @author Default
 	*/
 	public class Admin extends Module{
 		public var dgMain:DataGrid;
+		public var btCreate:Button;
+		private var oFormData:FormData;
 		public var tableName:String;
 		public var xmlData:XML;
-		private var oFormData:FormData;
-	
+		private var editpopup:String;
+		
+		/**
+		 * 
+		 */
 		public function Admin() {
 			super("Admin");
 		}
@@ -30,7 +38,9 @@
 		public override function init()
 		{
 			tableName = parameters.section;
-			new XMLLoader(oShell.getURL("main", tableName), onXMLData,onDataError,onError);
+			new XMLLoader(oShell.getURL("main", tableName), onXMLData, onDataError, onError);
+			btCreate.label = "Create New";
+			btCreate.addEventListener(MouseEvent.CLICK, onCreate);
 		}
 		/**
 		 * 
@@ -41,6 +51,7 @@
 		private function onXMLData(event:Event)
 		{
 			xmlData = XML(event.target.data);
+			editpopup = xmlData.parameters.editpopup;
 			var myDP:DataProvider = new DataProvider(<data>{xmlData[tableName]}</data>);
 			
 			var col1:DataGridColumn = new DataGridColumn("name");
@@ -61,6 +72,7 @@
 			
 			dgMain.dataProvider = myDP;
 			dgMain.addEventListener(ListEvent.ITEM_CLICK , onClickItem);
+			
 			
 		}
 		/**
@@ -83,14 +95,30 @@
 			{
 				case 1:
 					oFormData = new FormData(tableName, tableName, true, xmlData);
-					oShell.showPopup("edit",oFormData,onEdit);
+					oShell.showPopup(editpopup, oFormData, onEdit);
+					
 				break;
 				case 2:
 					oShell.showPopup("confirmation",{message:"Do you want to delete this user?"},onConfirmation);
 				break;
 			}
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function onCreate(e:Event)
+		{
+			
+			oFormData = new FormData(tableName, tableName, false,xmlData);
+			oShell.showPopup(editpopup, oFormData, onEdit);
+			
+		}
 		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onEdit(e:PopupEvent)
 		{
 			trace("edit closed");

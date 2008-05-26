@@ -44,7 +44,7 @@
 			treeSections.addEventListener(ListEvent.ITEM_CLICK,onClick);
 			treeSections.dataProvider = new TreeDataProvider(XML(oXML.section));
 			treeSections.openAllNodes();
-			cbTemplates.dataProvider = new DataProvider(<data>{oXML.templates }</data>);
+			cbTemplates.dataProvider = new DataProvider(<data>{oXML.templates}</data>);
 			cbTemplates.labelField = "name";
 			cbTemplates.prompt = "Template of Selected Content";
 			btCreate.addEventListener(MouseEvent.CLICK, onCreate);

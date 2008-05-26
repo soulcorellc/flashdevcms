@@ -99,7 +99,7 @@
 		 */
 		private function onError(e:Event)
 		{
-			trace("error xml");
+			trace("error loading xml file");
 		}
 		/**
 		 * 
