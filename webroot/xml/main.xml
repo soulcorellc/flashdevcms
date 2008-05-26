@@ -14,18 +14,21 @@
 				<menuitem label="Sections" id="sections"/>
 				<menuitem label="Files Manager" id="files"/>
 			</menu>
-					
+			
+			<menu label="Layout">
+				<menuitem label="Templates" id="admin" type="templates"/>
+				<menuitem label="Menus" id="50"/>
+				<menuitem label="Site Layout" id="50"/>
+			</menu>
+						
 			<menu label="Users And Groups">
 				<menuitem label="Manage Users" id="admin" type="users" />
 				<menuitem label="Manage Groups" id="admin" type="groups" />
 			</menu>
 			
-			<menu label="Layout">
-				<menuitem label="Create" id="50"/>
-			</menu>
 			
 			<menu label="Administration">
-				<menuitem label="Create"/>
+				<menuitem label="Options"/>
 			</menu>
 			<menu label="Preferences">
 				<menuitem label="Create"/>

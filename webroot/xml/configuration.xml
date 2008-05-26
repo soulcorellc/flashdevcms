@@ -50,6 +50,11 @@
 		<sURL><![CDATA[swf/popups/confirmation.swf]]></sURL>
 	</popups>
 	
+	<popups>
+		<sName>templates</sName>
+		<sURL><![CDATA[swf/admin/templates.swf]]></sURL>
+	</popups>
+	
 	<urls>
 		<login>
 			<main><![CDATA[../webroot/xml/login.xml]]></main>
@@ -75,8 +80,14 @@
 		<password>
 			<schema><![CDATA[../webroot/xml/forms/password.xml]]></schema>
 		</password>
+		
 		<sections>
 			<main><![CDATA[../webroot/xml/sections.xml]]></main>
 		</sections>
+		
+		<templates>
+			<main><![CDATA[../webroot/xml/templates.xml]]></main>
+		</templates>
+
 	</urls>
 </configuration>
