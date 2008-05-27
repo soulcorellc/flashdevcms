@@ -34,6 +34,7 @@
 		private var oShell:Shell;
 		private var oTweenOut:Tween;
 		private var oTween:Tween;
+		private var oTweenY:Tween;
 		private var oMultiLoader:MultiLoader;
 		private var oModule:Module;
 		private var oManager:StageManager;
@@ -180,7 +181,7 @@
 		{
 			oTween = new Tween(mcClip, "scaleX", Back.easeOut, .5, 1, 0.5, true);
 			oTween.addEventListener(TweenEvent.MOTION_FINISH, onModuleDisplayed);
-			new Tween(mcClip, "scaleY", Back.easeOut, .5, 1, .5, true);
+			oTweenY=new Tween(mcClip, "scaleY", Back.easeOut, .5, 1, .5, true);
 		}
 		private function onModuleDisplayed(event:TweenEvent)
 		{
@@ -194,7 +195,7 @@
 		{
 			oTweenOut = new Tween(mcClip, "scaleX", Regular.easeIn, 1, 0, 0.3, true);
 			oTweenOut.addEventListener(TweenEvent.MOTION_FINISH, onCloseModule);
-			new Tween(mcClip, "scaleY", Regular.easeIn, 1, 0, .3, true);
+			oTweenY=new Tween(mcClip, "scaleY", Regular.easeIn, 1, 0, .3, true);
 		}
 		/**
 		 * 
