@@ -5,13 +5,14 @@
 	import flash.ui.Mouse;
 	import flash.utils.getDefinitionByName;
 	import flash.events.MouseEvent;
-	
+	import flash.events.Event;
 	/**
 	* ...
 	* @author Default
 	*/
 	public class Holder extends Sprite{
-		private var type:String;
+		public var id:int;
+		public var type:String;
 		public var txtName:TextField;
 		private var mcResize:Sprite;
 		private var mcBackground:Sprite; 
@@ -19,9 +20,6 @@
 		public function Holder(type:String) {
 			
 			mcGuide = new Sprite();
-			
-			
-			
 			mcBackground = new Sprite();
 			drawBG(100, 100);
 			addChild(mcBackground);
@@ -81,8 +79,14 @@
 		}
 		private function onResize(e:MouseEvent)
 		{
+			mcGuide.graphics.clear();
+			mcGuide.graphics.lineStyle(0, 0x000000, 0.3);
+			mcGuide.graphics.beginFill(0x000000, 0);
+			mcGuide.graphics.drawRect( 0, 0, mcResize.x, mcResize.y);
+			mcGuide.graphics.endFill();
+		
 			mcResize.startDrag();
-			mcResize.addEventListener(MouseEvent.MOUSE_MOVE, updateResize);
+			mcResize.addEventListener(Event.ENTER_FRAME, updateResize);
 			mcResize.removeEventListener(MouseEvent.MOUSE_DOWN, onResize);
 			mcResize.addEventListener(MouseEvent.MOUSE_UP, onStopResize);
 		}
@@ -93,17 +97,15 @@
 			mcResize.stopDrag();
 			mcResize.removeEventListener(MouseEvent.MOUSE_UP, onStopResize);
 			mcResize.addEventListener(MouseEvent.MOUSE_DOWN, onResize);
-			mcResize.removeEventListener(MouseEvent.MOUSE_MOVE, updateResize);
+			mcResize.removeEventListener(Event.ENTER_FRAME, updateResize);
+			dispatchEvent(new Event("Resize"));
 		}
-		private function updateResize(e:MouseEvent)
+		private function updateResize(e:Event)
 		{
+			mcGuide.width = mcResize.x;
+			mcGuide.height = mcResize.y;
 			
-			mcGuide.graphics.clear();
-			mcGuide.graphics.lineStyle(1, 0x000000, 1);
-			mcGuide.graphics.beginFill(0x000000, 0);
-			mcGuide.graphics.drawRect( 0, 0, mcResize.x, mcResize.y);
-			mcGuide.graphics.endFill();
-			e.updateAfterEvent();
+			
 		}
 		
 		
