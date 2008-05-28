@@ -11,6 +11,9 @@
 	import com.flashcms.components.Holder;
 	import fl.containers.ScrollPane;
 	import fl.controls.Button;
+	import flash.events.KeyboardEvent;
+	import flash.ui.Keyboard;
+
 	
 	/**
 	* ...
@@ -22,7 +25,8 @@
 		public var selectionPanel:VBoxPane;
 		private var icon:Holder;
 		private var mcLayout:Sprite;
-		private var id:int=0;
+		private var id:int = 0;
+		private var selected:Holder;
 		public var xmlData:XML =
 		<data>
 			<components>
@@ -37,7 +41,6 @@
 				<type>Video</type>
 				<icon>IconVideo</icon>
 			</components>
-			
 		</data>;
 		
 		public var xmlTemplate:XML = <template/>;
@@ -58,7 +61,6 @@
 			mcLayout.graphics.drawRect(10, 10, 612, 523);
 			mcLayout.graphics.endFill();
 			scPanel.source=mcLayout;
-			//addChild(mcLayout);
 			selectionPanel.setStyle( "skin", "ToolbarSkin" ); 
 			cpPanel.setStyle( "skin", "ToolbarSkin" ); 
 			cpPanel.horizontalAlign = HorizontalAlignment.CENTER;
@@ -68,7 +70,6 @@
 			for each(var component:XML in xmlData.components)
 			{
 				var oButton:Button = new Button();
-				//oButton.label = component.type;
 				oButton.useHandCursor = true;
 				oButton.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
 				oButton.width = 32;
@@ -78,6 +79,7 @@
 				oButton.setStyle("icon", component.icon);
 				cpPanel.addChild(oButton);
 			}
+			stage.addEventListener(KeyboardEvent.KEY_DOWN,onDelete)
 		}
 		/**
 		 * 
@@ -91,6 +93,7 @@
 			icon.alpha = 0.5;
 			addChild(icon);
 			icon.addEventListener(MouseEvent.MOUSE_UP, onStopDrag);
+			icon.addEventListener("Select", onSelect);
 			icon.startDrag();
 		}
 		/**
@@ -120,14 +123,19 @@
 		 */
 		private function onHolderResize(e:Event)
 		{
-			updateXML(e.target.id);
+			updateXML(e.target);
 		}
 		/**
 		 * 
 		 */
-		private function updateXML(id:int)
+		private function updateXML(target)
 		{
-			trace("search "+id+" : "+xmlTemplate.component.(@id==0));
+			var node = xmlTemplate.component.(@id == target.id);
+			node.@x = target.x;
+			node.@y = target.y;
+			node.@width = target.width;
+			node.@height = target.height;
+			trace(xmlTemplate);
 		}
 		/**
 		 * 
@@ -135,8 +143,19 @@
 		private function insertXML()
 		{
 			xmlTemplate.component += <component id = { icon.id } type = { icon.type } x={icon.x} y={icon.y} width={icon.width} height={icon.height} />
-			trace(xmlTemplate);
+			
 		}
+		/**
+		 * 
+		 */
+		private function removeXML()
+		{
+			var node:XMLList = xmlTemplate.component.(@id == selected.id);
+			delete node[0];
+		}
+		/**
+		 * 
+		 */
 		private function insertHolder()
 		{
 			var point = new Point(icon.x, icon.y);
@@ -152,6 +171,38 @@
 		}
 		/**
 		 * 
+		 * @param	e
+		 */
+		private function onSelect(e:Event)
+		{
+			selected = e.target as Holder;
+		}
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function onDelete(e:KeyboardEvent)
+		{
+			switch (e.keyCode) {
+				case Keyboard.DELETE:
+				deleteComponent();
+				break;
+			}
+		}
+		/**
+		 * 
+		 */
+		private function deleteComponent()
+		{
+			if(selected != null)
+			{
+				removeXML();
+				mcLayout.removeChild(selected);
+				selected = null;
+			}
+		}
+		/**
+		 * 
 		 */
 		private function updateLayout()
 		{
@@ -161,6 +212,7 @@
 			mcLayout.graphics.endFill();
 			
 		}
+		
 	}
 	
 }

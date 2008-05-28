@@ -41,8 +41,6 @@
 			mcBackground.graphics.lineStyle(1, 0xCCCCCC, 1);
 			mcBackground.graphics.drawRect( 0, 0, newwidth, newheight);
 			mcBackground.graphics.endFill();
-			
-			
 		}
 		public function setDragable()
 		{
@@ -51,6 +49,7 @@
 		
 		private function onTake(e:MouseEvent)
 		{
+			dispatchEvent(new Event("Select"));
 			this.startDrag();
 			mcBackground.removeEventListener(MouseEvent.MOUSE_DOWN, onTake);
 			mcBackground.addEventListener(MouseEvent.MOUSE_UP, onClick);
@@ -60,6 +59,7 @@
 			this.stopDrag();
 			mcBackground.removeEventListener(MouseEvent.MOUSE_UP, onClick);
 			setDragable();
+			dispatchEvent(new Event("Resize"));
 		}
 		private function createResize()
 		{
