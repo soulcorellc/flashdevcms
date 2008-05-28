@@ -22,6 +22,7 @@
 		public var selectionPanel:VBoxPane;
 		private var icon:Holder;
 		private var mcLayout:Sprite;
+		private var id:int=0;
 		public var xmlData:XML =
 		<data>
 			<components>
@@ -39,10 +40,8 @@
 			
 		</data>;
 		
-		public var xmlTemplate:XML =
-		<template>
-			<component type="Text" x="50" y="50" width="100" height="100"/>
-		</template>
+		public var xmlTemplate:XML = <template/>;
+		
 		/**
 		 * 
 		 */
@@ -101,27 +100,56 @@
 		private function onStopDrag(e:MouseEvent)
 		{
 			icon.stopDrag();
+			icon.addEventListener("Resize", onHolderResize);
 			icon.alpha = 1;
 			icon.removeEventListener(MouseEvent.MOUSE_UP, onStopDrag);
 			if (icon.dropTarget.parent.parent== scPanel)
 			{
-				var point = new Point(icon.x, icon.y);
-				var point2 = this.localToGlobal(point);
-				mcLayout.globalToLocal(point2);
-				icon.x = mcLayout.globalToLocal(point2).x;
-				icon.y=scPanel.globalToLocal(point2).y;
-				mcLayout.addChild(icon);
-				scPanel.update();
-				icon.setDragable();
+				insertHolder();
+				insertXML();
 			}
 			else 
 			{
 				removeChild(icon);
 				icon = null;
 			}
-			
 		}
-
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function onHolderResize(e:Event)
+		{
+			updateXML(e.target.id);
+		}
+		/**
+		 * 
+		 */
+		private function updateXML(id:int)
+		{
+			trace("search "+id+" : "+xmlTemplate.component.(@id==0));
+		}
+		/**
+		 * 
+		 */
+		private function insertXML()
+		{
+			xmlTemplate.component += <component id = { icon.id } type = { icon.type } x={icon.x} y={icon.y} width={icon.width} height={icon.height} />
+			trace(xmlTemplate);
+		}
+		private function insertHolder()
+		{
+			var point = new Point(icon.x, icon.y);
+			var point2 = this.localToGlobal(point);
+			mcLayout.globalToLocal(point2);
+			icon.id = id;
+			icon.x = mcLayout.globalToLocal(point2).x;
+			icon.y=scPanel.globalToLocal(point2).y;
+			mcLayout.addChild(icon);
+			scPanel.update();
+			icon.setDragable();
+			id++;
+		}
 		/**
 		 * 
 		 */
