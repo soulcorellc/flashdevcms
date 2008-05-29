@@ -1,5 +1,7 @@
 ﻿package com.flashcms.admin {
 	
+	import com.yahoo.astra.fl.controls.TabBar;
+	import fl.controls.TextArea;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -20,14 +22,18 @@
 	* @author Default
 	*/
 	public class Templates extends Module{
+		public var oTabBar:TabBar;
 		public var scPanel:ScrollPane;
-		public var cpPanel:VBoxPane;
-		public var selectionPanel:VBoxPane;
+		public var componentsPanel:VBoxPane;
+		public var toolsPanel:VBoxPane;
 		private var icon:Holder;
 		private var mcLayout:Sprite;
+		private var mcXML:Sprite;
 		private var id:int = 0;
 		private var selected:Holder;
-		public var xmlData:XML =
+		private var currentState:int = 0;
+		private var txtXML:TextArea;
+		public var xmlComponents:XML =
 		<data>
 			<components>
 				<type>Text</type>
@@ -42,7 +48,13 @@
 				<icon>IconVideo</icon>
 			</components>
 		</data>;
-		
+		public var xmlTools:XML =
+		<data>
+			<tools>
+				<type>Save</type>
+				<icon>IconSave</icon>
+			</tools>
+		</data>
 		public var xmlTemplate:XML = <template/>;
 		
 		/**
@@ -56,30 +68,75 @@
 		 */
 		public override function init()
 		{
+			oTabBar.addEventListener(Event.CHANGE, onTabChange);
 			mcLayout = new Sprite();
+			mcXML= new Sprite();
 			mcLayout.graphics.beginFill(0xFFFFFF, 0.3);
 			mcLayout.graphics.drawRect(10, 10, 612, 523);
 			mcLayout.graphics.endFill();
-			scPanel.source=mcLayout;
-			selectionPanel.setStyle( "skin", "ToolbarSkin" ); 
-			cpPanel.setStyle( "skin", "ToolbarSkin" ); 
-			cpPanel.horizontalAlign = HorizontalAlignment.CENTER;
-			cpPanel.verticalAlign = VerticalAlignment.MIDDLE;
-			cpPanel.verticalGap = 10;
-			cpPanel.horizontalGap = 10;
-			for each(var component:XML in xmlData.components)
+			scPanel.source = mcLayout;
+			txtXML = new TextArea();
+			txtXML.width = 600;
+			txtXML.height = 400;
+			txtXML.x = 20;
+			txtXML.y = 20;
+			mcXML.addChild(txtXML);
+			toolsPanel.setStyle( "skin", "ToolbarSkin" ); 
+			setToolBar(xmlComponents.components,componentsPanel,onStartDrag);
+			setToolBar(xmlTools.tools,toolsPanel,onToolsChange);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN,onDelete)
+		}
+		private function setToolBar(data:XMLList,toolbar:VBoxPane,callback:Function)
+		{
+			for each(var component:XML in data)
 			{
 				var oButton:Button = new Button();
 				oButton.useHandCursor = true;
-				oButton.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
+				oButton.addEventListener(MouseEvent.MOUSE_DOWN, callback);
 				oButton.width = 32;
 				oButton.label = "";
 				oButton.name = component.type;
 				oButton.setStyle("upSkin", Shape);
 				oButton.setStyle("icon", component.icon);
-				cpPanel.addChild(oButton);
+				toolbar.addChild(oButton);
 			}
-			stage.addEventListener(KeyboardEvent.KEY_DOWN,onDelete)
+			toolbar.setStyle( "skin", "ToolbarSkin" ); 
+			toolbar.horizontalAlign = HorizontalAlignment.CENTER;
+			toolbar.verticalAlign = VerticalAlignment.MIDDLE;
+			toolbar.verticalGap = 10;
+			toolbar.horizontalGap = 10;
+			
+		}
+		private function onToolsChange(e:MouseEvent)
+		{
+			trace("ok");
+		}
+		private function onTabChange(event:Event)
+		{
+			var index:int = (event.currentTarget as TabBar).selectedIndex;  
+			
+			currentState = index;
+			switch(index)
+			{
+			case 0:
+				showEditor();
+			break;
+			case 1:
+				showXML();
+			break;
+			}
+			
+		}
+		private function showEditor()
+		{
+			trace("showEditor");
+			scPanel.source = mcLayout;
+		}
+		private function showXML()
+		{
+			trace("showXML");
+			txtXML.text = xmlTemplate;
+			scPanel.source = mcXML;
 		}
 		/**
 		 * 
@@ -142,8 +199,7 @@
 		 */
 		private function insertXML()
 		{
-			xmlTemplate.component += <component id = { icon.id } type = { icon.type } x={icon.x} y={icon.y} width={icon.width} height={icon.height} />
-			
+			xmlTemplate.component += <component id = { icon.id } type = { icon.type } x = { icon.x } y = { icon.y } width = { icon.width } height = { icon.height } /> 
 		}
 		/**
 		 * 
