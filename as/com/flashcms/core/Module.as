@@ -51,6 +51,9 @@
 			//new Tween(this, "scaleY", Back.easeOut, .5, 1, .5, true);
 		
 		}
+		public function setData(data:String)
+		{
+		}
 
 	}
 	

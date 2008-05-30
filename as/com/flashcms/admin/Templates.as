@@ -1,5 +1,7 @@
 ﻿package com.flashcms.admin {
 	
+	import com.flashcms.data.XMLLoader;
+	import com.flashcms.events.ErrorEvent;
 	import com.yahoo.astra.fl.controls.TabBar;
 	import fl.controls.TextArea;
 	import flash.display.Shape;
@@ -76,8 +78,8 @@
 			mcLayout.graphics.endFill();
 			scPanel.source = mcLayout;
 			txtXML = new TextArea();
-			txtXML.width = 600;
-			txtXML.height = 400;
+			txtXML.width = scPanel.width - 40;
+			txtXML.height = scPanel.height - 40;
 			txtXML.x = 20;
 			txtXML.y = 20;
 			mcXML.addChild(txtXML);
@@ -109,7 +111,27 @@
 		}
 		private function onToolsChange(e:MouseEvent)
 		{
-			trace("ok");
+			switch(e.target.name)
+			{
+				case "Save":
+				var url = oShell.getURL("save", "templates");
+				var variables = new Object();
+				variables.xml = xmlTemplate;
+				new XMLLoader(url, onSave, onDataError, onError, variables);
+				break;
+			}
+		}
+		private function onSave(e:Event)
+		{
+			trace("saved");
+		}
+		private function onDataError(e:ErrorEvent)
+		{
+			oShell.setStatusMessage(e.message);
+		}
+		private function onError(e:Event)
+		{
+			trace("error");
 		}
 		private function onTabChange(event:Event)
 		{

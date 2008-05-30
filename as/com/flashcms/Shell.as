@@ -19,6 +19,7 @@
 	import com.flashcms.core.User;
 	import com.flashcms.events.LoginEvent;
 	import com.flashcms.data.XMLLoader;
+	
 		
 public class Shell extends MovieClip {
 		private var oXML:XML;
@@ -275,6 +276,10 @@ public class Shell extends MovieClip {
 			removeSection(oHeader);
 			showPopup("login", null, onClose);
 			
+		}
+		public function setStatusMessage(message:String)
+		{
+			oFooter.setData(message);
 		}
 		/**
 		 * 

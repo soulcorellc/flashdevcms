@@ -92,6 +92,7 @@
 		
 		<templates>
 			<main><![CDATA[../webroot/xml/templates.xml]]></main>
+			<save><![CDATA[../webroot/xml/savetemplate.xml]]></save>
 		</templates>
 
 	</urls>
