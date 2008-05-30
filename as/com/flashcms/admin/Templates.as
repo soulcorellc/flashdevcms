@@ -72,7 +72,7 @@
 			mcLayout = new Sprite();
 			mcXML= new Sprite();
 			mcLayout.graphics.beginFill(0xFFFFFF, 0.3);
-			mcLayout.graphics.drawRect(10, 10, 612, 523);
+			mcLayout.graphics.drawRect(10, 10, scPanel.width-20,scPanel.height-20);
 			mcLayout.graphics.endFill();
 			scPanel.source = mcLayout;
 			txtXML = new TextArea();

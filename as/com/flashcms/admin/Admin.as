@@ -2,6 +2,7 @@
 	import com.flashcms.core.Module;
 	import com.flashcms.events.ErrorEvent;
 	import com.flashcms.data.XMLLoader;
+	import com.flashcms.events.NavigationEvent;
 	import com.flashcms.events.PopupEvent;
 	import com.flashcms.cellrender.ButtonRenderer;
 	import com.flashcms.forms.FormData;
@@ -95,8 +96,13 @@
 			{
 				case 1:
 					oFormData = new FormData(tableName, tableName, true, xmlData);
-					oShell.showPopup(editpopup, oFormData, onEdit);
-					
+					if(editpopup != "templates"){
+						oShell.showPopup(editpopup, oFormData, onEdit);
+					}
+					else
+					{
+						oShell.setModule(new NavigationEvent("templates", { } ));
+					}
 				break;
 				case 2:
 					oShell.showPopup("confirmation",{message:"Do you want to delete this user?"},onConfirmation);
@@ -110,9 +116,7 @@
 		private function onCreate(e:Event)
 		{
 			
-			oFormData = new FormData(tableName, tableName, false,xmlData);
-			oShell.showPopup(editpopup, oFormData, onEdit);
-			
+			oShell.setModule(new NavigationEvent("templates", { } ));
 		}
 		
 		/**

@@ -11,6 +11,11 @@
 	import flash.net.URLRequest;
 	import flash.events.IOErrorEvent;
 	import flash.events.Event;
+	import flash.display.SimpleButton;
+	import flash.text.TextField;
+	import com.flashcms.events.PopupEvent;
+	import com.flashcms.forms.FormData;
+	import flash.events.MouseEvent;
 	
 	/**
 	* ...
@@ -24,6 +29,7 @@
 		private var sMainURL:String;
 		private var oRequest:URLRequest;
 		private var oMultiLoader:MultiLoader;
+		private var oForm:FormData;
 		public function Header() {
 			super("Header");
 			
@@ -43,6 +49,14 @@
 			oMultiLoader.add(oShell.sLogo);
 			oMultiLoader.start();
 			draw();
+			initUser();
+		}
+		private function initUser()
+		{
+			txtUser.text = "Welcome, " + oShell.oUser.sName;
+			btProfile.addEventListener(MouseEvent.CLICK, onProfile);
+			btPassword.addEventListener(MouseEvent.CLICK, onPassword);
+			btLogout.addEventListener(MouseEvent.CLICK, onLogout);
 		}
 		/**
 		 * Called when stage is resized
@@ -76,6 +90,27 @@
 		function ioErrorHandler(event:IOErrorEvent)
 		{
 			trace("ioErrorHandler: " + event.text);
+		}
+		
+		//USER
+		private function onProfile(e:Event)
+		{
+			oForm = new FormData("users", "users");
+			oShell.showPopup("edit",oForm,onEdit);
+		}
+		private function onPassword(e:Event)
+		{
+			
+			oForm = new FormData("password", "password");
+			oShell.showPopup("edit",oForm,onEdit);
+		}
+		private function onLogout(e:Event)
+		{
+			oShell.logout();
+		}
+		private function onEdit(e:PopupEvent)
+		{
+			
 		}
 	}
 	

@@ -29,12 +29,17 @@
 		<sName>admin</sName>
 		<sURL><![CDATA[swf/admin/admin.swf]]></sURL>
 	</modules>
-	
 	<modules>
 		<id>6</id>
 		<sName>sections</sName>
 		<sURL><![CDATA[swf/admin/sections.swf]]></sURL>
 	</modules>
+	<modules>
+		<id>7</id>
+		<sName>templates</sName>
+		<sURL><![CDATA[swf/admin/templates.swf]]></sURL>
+	</modules>
+	
 	<popups>
 		<sName>login</sName>
 		<sURL><![CDATA[swf/login/login.swf]]></sURL>

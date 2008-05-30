@@ -33,12 +33,12 @@ public class Shell extends MovieClip {
 		private var oHeader:Module;
 		private var oFooter:Module;
 		private var oMain:Module;
-		private var oUserModule:Module;
 		private var oParameters:Object;
 		public var xMenu:XMLList;
 		public var xMain:XMLList;
 		public var sLogo:String;
 		public var oUser:User;
+		private var mainindex:int=-1;
 		public function Shell(){
 			super();
 			init();
@@ -67,7 +67,6 @@ public class Shell extends MovieClip {
 			switch(event.sModule)
 			{
 				case "/":
-					loadModule("user");
 					loadModule("main"); 
 					loadModule("footer");
 					loadModule("header");
@@ -77,6 +76,9 @@ public class Shell extends MovieClip {
 				break;
 				case "/sections":
 					loadModule("sections");
+				break;
+				case "/templates":
+					loadModule("templates");
 				break;
 				default:
 					trace("loading: " + event.sModule + " parameters : " + event.parameters);
@@ -209,16 +211,11 @@ public class Shell extends MovieClip {
 						oFooter.sManager = new StageManager(oFooter, 0, 100, 0, 100, false)
 						initModule(oFooter);
 					break;
-					case "User":
-						oUserModule = Module(event.loaderTarget.content);
-						oUserModule.sManager=new StageManager(oUserModule, 0, 20, 0, 0, true)
-						initModule(oUserModule);
-					break;
 					default:
 						removeSection(oMain);
 						oMain = Module(event.loaderTarget.content);
-						oMain.sManager = new StageManager(oMain, 25, 20, 0, 0, true);
-						initModule(oMain);
+						oMain.sManager = new StageManager(oMain, 2, 15, 0, 0, true);
+						initModule(oMain,mainindex);
 					break;
 				}
 			}
@@ -234,6 +231,7 @@ public class Shell extends MovieClip {
 		{
 			try{
 				oSection.sManager.remove();
+				mainindex = this.getChildIndex(oSection);
 				removeChild(oSection.sManager);
 				removeChild(oSection);
 				stage.removeEventListener(Event.RESIZE, oSection.onResize);
@@ -248,11 +246,17 @@ public class Shell extends MovieClip {
 		 * 
 		 * @param	oModule
 		 */
-		private function initModule(oModule:Module)
+		private function initModule(oModule:Module,mainindex:int=-1)
 		{
 			oModule.oShell = this;
 			oModule.parameters = oParameters;
-			addChild(oModule);
+			if (mainindex != -1)
+			{
+				addChildAt(oModule, mainindex);
+			}
+			else {
+				addChild(oModule);
+			}
 			addChild(oModule.sManager);
 			oModule.init();
 			oModule.show();
@@ -267,7 +271,7 @@ public class Shell extends MovieClip {
 			oUser.sName = "";
 			removeSection(oMain);
 			removeSection(oFooter);
-			removeSection(oUserModule);
+			
 			removeSection(oHeader);
 			showPopup("login", null, onClose);
 			
