@@ -96,12 +96,12 @@
 			{
 				case 1:
 					oFormData = new FormData(tableName, tableName, true, xmlData);
-					if(editpopup != "templates"){
-						oShell.showPopup(editpopup, oFormData, onEdit);
+					if(editpopup == "templates"){
+						oShell.setModule(new NavigationEvent("templates", { } ));
 					}
 					else
 					{
-						oShell.setModule(new NavigationEvent("templates", { } ));
+						oShell.showPopup(editpopup, oFormData, onEdit);
 					}
 				break;
 				case 2:
@@ -115,8 +115,15 @@
 		 */
 		private function onCreate(e:Event)
 		{
-			
-			oShell.setModule(new NavigationEvent("templates", { } ));
+			if(editpopup == "templates")
+			{
+				oShell.setModule(new NavigationEvent("templates", {} ));
+			}
+			else 
+			{
+				oFormData = new FormData(tableName, tableName, true, xmlData);
+				oShell.showPopup(editpopup, oFormData, onEdit);
+			}
 		}
 		
 		/**

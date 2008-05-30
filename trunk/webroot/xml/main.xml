@@ -33,8 +33,8 @@
 			<menu label="Preferences">
 				<menuitem label="Create"/>
 			</menu>
-			<menu label="View Site">
-				<menuitem label="Create"/>
+			<menu label="Site">
+				<menuitem label="View Site"/>
 			</menu>
 	</menus>
 	
