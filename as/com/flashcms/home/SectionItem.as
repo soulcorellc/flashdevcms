@@ -7,15 +7,17 @@
 	*/
 	public class SectionItem extends Sprite{
 		
+		private var mcBackground:Sprite;
 		public function SectionItem(xSection:XML){
-			trace(xSection.title);
+			
 			draw();
 		}
 		private function draw()
 		{
-			this.graphics.lineStyle(1, 0x000000);
-			this.graphics.drawRect(0, 0, 500, 60);
-			this.graphics.endFill();
+			mcBackground = new Sprite();
+			mcBackground.graphics.lineStyle(1, 0x000000);
+			mcBackground.graphics.drawRect(0, 0, 500, 60);
+			mcBackground.graphics.endFill();
 		}
 		
 	}

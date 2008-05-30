@@ -81,6 +81,9 @@ public class Shell extends MovieClip {
 				case "/templates":
 					loadModule("templates");
 				break;
+				case "/files":
+					loadModule("files");
+				break;
 				default:
 					trace("loading: " + event.sModule + " parameters : " + event.parameters);
 				break;

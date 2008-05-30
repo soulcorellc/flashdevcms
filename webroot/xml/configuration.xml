@@ -40,6 +40,12 @@
 		<sURL><![CDATA[swf/admin/templates.swf]]></sURL>
 	</modules>
 	
+	<modules>
+		<id>8</id>
+		<sName>files</sName>
+		<sURL><![CDATA[swf/sections/files.swf]]></sURL>
+	</modules>
+	
 	<popups>
 		<sName>login</sName>
 		<sURL><![CDATA[swf/login/login.swf]]></sURL>
@@ -61,6 +67,9 @@
 	</popups>
 	
 	<urls>
+		<core>
+			<upload><![CDATA[../webroot/xml/upload.xml]]></upload>
+		</core>
 		<login>
 			<main><![CDATA[../webroot/xml/login.xml]]></main>
 		</login>
