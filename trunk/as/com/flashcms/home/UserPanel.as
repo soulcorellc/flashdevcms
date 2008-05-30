@@ -44,7 +44,8 @@
 		 */
 		private function onProfile(e:Event)
 		{
-			oForm = new FormData("users", "users", true,oXMLForm);
+			//oForm = new FormData("users", "users", true,oXMLForm);
+			oForm = new FormData("users", "users");
 			oShell.showPopup("edit",oForm,onEdit);
 		}
 		/**
