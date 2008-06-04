@@ -1,27 +1,42 @@
 ﻿package com.flashcms.sections {
 	import com.flashcms.core.Module;
+	import fl.controls.List;
+	import flash.net.FileFilter;
 	import flash.net.FileReferenceList;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLRequest;
 	import flash.net.FileReference;
+	import fl.controls.Button;
+	import flash.events.MouseEvent;
 	/**
 	* ...
 	* @author Default
 	*/
 	public class Files extends Module{
-		var fileRefList:FileReferenceList = new FileReferenceList();  
+		public var btUpload:Button;
+		public var listFiles:List;
+		private var fileRefList:FileReferenceList = new FileReferenceList();  
+		private var aFileTypes:Array=new Array();
 		public function Files() {
-			init();
+			
 		}
 		/**
 		 * 
 		 */
 		public override function init()
 		{
+			trace("init on files");
+			aFileTypes.push(new FileFilter("Images", "*.jpg;*.gif;*.png"));
+			aFileTypes.push(new FileFilter("Videos", "*.flv"));
 			fileRefList.addEventListener(Event.SELECT, selectHandler); 
 			fileRefList.addEventListener(IOErrorEvent.IO_ERROR, onError); 
-			//fileRefList.browse();  
+			btUpload.addEventListener(MouseEvent.CLICK, browseFiles); 
+			listFiles.iconField = "icon";
+		}
+		private function browseFiles(e:Event)
+		{
+			fileRefList.browse(aFileTypes);
 		}
 		/**
 		 * 
@@ -58,7 +73,7 @@
 		}  
 		function onError(e:IOErrorEvent)
 		{
-			trace(e);
+			listFiles.addItem({label:"error uploading : "+e.target.name,icon:"iconError"});
 		}
 	}
 }
