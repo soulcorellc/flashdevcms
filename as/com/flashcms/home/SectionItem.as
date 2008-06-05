@@ -1,5 +1,6 @@
 ﻿package com.flashcms.home {
 	import flash.display.Sprite;
+	import flash.text.TextField;
 	
 	/**
 	* ...
@@ -7,18 +8,13 @@
 	*/
 	public class SectionItem extends Sprite{
 		
-		private var mcBackground:Sprite;
+		public var txtDescription:TextField;
+		public var txtName:TextField;
 		public function SectionItem(xSection:XML){
-			
-			draw();
+			txtName.text = xSection.title;
+			txtDescription.text = xSection.description;
 		}
-		private function draw()
-		{
-			mcBackground = new Sprite();
-			mcBackground.graphics.lineStyle(1, 0x000000);
-			mcBackground.graphics.drawRect(0, 0, 500, 60);
-			mcBackground.graphics.endFill();
-		}
+		
 		
 	}
 	

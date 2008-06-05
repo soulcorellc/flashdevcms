@@ -22,11 +22,11 @@
 	public class Admin extends Module{
 		public var dgMain:DataGrid;
 		public var btCreate:Button;
-		private var oFormData:FormData;
 		public var tableName:String;
+		public var sectionName:String;
 		public var xmlData:XML;
 		private var editpopup:String;
-		
+		private var oFormData:FormData;
 		/**
 		 * 
 		 */
@@ -38,8 +38,11 @@
 		 */
 		public override function init()
 		{
-			tableName = parameters.section;
-			new XMLLoader(oShell.getURL("main", tableName), onXMLData, onDataError, onError);
+			trace("parameters.content :"+parameters.content);
+			sectionName = parameters.section;
+			tableName = parameters.content == undefined? parameters.section:parameters.content;
+			trace("tableName : "+tableName)
+			new XMLLoader(oShell.getURL("main", sectionName), onXMLData, onDataError, onError);
 			btCreate.label = "Create New";
 			btCreate.addEventListener(MouseEvent.CLICK, onCreate);
 		}
@@ -73,7 +76,6 @@
 			
 			dgMain.dataProvider = myDP;
 			dgMain.addEventListener(ListEvent.ITEM_CLICK , onClickItem);
-			
 			
 		}
 		/**

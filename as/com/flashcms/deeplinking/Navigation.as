@@ -18,13 +18,15 @@
 			var module:String = SWFAddress.getValue() == ""? "/":SWFAddress.getPath();
 			var oparams:Object=new Object();
 			oparams.section = SWFAddress.getParameter("section");
+			oparams.content = SWFAddress.getParameter("content");
 			var oEvent = new NavigationEvent(module, oparams);
 			dispatchEvent(oEvent);
 		}
 		
 		public function setURL(module:String, parameters:Object=null)
 		{
-			var sparams:String="section="+parameters.type;
+			var sparams:String = "section=" + parameters.section;
+			sparams = parameters.content == undefined? sparams : sparams +"&content="+ parameters.content;
 			SWFAddress.setValue("/" + module+"?"+sparams);
 			SWFAddress.setTitle(":: " + module + " ::");
 		}
