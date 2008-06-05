@@ -65,6 +65,10 @@
 		<sName>templates</sName>
 		<sURL><![CDATA[swf/admin/templates.swf]]></sURL>
 	</popups>
+	<popups>
+		<sName>assign</sName>
+		<sURL><![CDATA[swf/popups/assign.swf]]></sURL>
+	</popups>
 	
 	<urls>
 		<core>
@@ -79,6 +83,12 @@
 		<home>
 			<main><![CDATA[../webroot/xml/main.xml]]></main>
 		</home>
+		
+		<assign>
+			<main><![CDATA[../webroot/xml/assignusers.xml]]></main>
+		</assign>
+		
+			
 		<users>
 			<main><![CDATA[../webroot/xml/users.xml]]></main>
 			<data><![CDATA[../webroot/xml/getUser.xml]]></data>

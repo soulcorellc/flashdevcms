@@ -16,23 +16,23 @@
 			</menu>
 			
 			<menu label="Layout">
-				<menuitem label="Templates" id="admin" type="templates"/>
-				<menuitem label="Menus" id="50"/>
+				<menuitem label="Templates" id="admin" section="templates"/>
+				<menuitem label="Themes" id="50"/>
 				<menuitem label="Site Layout" id="50"/>
 			</menu>
 						
 			<menu label="Users And Groups">
-				<menuitem label="Manage Users" id="admin" type="users" />
-				<menuitem label="Manage Groups" id="admin" type="groups" />
+				<menuitem label="Manage Users" id="admin" section="users" />
+				<menuitem label="Manage Groups" id="admin" section="groups" />
+				<menuitem label="Assign Permissions" id="admin" section="assign" content="groups" />
 			</menu>
 			
 			
 			<menu label="Administration">
 				<menuitem label="Options"/>
+				<menuitem label="Preferences"/>
 			</menu>
-			<menu label="Preferences">
-				<menuitem label="Create"/>
-			</menu>
+			
 			<menu label="Site">
 				<menuitem label="View Site"/>
 			</menu>
@@ -40,7 +40,35 @@
 	
 	<main>
 		<icon></icon>
-		<title>Users</title>
+		<title>Content</title>
+		<name>content</name>
+		<description>This is where you can change content</description>
+		<items>
+			<id>4</id>
+			<name>Subitem1</name>
+		</items>
+		<items>
+			<id>5</id>
+			<name>Subitem1</name>
+		</items>
+	</main>
+	<main>
+		<icon></icon>
+		<title>Layout</title>
+		<name>layout</name>
+		<description>This is where you can change layout</description>
+		<items>
+			<id>4</id>
+			<name>Subitem1</name>
+		</items>
+		<items>
+			<id>5</id>
+			<name>Subitem1</name>
+		</items>
+	</main>
+	<main>
+		<icon></icon>
+		<title>Users and Groups</title>
 		<name></name>
 		<description>This is where you can change users</description>
 		<items>
@@ -54,15 +82,15 @@
 	</main>
 	<main>
 		<icon></icon>
-		<title>Content</title>
-		<name>content</name>
-		<description>This is where you can change content</description>
+		<title>Administration</title>
+		<name></name>
+		<description>This is where you can change administration</description>
 		<items>
-			<id>4</id>
+			<id>1</id>
 			<name>Subitem1</name>
 		</items>
 		<items>
-			<id>5</id>
+			<id>2</id>
 			<name>Subitem1</name>
 		</items>
 	</main>
