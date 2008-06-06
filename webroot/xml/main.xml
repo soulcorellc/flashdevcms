@@ -7,35 +7,34 @@
 	<logo><![CDATA[images/header.png]]></logo>
 	
 	<menus>
-			<menu label="Main">
-				<menuitem label="Home" id="" />
-			</menu>
-			<menu label="Content">
-				<menuitem label="Sections" id="sections"/>
-				<menuitem label="Files Manager" id="files"/>
-			</menu>
-			
-			<menu label="Layout">
-				<menuitem label="Templates" id="admin" section="templates"/>
-				<menuitem label="Themes" id="50"/>
-				<menuitem label="Site Layout" id="50"/>
-			</menu>
-						
-			<menu label="Users And Groups">
-				<menuitem label="Manage Users" id="admin" section="users" />
-				<menuitem label="Manage Groups" id="admin" section="groups" />
-				<menuitem label="Assign Permissions" id="admin" section="assign" content="groups" />
-			</menu>
-			
-			
-			<menu label="Administration">
-				<menuitem label="Options"/>
-				<menuitem label="Preferences"/>
-			</menu>
-			
-			<menu label="Site">
-				<menuitem label="View Site"/>
-			</menu>
+		<menu label="Main">
+			<menuitem label="Home" id="" />
+		</menu>
+		<menu label="Content">
+			<menuitem label="Sections" id="sections"/>
+			<menuitem label="Files Manager" id="files"/>
+		</menu>
+		
+		<menu label="Layout">
+			<menuitem label="Templates" id="admin" section="templates"/>
+			<menuitem label="Themes" id="50"/>
+			<menuitem label="Site Layout" id="50"/>
+		</menu>
+					
+		<menu label="Users And Groups">
+			<menuitem label="Manage Users" id="admin" section="users" />
+			<menuitem label="Manage Groups" id="admin" section="groups" />
+		</menu>
+		
+		
+		<menu label="Administration">
+			<menuitem label="Options"/>
+			<menuitem label="Preferences"/>
+		</menu>
+		
+		<menu label="Site">
+			<menuitem label="View Site"/>
+		</menu>
 	</menus>
 	
 	<main>

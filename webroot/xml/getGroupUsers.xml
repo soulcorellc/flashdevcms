@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<result>
+		<success>true</success>
+	</result>
+	<user>
+		<id>1</id>
+		<name>Pedro Perez</name>
+	</user>
+	<user>
+		<id>2</id>
+		<name>Juan Martinez</name>
+	</user>
+	<user>
+		<id>2</id>
+		<name>Mario Perez</name>
+	</user>
+</data>

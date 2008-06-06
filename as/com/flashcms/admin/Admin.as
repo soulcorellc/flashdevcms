@@ -38,9 +38,8 @@
 		 */
 		public override function init()
 		{
-			trace("parameters.content :"+parameters.content);
 			sectionName = parameters.section;
-			tableName = parameters.content == undefined? parameters.section:parameters.content;
+			tableName = parameters.content == undefined || parameters.content==""? parameters.section:parameters.content;
 			trace("tableName : "+tableName)
 			new XMLLoader(oShell.getURL("main", sectionName), onXMLData, onDataError, onError);
 			btCreate.label = "Create New";
@@ -58,25 +57,28 @@
 			editpopup = xmlData.parameters.editpopup;
 			var myDP:DataProvider = new DataProvider(<data>{xmlData[tableName]}</data>);
 			
-			var col1:DataGridColumn = new DataGridColumn("name");
-			col1.headerText = "Name";
-			col1.width = 300;
 			
-			var col2:DataGridColumn = new DataGridColumn("edit");
-			col2.headerText = "";
-			col2.cellRenderer = ButtonRenderer;
-			
-			var col3:DataGridColumn = new DataGridColumn("delete");
-			col3.headerText= "";
-			col3.cellRenderer = ButtonRenderer;
-			
-			dgMain.addColumn(col1);
-			dgMain.addColumn(col2);
-			dgMain.addColumn(col3);
-			
+			dgMain.addColumn(createColumn("name","Name",300));
+			dgMain.addColumn(createColumn("edit","",120,ButtonRenderer));
+			dgMain.addColumn(createColumn("delete","",120,ButtonRenderer));
+			if (tableName == "groups"){
+			dgMain.addColumn(createColumn("users", "", 120, ButtonRenderer));
+			dgMain.addColumn(createColumn("permissions","",120,ButtonRenderer));
+			}
 			dgMain.dataProvider = myDP;
 			dgMain.addEventListener(ListEvent.ITEM_CLICK , onClickItem);
 			
+		}
+		
+		private function createColumn(name:String,label:String,width:int=120,cellrenderer:Class=null):DataGridColumn
+		{
+			var col1:DataGridColumn = new DataGridColumn(name);
+			col1.headerText = label;
+			col1.width = width;
+			if(cellrenderer!=null){
+			col1.cellRenderer = ButtonRenderer;
+			}
+			return col1;
 		}
 		/**
 		 * 
@@ -97,7 +99,7 @@
 			switch(event.columnIndex)
 			{
 				case 1:
-					oFormData = new FormData(tableName, tableName, true, xmlData);
+					oFormData = new FormData(tableName, sectionName , true, xmlData);
 					if(editpopup == "templates"){
 						oShell.setModule(new NavigationEvent("templates", { } ));
 					}
@@ -108,6 +110,12 @@
 				break;
 				case 2:
 					oShell.showPopup("confirmation",{message:"Do you want to delete this user?"},onConfirmation);
+				break;
+				case 3:
+					oShell.showPopup("assign",{},onConfirmation);
+				break;
+				case 4:
+					oShell.showPopup("assign",{},onConfirmation);
 				break;
 			}
 		}
@@ -123,7 +131,7 @@
 			}
 			else 
 			{
-				oFormData = new FormData(tableName, tableName, true, xmlData);
+				oFormData = new FormData(tableName, sectionName, true, xmlData);
 				oShell.showPopup(editpopup, oFormData, onEdit);
 			}
 		}
