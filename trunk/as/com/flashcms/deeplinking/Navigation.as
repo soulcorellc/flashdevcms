@@ -16,17 +16,35 @@
 		public function onChange(event:SWFAddressEvent)
 		{
 			var module:String = SWFAddress.getValue() == ""? "/":SWFAddress.getPath();
-			var oparams:Object=new Object();
-			oparams.section = SWFAddress.getParameter("section");
-			oparams.content = SWFAddress.getParameter("content");
+			var oparams:Object = new Object();
+			
+			var parameters = SWFAddress.getParameterNames();
+			
+			for (var i in parameters)
+			{
+				oparams[parameters[i]]= SWFAddress.getParameter(parameters[i]);
+				oparams[parameters[i]] = SWFAddress.getParameter(parameters[i]);
+			}
+			
+			
 			var oEvent = new NavigationEvent(module, oparams);
 			dispatchEvent(oEvent);
 		}
 		
 		public function setURL(module:String, parameters:Object=null)
 		{
-			var sparams:String = "section=" + parameters.section;
-			sparams = parameters.content == undefined? sparams : sparams +"&content="+ parameters.content;
+			//var sparams:String = "section=" + parameters.section;
+			var sparams:String = "";
+			for (var i in parameters)
+			{
+				if(i!= "id" && i!="label" && i!="selected"){
+					sparams += i + "=" + parameters[i] + "&";
+				}
+			}
+			
+			sparams=sparams.slice(0, sparams.length - 1);
+			
+			//sparams = parameters.content == undefined? sparams : sparams +"&content="+ parameters.content;
 			SWFAddress.setValue("/" + module+"?"+sparams);
 			SWFAddress.setTitle(":: " + module + " ::");
 		}

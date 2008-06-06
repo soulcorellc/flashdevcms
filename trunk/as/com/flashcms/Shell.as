@@ -64,7 +64,7 @@ public class Shell extends MovieClip {
 		 */
 		public function onModuleChange(event:NavigationEvent)
 		{
-			trace("Module " + event.sModule);
+			trace("Module " + event.sModule+" Params :"+event.parameters);
 			switch(event.sModule)
 			{
 				case "/":

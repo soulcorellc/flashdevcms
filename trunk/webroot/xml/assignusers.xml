@@ -16,7 +16,20 @@
 		<id>3</id>
 		<name>Reader</name>
 	</groups>
-			
+	<users>
+		<id>1</id>
+		<name>David Barrios</name>
+	</users>
+	<users>
+		<id>2</id>
+		<name>Pedro Perez</name>
+	</users>
+	<users>
+		<id>3</id>
+		<name>Juan Martinez</name>
+	</users>
+
+	
 	<parameters>
 		<editpopup>assign</editpopup>
 	</parameters>
