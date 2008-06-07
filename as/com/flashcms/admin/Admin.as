@@ -96,10 +96,10 @@
 		 */
 		private function onClickItem(event:ListEvent)
 		{
+			oFormData = new FormData(tableName, sectionName , true, xmlData);
 			switch(event.columnIndex)
 			{
 				case 1:
-					oFormData = new FormData(tableName, sectionName , true, xmlData);
 					if(editpopup == "templates"){
 						oShell.setModule(new NavigationEvent("templates", { } ));
 					}
@@ -112,10 +112,12 @@
 					oShell.showPopup("confirmation",{message:"Do you want to delete this user?"},onConfirmation);
 				break;
 				case 3:
-					oShell.showPopup("assign",{},onConfirmation);
+					oFormData.section = "users";
+					oShell.showPopup("assign",oFormData,onConfirmation);
 				break;
 				case 4:
-					oShell.showPopup("assign",{},onConfirmation);
+					oFormData.section = "modules";
+					oShell.showPopup("assign",oFormData,onConfirmation);
 				break;
 			}
 		}
