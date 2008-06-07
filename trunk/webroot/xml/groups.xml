@@ -16,7 +16,61 @@
 		<id>3</id>
 		<name>Reader</name>
 	</groups>
-			
+	
+	<users>
+		<id>1</id>
+		<name>David Barrios</name>
+	</users>
+	<users>
+		<id>2</id>
+		<name>Pedro Perez</name>
+	</users>
+	<users>
+		<id>3</id>
+		<name>Juan Martinez</name>
+	</users>
+	
+	<modules>
+		<id>1</id>
+		<name>Sections</name>
+	</modules>
+	<modules>
+		<id>2</id>
+		<name>File Manager</name>
+	</modules>
+	<modules>
+		<id>3</id>
+		<name>Layout</name>
+	</modules>
+
+	<modules>
+		<id>4</id>
+		<name>Templates</name>
+	</modules>
+	<modules>
+		<id>5</id>
+		<name>Themes</name>
+	</modules>
+	
+	<modules>
+		<id>6</id>
+		<name>Users</name>
+	</modules>
+	
+	<modules>
+		<id>7</id>
+		<name>Groups</name>
+	</modules>
+	
+	<modules>
+		<id>8</id>
+		<name>Options</name>
+	</modules>
+	
+	<modules>
+		<id>8</id>
+		<name>Preferences</name>
+	</modules>
 	<parameters>
 		<editpopup>edit</editpopup>
 	</parameters>
