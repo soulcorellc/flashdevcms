@@ -14,11 +14,14 @@
 	*/
 	public class Login extends Module{
 		
-		public var txtNombre:TextField;
+		public var txtUser:TextField;
+		public var txtPass:TextField;
 		public var btEnter:Button;
-		public var sUserName:String="david";
+		public var sUserName:String="";
+		public var txtError:TextField;
+		private var sOption:String = "login";
 		private var oXMLLoader:XMLLoader;
-		private var txtError:TextField;
+		private var oXML:XML;
 		public function Login() {
 			super("Login");
 		}
@@ -35,18 +38,16 @@
 		 */
 		public function onEnter(e:Event)
 		{
-			oXMLLoader = new XMLLoader(oShell.getURL("main", "login"), onXMLData, onDataError,onError,{usuario:"david",password:"123456"});
+			oXMLLoader = new XMLLoader(oShell.getURL("main", "login"), onXMLData, onDataError,onError,{option:sOption,user:txtUser.text,password:txtPass.text});
 		}
 		private function onXMLData(event:Event)
 		{
-			dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{sName:sUserName}));	
+			oXML = XML(event.target.data);
+			dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{sName:oXML.user.nombre}));	
 		}
 		private function onDataError(event:ErrorEvent)
 		{
-			txtError = new TextField();
 			txtError.text = event.message;
-			txtError.y = 100;
-			addChild(txtError);
 		}
 		
 		private function onError(event:Error)
