@@ -6,6 +6,7 @@
 	import com.flashcms.events.PopupEvent;
 	import com.flashcms.cellrender.ButtonRenderer;
 	import com.flashcms.forms.FormData;
+	import com.yahoo.astra.fl.accessibility.EventTypes;
 	import fl.controls.Button;
 	import fl.controls.DataGrid;
 	import fl.events.ListEvent;
@@ -27,6 +28,12 @@
 		public var xmlData:XML;
 		private var editpopup:String;
 		private var oFormData:FormData;
+		private var sOption:String;
+		private var sURL:String;
+		private var idDelete:int;
+		private var editoption:String;
+		private var createoption:String;
+		private var oXMLLoader:XMLLoader;
 		/**
 		 * 
 		 */
@@ -38,10 +45,15 @@
 		 */
 		public override function init()
 		{
+			editoption=parameters.edit;
+			createColumn=parameters.create;
 			sectionName = parameters.section;
+			sURL = oShell.getURL("main", sectionName);
+			sOption = parameters.option;
+			//trace("sOption : " + sOption);
 			tableName = parameters.content == undefined || parameters.content==""? parameters.section:parameters.content;
-			trace("tableName : "+tableName)
-			new XMLLoader(oShell.getURL("main", sectionName), onXMLData, onDataError, onError);
+			//trace("tableName : "+tableName)
+			oXMLLoader=new XMLLoader(sURL, onXMLData, onDataError, onError,{option:sOption});
 			btCreate.label = "Create New";
 			btCreate.addEventListener(MouseEvent.CLICK, onCreate);
 		}
@@ -57,13 +69,12 @@
 			editpopup = xmlData.parameters.editpopup;
 			var myDP:DataProvider = new DataProvider(<data>{xmlData[tableName]}</data>);
 			
-			
 			dgMain.addColumn(createColumn("name","Name",300));
 			dgMain.addColumn(createColumn("edit","",120,ButtonRenderer));
 			dgMain.addColumn(createColumn("delete","",120,ButtonRenderer));
 			if (tableName == "groups"){
-			dgMain.addColumn(createColumn("users", "", 120, ButtonRenderer));
-			dgMain.addColumn(createColumn("permissions","",120,ButtonRenderer));
+				dgMain.addColumn(createColumn("users", "", 120, ButtonRenderer));
+				dgMain.addColumn(createColumn("permissions","",120,ButtonRenderer));
 			}
 			dgMain.dataProvider = myDP;
 			dgMain.addEventListener(ListEvent.ITEM_CLICK , onClickItem);
@@ -76,7 +87,7 @@
 			col1.headerText = label;
 			col1.width = width;
 			if(cellrenderer!=null){
-			col1.cellRenderer = ButtonRenderer;
+				col1.cellRenderer = ButtonRenderer;
 			}
 			return col1;
 		}
@@ -105,11 +116,12 @@
 					}
 					else
 					{
-						oShell.showPopup(editpopup, oFormData, onEdit);
+						oShell.showPopup(editpopup, {table:tableName,section:sectionName,requiredata:true,data:xmlData,id:event.item.id}, onEdit);
 					}
 				break;
 				case 2:
-					oShell.showPopup("confirmation",{message:"Do you want to delete this user?"},onConfirmation);
+					idDelete = int(event.item.id);
+					oShell.showPopup("confirmation",{message:"Do you want to delete ?"},onConfirmation);
 				break;
 				case 3:
 					oFormData.section = "users";
@@ -133,8 +145,7 @@
 			}
 			else 
 			{
-				oFormData = new FormData(tableName, sectionName, true, xmlData);
-				oShell.showPopup(editpopup, oFormData, onEdit);
+				oShell.showPopup(editpopup, {table:tableName,section:sectionName,requiredata:true,data:xmlData,id:event.item.id,create:true,editoption:editoption,createoption:createoption}, onEdit);
 			}
 		}
 		
@@ -146,23 +157,41 @@
 		{
 			trace("edit closed");
 		}
-		
+		/*
+		 * 
+		 * @param	e
+		 */
 		private function onConfirmation(e:PopupEvent)
 		{
 			if (e.parameters.type == "yes")
 			{
-				trace("DELETING");
+				oXMLLoader=new XMLLoader(sURL, onDelete, onDeleteError, onError,{option:"delete",user:idDelete});
 			}
 		}
 		/**
 		 * 
+		 * @param	e
+		 */
+		private function onDelete(e:Event)
+		{
+			oShell.setStatusMessage("User Deleted");
+		}
+		/**
 		 * 
+		 * @param	e
+		 */
+		private function onDeleteError(e:Event)
+		{
+			oShell.setStatusMessage("Error Deleting");
+		}
+		/**
 		 * 
 		 * @param	event
 		 */
 		private function onError(event:IOErrorEvent)
 		{
-			trace("ioErrorHandler: " + event.text);
+			oShell.setStatusMessage(event.text);
+			//trace("ioErrorHandler: " + event.text);
 		}
 		
 	}

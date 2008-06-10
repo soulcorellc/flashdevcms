@@ -66,6 +66,9 @@
 		{
 			draw();	
 		}
+		/**
+		 * 
+		 */
 		private function draw()
 		{
 			this.graphics.clear();
@@ -111,6 +114,11 @@
 		private function onEdit(e:PopupEvent)
 		{
 			
+		}
+		public override function dispose()
+		{
+			removeChild(oMenu);
+			oMenu = null;
 		}
 	}
 	

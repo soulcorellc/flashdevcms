@@ -22,11 +22,10 @@
 		</menu>
 					
 		<menu label="Users And Groups">
-			<menuitem label="Manage Users" id="admin" section="users" />
-			<menuitem label="Manage Groups" id="admin" section="groups" />
+			<menuitem label="Manage Users" id="admin" section="users" option="getall" editoption="create" createoption="setuser" />
+			<menuitem label="Manage Groups" id="admin" section="groups" option="getallgroups" editoption="editprofile" createoption="createprofile"/>
 		</menu>
-		
-		
+				
 		<menu label="Administration">
 			<menuitem label="Options"/>
 			<menuitem label="Preferences"/>

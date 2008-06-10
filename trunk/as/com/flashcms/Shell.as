@@ -236,6 +236,7 @@ public class Shell extends MovieClip {
 			try{
 				oSection.sManager.remove();
 				mainindex = this.getChildIndex(oSection);
+				oSection.dispose();
 				removeChild(oSection.sManager);
 				removeChild(oSection);
 				stage.removeEventListener(Event.RESIZE, oSection.onResize);

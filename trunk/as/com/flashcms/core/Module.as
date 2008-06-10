@@ -54,6 +54,10 @@
 		public function setData(data:String)
 		{
 		}
+		
+		public function dispose()
+		{
+		}
 
 	}
 	
