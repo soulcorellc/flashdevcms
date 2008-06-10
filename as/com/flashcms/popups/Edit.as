@@ -22,6 +22,11 @@
 		private var oLayout:Layout;
 		private var oBar:ButtonBar;
 		private var oForm:FormData;
+		private var id:int;
+		private var create:Boolean;
+		private var createoption:String;
+		private var editoption:String;
+		
 		
 		/**
 		 * 
@@ -35,6 +40,10 @@
 		public override function init()
 		{
 			oForm = new FormData(parameters.table, parameters.section, parameters.requiredata, parameters.data);
+			id = parameters.id;
+			create = parameters.create;
+			editoption = parameters.editoption;
+			createoption=parameters.createoption;
 			var urlschema:String = oShell.getURL("schema", oForm.section);
 			new XMLLoader(urlschema, onXMLSchema, onErrorData, onError);
 			
@@ -53,7 +62,7 @@
 			if (oForm.requiredata)
 			{
 				var urldata = oShell.getURL("data", oForm.section);
-				new XMLLoader(urldata, onXMLData, onErrorData, onError);
+				new XMLLoader(urldata, onXMLData, onErrorData, onError, {option:"getuser",id:id} );
 			}
 			else
 			{
@@ -107,7 +116,16 @@
 		 */
 		private function send(e:Event)
 		{
-			
+			option = create?createoption:editoption;
+			new XMLLoader(urldata, onSaveData, onSaveError, onError, {option:option,id:id});
+		}
+		private function onSaveData(e:Event)
+		{
+			trace("saved");
+		}
+		private function onSaveError(e:Event)
+		{
+			trace("error saving");
 		}
 		/**
 		 * 
