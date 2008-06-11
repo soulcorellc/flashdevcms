@@ -216,6 +216,7 @@ public class Shell extends MovieClip {
 						initModule(oFooter);
 					break;
 					default:
+						
 						removeSection(oMain);
 						oMain = Module(event.loaderTarget.content);
 						oMain.sManager = new StageManager(oMain, 2, 15, 0, 0, true);
@@ -234,13 +235,15 @@ public class Shell extends MovieClip {
 		private function removeSection(oSection:Module)
 		{
 			try{
-				oSection.sManager.remove();
-				mainindex = this.getChildIndex(oSection);
-				oSection.dispose();
-				removeChild(oSection.sManager);
-				removeChild(oSection);
-				stage.removeEventListener(Event.RESIZE, oSection.onResize);
-				oSection= null;
+				if(oSection!= null){
+					oSection.sManager.remove();
+					mainindex = this.getChildIndex(oSection);
+					oSection.dispose();
+					removeChild(oSection.sManager);
+					removeChild(oSection);
+					stage.removeEventListener(Event.RESIZE, oSection.onResize);
+					oSection = null;
+				}
 			}
 			catch (e:Error)
 			{
@@ -259,7 +262,8 @@ public class Shell extends MovieClip {
 			{
 				addChildAt(oModule, mainindex);
 			}
-			else {
+			else 
+			{
 				addChild(oModule);
 			}
 			addChild(oModule.sManager);

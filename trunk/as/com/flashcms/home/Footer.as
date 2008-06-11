@@ -3,7 +3,7 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.text.TextField;
-	
+	import com.flashcms.design.DynamicBG;
 	/**
 	* ...
 	* @author Default
@@ -14,34 +14,31 @@
 		 */
 		private var mcBackground:Sprite;
 		private var oMessage;
+		private var oBG:DynamicBG;
 		public function Footer() {
-			super("Footer");
-			mcBackground = new Sprite();
-			oMessage = new OutputMessage();
-			oMessage.x = 10;
-			oMessage.y = 2;
+			
+		}
+		private function createBG()
+		{
+			//oBG = new DynamicBG(stage.stageWidth, new left(), new center(), new right());
+			//addChild(oBG);
 		}
 		public override function init()
 		{
-			draw();
-			addChild(mcBackground);
+			/*createBG();
+			oMessage = new OutputMessage();
+			oMessage.x = 10;
+			oMessage.y = 2;
 			addChild(oMessage);
+			*/
 		}
 		public override function setData(message:String)
 		{
-			oMessage.message.text = message;
-		}
-		private function draw()
-		{
-			mcBackground.graphics.clear();
-			mcBackground.graphics.beginFill(0xCCCCCC);
-			mcBackground.graphics.drawRect(0, 0, stage.stageWidth, 20);
-			mcBackground.graphics.endFill();
-			
+			//oMessage.message.text = message;
 		}
 		public override function onResize(event:Event)
 		{
-			draw();
+			//oBG.update(stage.stageWidth);
 		}
 		
 	}

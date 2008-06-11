@@ -19,6 +19,7 @@
 		 */
 		override public function init()
 		{
+			trace("init main");
 			for (var i in oShell.xMain)
 			{
 				var oSection:SectionItem = new SectionItem(oShell.xMain[i]);
