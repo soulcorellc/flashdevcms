@@ -16,7 +16,9 @@
 	import com.flashcms.events.PopupEvent;
 	import com.flashcms.forms.FormData;
 	import flash.events.MouseEvent;
-	
+	import com.flashcms.design.DynamicBG;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	/**
 	* ...
 	* @author Default
@@ -30,6 +32,8 @@
 		private var oRequest:URLRequest;
 		private var oMultiLoader:MultiLoader;
 		private var oForm:FormData;
+		private var oBG:DynamicBG;
+		private var oUserInfo;
 		public function Header() {
 			super("Header");
 			
@@ -39,24 +43,37 @@
 		 */		
 		override public function init()
 		{
+			createBG();
+			oUserInfo = new UserInfo();
+			oUserInfo.x = 255;
+			oUserInfo.y = 12;
+			addChild(oUserInfo);
 			oMenu = new MenuBar(this);
+			var oStyle = new TextFormat("Verdana", 10, 0xFFE8C6, true, false, false, '', '', TextFormatAlign.LEFT, 0, 0, 0, 0);
+			oMenu.setStyle("textFormat",oStyle)
+			oMenu.y = 103;
+			oMenu.x = 82;
 			oMenu.addEventListener(MenuEvent.ITEM_CLICK, onItemClick);
-			oMenu.y = 60;
 			oMultiLoader = new MultiLoader();
 			oMultiLoader.addEventListener(LoadEvent.LOAD_EVENT, onLoadImage);
 			oMultiLoader.addEventListener(LoadError.LOAD_ERROR, onError);
 			oMenu.dataProvider = XML(oShell.xMenu);
 			oMultiLoader.add(oShell.sLogo);
 			oMultiLoader.start();
-			draw();
+			
 			initUser();
+		}
+		private function createBG()
+		{
+			oBG = new DynamicBG(stage.stageWidth, new left(), new center(), new right());
+			addChild(oBG);
 		}
 		private function initUser()
 		{
-			txtUser.text = "Welcome, " + oShell.oUser.sName;
-			btProfile.addEventListener(MouseEvent.CLICK, onProfile);
-			btPassword.addEventListener(MouseEvent.CLICK, onPassword);
-			btLogout.addEventListener(MouseEvent.CLICK, onLogout);
+			oUserInfo.txtUser.text = "WELCOME, " + String(oShell.oUser.sName).toUpperCase();
+			oUserInfo.btProfile.addEventListener(MouseEvent.CLICK, onProfile);
+			oUserInfo.btPassword.addEventListener(MouseEvent.CLICK, onPassword);
+			oUserInfo.btLogout.addEventListener(MouseEvent.CLICK, onLogout);
 		}
 		/**
 		 * Called when stage is resized
@@ -64,18 +81,10 @@
 		 */
 		override public function onResize(event:Event)
 		{
-			draw();	
+			//draw();	
+			oBG.update(stage.stageWidth);
 		}
-		/**
-		 * 
-		 */
-		private function draw()
-		{
-			this.graphics.clear();
-			this.graphics.lineStyle(1,0xCCCCCC,1);
-			this.graphics.drawRect(0, 60, stage.stageWidth, 21);
-			this.graphics.endFill();
-		}
+		
 		private function onError(event:LoadError)
 		{
 			trace("Header error "+event.text);
