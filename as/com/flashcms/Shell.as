@@ -201,7 +201,7 @@ public class Shell extends MovieClip {
 		function onModuleLoaded(event:LoadEvent)
 		{
 			try{
-				
+				trace("load: "+Module(event.loaderTarget.content).sName);
 				switch(Module(event.loaderTarget.content).sName)
 				{
 					case "Header":
@@ -216,10 +216,9 @@ public class Shell extends MovieClip {
 						initModule(oFooter);
 					break;
 					default:
-						
 						removeSection(oMain);
 						oMain = Module(event.loaderTarget.content);
-						oMain.sManager = new StageManager(oMain, 2, 15, 0, 0, true);
+						oMain.sManager = new StageManager(oMain, 2, 20, 0, 0, true);
 						initModule(oMain,mainindex);
 					break;
 				}
@@ -240,6 +239,7 @@ public class Shell extends MovieClip {
 					mainindex = this.getChildIndex(oSection);
 					oSection.dispose();
 					removeChild(oSection.sManager);
+					trace("removing section!");
 					removeChild(oSection);
 					stage.removeEventListener(Event.RESIZE, oSection.onResize);
 					oSection = null;

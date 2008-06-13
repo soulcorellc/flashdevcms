@@ -15,30 +15,29 @@
 		private var mcBackground:Sprite;
 		private var oMessage;
 		private var oBG:DynamicBG;
-		public function Footer() {
-			
+		public function Footer() {    
+			super("Footer");
 		}
 		private function createBG()
 		{
-			//oBG = new DynamicBG(stage.stageWidth, new left(), new center(), new right());
-			//addChild(oBG);
+			oBG = new DynamicBG(stage.stageWidth, new left(), new center(), new right());
+			addChild(oBG);
 		}
 		public override function init()
 		{
-			/*createBG();
+			createBG();
 			oMessage = new OutputMessage();
 			oMessage.x = 10;
 			oMessage.y = 2;
 			addChild(oMessage);
-			*/
 		}
 		public override function setData(message:String)
 		{
-			//oMessage.message.text = message;
+			oMessage.message.text = message;
 		}
 		public override function onResize(event:Event)
 		{
-			//oBG.update(stage.stageWidth);
+			oBG.update(stage.stageWidth);
 		}
 		
 	}

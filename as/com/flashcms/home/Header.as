@@ -51,7 +51,7 @@
 			oMenu = new MenuBar(this);
 			var oStyle = new TextFormat("Verdana", 10, 0xFFE8C6, true, false, false, '', '', TextFormatAlign.LEFT, 0, 0, 0, 0);
 			oMenu.setStyle("textFormat",oStyle)
-			oMenu.y = 103;
+			oMenu.y = 73;
 			oMenu.x = 82;
 			oMenu.addEventListener(MenuEvent.ITEM_CLICK, onItemClick);
 			oMultiLoader = new MultiLoader();
