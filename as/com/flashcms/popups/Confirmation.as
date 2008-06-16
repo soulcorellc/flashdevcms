@@ -4,24 +4,31 @@
 	import com.flashcms.events.PopupEvent;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
+	import com.flashcms.design.DynamicBG;
 	/**
 	* ...
 	* @author Default
 	*/
 	public class Confirmation extends Module{
 		private var oBar:ButtonBar;
+		private var oBG:DynamicBG;
 		public function Confirmation() {
-			
+			createBG();
 		}
 		/**
 		 * 
 		 */
+		private function createBG()
+		{
+			oBG = new DynamicBG(350, new left(), new center(), new right());
+			addChildAt(oBG,0);
+		}
 		public override function init()
 		{
 			txtMessage.text = parameters.message;
 			oBar = new ButtonBar(onOK, onCancel, "Yes", "No");
 			oBar.x = 75;
-			oBar.y = 200;
+			oBar.y = 250;
 			addChild(oBar);
 			
 		}

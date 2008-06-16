@@ -17,11 +17,12 @@
 		private var oBG:DynamicBG;
 		public function Footer() {    
 			super("Footer");
+			
 		}
 		private function createBG()
 		{
 			oBG = new DynamicBG(stage.stageWidth, new left(), new center(), new right());
-			addChild(oBG);
+			addChildAt(oBG,0);
 		}
 		public override function init()
 		{

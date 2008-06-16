@@ -22,7 +22,7 @@
 			mcGuide = new Sprite();
 			mcBackground = new Sprite();
 			drawBG(100, 100);
-			addChild(mcBackground);
+			addChildAt(mcBackground,0);
 			this.type = type;
 			txtName.text = type;
 			var IconClass:Class = getDefinitionByName("Icon" + type) as Class;

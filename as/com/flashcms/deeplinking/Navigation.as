@@ -45,6 +45,7 @@
 			sparams=sparams.slice(0, sparams.length - 1);
 			
 			//sparams = parameters.content == undefined? sparams : sparams +"&content="+ parameters.content;
+			trace("setting value : " + "/" + module + "?" + sparams);
 			SWFAddress.setValue("/" + module+"?"+sparams);
 			SWFAddress.setTitle(":: " + module + " ::");
 		}

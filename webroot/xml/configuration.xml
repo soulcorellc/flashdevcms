@@ -5,6 +5,11 @@
 	</result>
 	
 	<modules>
+		<id>0</id>
+		<sName>background</sName>
+		<sURL><![CDATA[swf/home/background.swf]]></sURL>
+	</modules>
+	<modules>
 		<id>1</id>
 		<sName>header</sName>
 		<sURL><![CDATA[swf/home/header.swf]]></sURL>

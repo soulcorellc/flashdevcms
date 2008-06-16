@@ -19,8 +19,8 @@
 			addChild(centerasset);
 			addChild(rightasset);
 			rightasset.x = size - rightasset.width;
-			centerasset.x = leftasset.width;
-			centerasset.width = size - (leftasset.width + rightasset.width);
+			centerasset.x = leftasset.width-1;
+			centerasset.width = size+2 - (leftasset.width + rightasset.width);
 		}
 		public function update(size:int)
 		{
