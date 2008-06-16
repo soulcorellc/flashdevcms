@@ -8,7 +8,6 @@
 	import flash.events.Event;
 	import com.flashcms.events.PopupEvent;
 	import flash.display.LoaderInfo;	
-	
 	import com.flashcms.data.MultiLoader;
 	import com.flashcms.core.PopupManager;
 	import com.flashcms.core.Module;
@@ -19,7 +18,7 @@
 	import com.flashcms.core.User;
 	import com.flashcms.events.LoginEvent;
 	import com.flashcms.data.XMLLoader;
-	
+	import flash.external.ExternalInterface;
 		
 public class Shell extends MovieClip {
 		private var oXML:XML;
@@ -34,12 +33,14 @@ public class Shell extends MovieClip {
 		private var oHeader:Module;
 		private var oFooter:Module;
 		private var oMain:Module;
+		private var oBackground:Module;
 		private var oParameters:Object;
 		public var xMenu:XMLList;
 		public var xMain:XMLList;
 		public var sLogo:String;
 		public var oUser:User;
-		private var mainindex:int=-1;
+		private var mainindex:int = -1;
+		private var bHeaderLoaded:Boolean = false;
 		public function Shell(){
 			super();
 			init();
@@ -64,13 +65,17 @@ public class Shell extends MovieClip {
 		 */
 		public function onModuleChange(event:NavigationEvent)
 		{
-			trace("Module " + event.sModule+" Params :"+event.parameters);
+			//trace("Module " + event.sModule + " Params :" + event.parameters);
+			if(!bHeaderLoaded){
+				loadModule("background");	
+				loadModule("footer");
+				loadModule("header");
+				bHeaderLoaded = true;
+			}
 			switch(event.sModule)
 			{
 				case "/":
 					loadModule("main"); 
-					loadModule("footer");
-					loadModule("header");
 				break;
 				case "/admin":
 					loadModule("admin",event.parameters);
@@ -145,6 +150,7 @@ public class Shell extends MovieClip {
 		 */
 		public function setModule(event:NavigationEvent)
 		{
+			trace("setting module on shell " + event.sModule);
 			oNavigation.setURL(event.sModule, event.parameters);
 		}
 		/**
@@ -201,7 +207,6 @@ public class Shell extends MovieClip {
 		function onModuleLoaded(event:LoadEvent)
 		{
 			try{
-				trace("load: "+Module(event.loaderTarget.content).sName);
 				switch(Module(event.loaderTarget.content).sName)
 				{
 					case "Header":
@@ -212,20 +217,25 @@ public class Shell extends MovieClip {
 					break;
 					case "Footer":
 						oFooter = Module(event.loaderTarget.content);
-						oFooter.sManager = new StageManager(oFooter, 0, 100, 0, 100, false)
-						initModule(oFooter);
+						oFooter.sManager = new StageManager(oFooter, 0, 100, 0, 50, true)
+						initModule(oFooter,1);
+					break;
+					case "Background":
+						oBackground = Module(event.loaderTarget.content);
+						oBackground.y = 120;
+						initModule(oBackground,0);
 					break;
 					default:
 						removeSection(oMain);
 						oMain = Module(event.loaderTarget.content);
-						oMain.sManager = new StageManager(oMain, 2, 20, 0, 0, true);
-						initModule(oMain,mainindex);
+						oMain.sManager = new StageManager(oMain, 50, 54, 50, 50, true);
+						initModule(oMain,2);
 					break;
 				}
 			}
 			catch (err:Error)
 			{
-				trace("Shell Exception : " + err.message);
+				trace("Shell Exception : " + err.message+ " : "+Module(event.loaderTarget.content).sName);
 			}
 		}
 		/**
@@ -235,41 +245,51 @@ public class Shell extends MovieClip {
 		{
 			try{
 				if(oSection!= null){
-					oSection.sManager.remove();
-					mainindex = this.getChildIndex(oSection);
 					oSection.dispose();
-					removeChild(oSection.sManager);
-					trace("removing section!");
+					if(oSection.sManager!=null && oSection.sManager.stage!=null){
+						oSection.sManager.remove();
+						removeChild(oSection.sManager);
+					}
+					if(oSection.stage != null){
 					removeChild(oSection);
 					stage.removeEventListener(Event.RESIZE, oSection.onResize);
+					}
+					oSection.sManager = null;
 					oSection = null;
+				
 				}
 			}
 			catch (e:Error)
 			{
-				trace("Error removing "+oSection);
+				trace("Error removing "+oSection+" : "+e.message);
 			}
 		}
 		/**
 		 * 
 		 * @param	oModule
 		 */
-		private function initModule(oModule:Module,mainindex:int=-1)
+		private function initModule(oModule:Module,index:int=-1)
 		{
-			oModule.oShell = this;
-			oModule.parameters = oParameters;
-			if (mainindex != -1)
-			{
-				addChildAt(oModule, mainindex);
+			try{
+				oModule.oShell = this;
+				oModule.parameters = oParameters;
+				if (index != -1){
+					addChildAt(oModule, index);
+				}
+				else {
+					addChild(oModule);
+				}
+				oModule.init();
+				oModule.show();
+				stage.addEventListener(Event.RESIZE, oModule.onResize);
+				if (oModule.sManager != null){
+					addChild(oModule.sManager);
+				}
 			}
-			else 
+			catch (error:Event)
 			{
-				addChild(oModule);
+				trace("Error on INIT :" + error);
 			}
-			addChild(oModule.sManager);
-			oModule.init();
-			oModule.show();
-			stage.addEventListener(Event.RESIZE, oModule.onResize);
 		}
 		/**
 		 * 
@@ -278,10 +298,11 @@ public class Shell extends MovieClip {
 		{
 			oUser.bLogged = false;
 			oUser.sName = "";
+			removeSection(oHeader);
 			removeSection(oMain);
 			removeSection(oFooter);
-			
-			removeSection(oHeader);
+			removeSection(oBackground);
+			bHeaderLoaded = false;
 			showPopup("login", null, onClose);
 			
 		}

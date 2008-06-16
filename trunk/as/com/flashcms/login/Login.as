@@ -8,6 +8,7 @@
 	import com.flashcms.events.PopupEvent;
 	import flash.events.MouseEvent;
 	import com.flashcms.data.XMLLoader;
+	import com.flashcms.design.DynamicBG;
 	/**
 	* ...
 	* @author David Barrios
@@ -22,15 +23,23 @@
 		private var sOption:String = "login";
 		private var oXMLLoader:XMLLoader;
 		private var oXML:XML;
+		private var oBG:DynamicBG;
 		public function Login() {
 			super("Login");
+			createBG();
 		}
 		/**
 		 * 
 		 */
 		public override function init()
 		{
+			
 			btEnter.addEventListener(MouseEvent.CLICK, onEnter);
+		}
+		private function createBG()
+		{
+			oBG = new DynamicBG(350, new left(), new center(), new right());
+			addChildAt(oBG,0);
 		}
 		/**
 		 * 

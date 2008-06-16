@@ -46,7 +46,7 @@
 		public override function init()
 		{
 			editoption=parameters.edit;
-			createColumn=parameters.create;
+			createoption=parameters.create;
 			sectionName = parameters.section;
 			sURL = oShell.getURL("main", sectionName);
 			sOption = parameters.option;
@@ -145,7 +145,7 @@
 			}
 			else 
 			{
-				oShell.showPopup(editpopup, {table:tableName,section:sectionName,requiredata:true,data:xmlData,id:event.item.id,create:true,editoption:editoption,createoption:createoption}, onEdit);
+				oShell.showPopup(editpopup, {table:tableName,section:sectionName,requiredata:true,data:xmlData,create:true,editoption:editoption,createoption:createoption}, onEdit);
 			}
 		}
 		

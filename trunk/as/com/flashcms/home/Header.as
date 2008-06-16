@@ -33,7 +33,7 @@
 		private var oMultiLoader:MultiLoader;
 		private var oForm:FormData;
 		private var oBG:DynamicBG;
-		private var oUserInfo;
+		public var oUserInfo;
 		public function Header() {
 			super("Header");
 			
@@ -44,15 +44,11 @@
 		override public function init()
 		{
 			createBG();
-			oUserInfo = new UserInfo();
-			oUserInfo.x = 255;
-			oUserInfo.y = 12;
-			addChild(oUserInfo);
 			oMenu = new MenuBar(this);
 			var oStyle = new TextFormat("Verdana", 10, 0xFFE8C6, true, false, false, '', '', TextFormatAlign.LEFT, 0, 0, 0, 0);
 			oMenu.setStyle("textFormat",oStyle)
 			oMenu.y = 73;
-			oMenu.x = 82;
+			oMenu.x = 120;
 			oMenu.addEventListener(MenuEvent.ITEM_CLICK, onItemClick);
 			oMultiLoader = new MultiLoader();
 			oMultiLoader.addEventListener(LoadEvent.LOAD_EVENT, onLoadImage);
@@ -60,13 +56,13 @@
 			oMenu.dataProvider = XML(oShell.xMenu);
 			oMultiLoader.add(oShell.sLogo);
 			oMultiLoader.start();
-			
 			initUser();
+			trace(this.height);
 		}
 		private function createBG()
 		{
 			oBG = new DynamicBG(stage.stageWidth, new left(), new center(), new right());
-			addChild(oBG);
+			addChildAt(oBG,0);
 		}
 		private function initUser()
 		{
@@ -81,7 +77,6 @@
 		 */
 		override public function onResize(event:Event)
 		{
-			//draw();	
 			oBG.update(stage.stageWidth);
 		}
 		
