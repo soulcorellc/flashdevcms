@@ -42,33 +42,34 @@
 	<modules>
 		<id>7</id>
 		<sName>templates</sName>
-		<sURL><![CDATA[swf/admin/templates.swf]]></sURL>
+		<sURL><![CDATA[swf/editors/templates.swf]]></sURL>
 	</modules>
-	
 	<modules>
 		<id>8</id>
 		<sName>files</sName>
 		<sURL><![CDATA[swf/sections/files.swf]]></sURL>
+	</modules>
+	<modules>
+		<id>9</id>
+		<sName>sectioneditor</sName>
+		<sURL><![CDATA[swf/editors/sectioneditor.swf]]></sURL>
 	</modules>
 	
 	<popups>
 		<sName>login</sName>
 		<sURL><![CDATA[swf/login/login.swf]]></sURL>
 	</popups>
-
 	<popups>
 		<sName>edit</sName>
 		<sURL><![CDATA[swf/popups/edit.swf]]></sURL>
 	</popups>
-
 	<popups>
 		<sName>confirmation</sName>
 		<sURL><![CDATA[swf/popups/confirmation.swf]]></sURL>
 	</popups>
-	
 	<popups>
 		<sName>templates</sName>
-		<sURL><![CDATA[swf/admin/templates.swf]]></sURL>
+		<sURL><![CDATA[swf/editors/templates.swf]]></sURL>
 	</popups>
 	<popups>
 		<sName>assign</sName>
@@ -88,36 +89,28 @@
 		<home>
 			<main><![CDATA[../webroot/xml/main.xml]]></main>
 		</home>
-		
 		<assign>
 			<main><![CDATA[../webroot/xml/assignusers.xml]]></main>
 		</assign>
-		
-			
 		<users>
 			<main><![CDATA[../webroot/xml/users.xml]]></main>
 			<data><![CDATA[../webroot/xml/getUser.xml]]></data>
 			<schema><![CDATA[../webroot/xml/forms/users.xml]]></schema>
 		</users>
-		
 		<groups>
 			<main><![CDATA[../webroot/xml/groups.xml]]></main>
 			<data><![CDATA[../webroot/xml/getGroup.xml]]></data>
 			<schema><![CDATA[../webroot/xml/forms/groups.xml]]></schema>
 		</groups>
-		
 		<password>
 			<schema><![CDATA[../webroot/xml/forms/password.xml]]></schema>
 		</password>
-		
 		<sections>
 			<main><![CDATA[../webroot/xml/sections.xml]]></main>
 		</sections>
-		
 		<templates>
 			<main><![CDATA[../webroot/xml/templates.xml]]></main>
 			<save><![CDATA[../webroot/xml/savetemplate.xml]]></save>
 		</templates>
-
 	</urls>
 </configuration>

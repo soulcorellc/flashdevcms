@@ -1,4 +1,4 @@
-﻿package com.flashcms.admin {
+﻿package com.flashcms.editors{
 	
 	import com.flashcms.data.XMLLoader;
 	import com.flashcms.events.ErrorEvent;

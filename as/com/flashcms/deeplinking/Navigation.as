@@ -26,7 +26,8 @@
 				oparams[parameters[i]] = SWFAddress.getParameter(parameters[i]);
 			}
 			
-			
+			module = module.slice(1, module.length);
+			trace("MODDUDE : " + module);
 			var oEvent = new NavigationEvent(module, oparams);
 			dispatchEvent(oEvent);
 		}
