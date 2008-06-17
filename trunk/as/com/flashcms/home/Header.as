@@ -78,6 +78,7 @@
 		override public function onResize(event:Event)
 		{
 			oBG.update(stage.stageWidth);
+			oUserInfo.x = stage.stageWidth - (oUserInfo.width+20);
 		}
 		
 		private function onError(event:LoadError)
@@ -119,6 +120,7 @@
 		{
 			
 		}
+		
 		public override function dispose()
 		{
 			removeChild(oMenu);

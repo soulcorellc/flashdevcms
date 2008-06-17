@@ -12,6 +12,7 @@
 		</menu>
 		<menu label="CONTENT">
 			<menuitem label="Sections" id="sections"/>
+			<menuitem label="Create Section" id="sectioneditor"/>
 			<menuitem label="Files Manager" id="files"/>
 		</menu>
 		
@@ -34,6 +35,10 @@
 		
 		<menu label="SITE">
 			<menuitem label="View Site"/>
+		</menu>
+		
+		<menu label="HELP">
+			<menuitem label="About"/>
 		</menu>
 	</menus>
 	
@@ -87,6 +92,20 @@
 		<items>
 			<id>1</id>
 			<name>Subitem1</name>
+		</items>
+		<items>
+			<id>2</id>
+			<name>Subitem1</name>
+		</items>
+	</main>
+	<main>
+		<icon></icon>
+		<title>Site</title>
+		<name></name>
+		<description>This is where you can view your site</description>
+		<items>
+			<id>1</id>
+			<name>Site</name>
 		</items>
 		<items>
 			<id>2</id>

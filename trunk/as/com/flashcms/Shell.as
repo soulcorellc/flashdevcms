@@ -74,23 +74,12 @@ public class Shell extends MovieClip {
 			}
 			switch(event.sModule)
 			{
-				case "/":
+				case "":
 					loadModule("main"); 
 				break;
-				case "/admin":
-					loadModule("admin",event.parameters);
-				break;
-				case "/sections":
-					loadModule("sections");
-				break;
-				case "/templates":
-					loadModule("templates");
-				break;
-				case "/files":
-					loadModule("files");
-				break;
+
 				default:
-					trace("loading: " + event.sModule + " parameters : " + event.parameters);
+					loadModule(event.sModule,event.parameters);
 				break;
 			}	
 			oModuleLoader.start();
