@@ -111,6 +111,7 @@
 		<templates>
 			<main><![CDATA[../webroot/xml/templates.xml]]></main>
 			<save><![CDATA[../webroot/xml/savetemplate.xml]]></save>
+			<get><![CDATA[../webroot/xml/getTemplate.xml]]></get>
 		</templates>
 	</urls>
 </configuration>

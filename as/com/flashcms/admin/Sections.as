@@ -9,6 +9,8 @@
 	import fl.data.DataProvider;
 	import fl.controls.ComboBox;
 	import flash.events.MouseEvent;
+	import com.flashcms.events.NavigationEvent;
+	
 	/**
 	* ...
 	* @author Default
@@ -53,7 +55,7 @@
 		}
 		private function onCreate(e:Event)
 		{
-			
+			oShell.setModule(new NavigationEvent("sectioneditor", {} ));
 		}
 		private function onEdit(e:Event)
 		{

@@ -50,6 +50,10 @@
 			{
 				errorhandler = onError;
 			}
+			if (dataerrorhandler== null)
+			{
+				dataerrorhandler = onError;
+			}
 			oLoader.addEventListener(IOErrorEvent.IO_ERROR, errorhandler);
 		}
 		/**
