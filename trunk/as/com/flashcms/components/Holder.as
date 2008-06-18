@@ -17,11 +17,11 @@
 		private var mcResize:Sprite;
 		private var mcBackground:Sprite; 
 		private var mcGuide:Sprite;
-		public function Holder(type:String) {
+		public function Holder(type:String,isDraggable:Boolean=false) {
 			
 			mcGuide = new Sprite();
 			mcBackground = new Sprite();
-			drawBG(100, 100);
+			setSize(100, 100);
 			addChildAt(mcBackground,0);
 			this.type = type;
 			txtName.text = type;
@@ -30,11 +30,17 @@
 			icon.x = 6;
 			icon.y = 6;
 			addChild(icon);
-			addChild(mcGuide);
-			createResize();
+			
+			if(isDraggable){
+				addChild(mcGuide);
+				createResize();
+			}
+			else {
+			
+			}
 			
 		}
-		private function drawBG(newwidth:int,newheight:int)
+		public function setSize(newwidth:int,newheight:int)
 		{
 			mcBackground.graphics.clear();
 			mcBackground.graphics.beginFill(0xF9F9F9, 1);
@@ -93,7 +99,7 @@
 		private function onStopResize(e:MouseEvent)
 		{
 			mcGuide.graphics.clear();
-			drawBG(mcResize.x,mcResize.y);
+			setSize(mcResize.x,mcResize.y);
 			mcResize.stopDrag();
 			mcResize.removeEventListener(MouseEvent.MOUSE_UP, onStopResize);
 			mcResize.addEventListener(MouseEvent.MOUSE_DOWN, onResize);
@@ -104,9 +110,9 @@
 		{
 			mcGuide.width = mcResize.x;
 			mcGuide.height = mcResize.y;
-			
-			
 		}
+		
+		
 		
 		
 	}

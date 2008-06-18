@@ -88,6 +88,12 @@
 			setToolBar(xmlTools.tools,toolsPanel,onToolsChange);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN,onDelete)
 		}
+		/**
+		 * 
+		 * @param	data
+		 * @param	toolbar
+		 * @param	callback
+		 */
 		private function setToolBar(data:XMLList,toolbar:VBoxPane,callback:Function)
 		{
 			for each(var component:XML in data)
@@ -109,6 +115,10 @@
 			toolbar.horizontalGap = 10;
 			
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onToolsChange(e:MouseEvent)
 		{
 			switch(e.target.name)
@@ -121,10 +131,18 @@
 				break;
 			}
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onSave(e:Event)
 		{
 			trace("saved");
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onDataError(e:ErrorEvent)
 		{
 			oShell.setStatusMessage(e.message);
@@ -140,20 +158,26 @@
 			currentState = index;
 			switch(index)
 			{
-			case 0:
-				showEditor();
-			break;
-			case 1:
-				showXML();
-			break;
+				case 0:
+					showEditor();
+				break;
+				case 1:
+					showXML();
+				break;
 			}
 			
 		}
+		/**
+		 * 
+		 */
 		private function showEditor()
 		{
 			trace("showEditor");
 			scPanel.source = mcLayout;
 		}
+		/**
+		 * 
+		 */
 		private function showXML()
 		{
 			trace("showXML");
@@ -166,7 +190,7 @@
 		 */
 		private function onStartDrag(e:MouseEvent)
 		{
-			icon = new Holder(e.target.name);
+			icon = new Holder(e.target.name,true);
 			icon.x = mouseX-8;
 			icon.y = mouseY - 8;
 			icon.alpha = 0.5;

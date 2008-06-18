@@ -1,0 +1,9 @@
+﻿<template>
+	<result>
+		<success>true</success>
+	</result>
+	
+   <component id="0" type="Text" x="28" y="26" width="211" height="177"/>
+  <component id="1" type="Image" x="250" y="25" width="303" height="186"/>
+  <component id="2" type="Video" x="28" y="228" width="529" height="182"/>
+</template>
