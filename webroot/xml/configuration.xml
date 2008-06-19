@@ -54,7 +54,10 @@
 		<sName>sectioneditor</sName>
 		<sURL><![CDATA[swf/editors/sectioneditor.swf]]></sURL>
 	</modules>
-	
+	<popups>
+		<sName>templatepicker</sName>
+		<sURL><![CDATA[swf/popups/templatepicker.swf]]></sURL>
+	</popups>
 	<popups>
 		<sName>login</sName>
 		<sURL><![CDATA[swf/login/login.swf]]></sURL>

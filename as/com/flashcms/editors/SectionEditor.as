@@ -1,6 +1,7 @@
 ﻿package com.flashcms.editors {
 	import com.flashcms.core.Module;
 	import com.flashcms.data.XMLLoader;
+	import com.flashcms.events.PopupEvent;
 	import com.yahoo.astra.fl.controls.TabBar;
 	import fl.containers.ScrollPane;
 	import com.yahoo.astra.fl.containers.VBoxPane;
@@ -23,24 +24,26 @@
 		 * 
 		 */
 		public function SectionEditor() {
-			super("SectionEditor");	
+			super("SectionEditor");
+			
 		}
+		
 		/**
 		 * 
 		 */
 		public override function init()
 		{
-			draw();
-			loadXML();
-			
+			oShell.showPopup("templatepicker", { }, onTemplateSelected);
 		}
 		/**
 		 * 
+		 * @param	e
 		 */
-		private function loadXML()
+		private function onTemplateSelected(e:PopupEvent)
 		{
+			draw();
 			var url = oShell.getURL("get", "templates");
-			oXMLLoader= new XMLLoader(url, onTemplate);
+			oXMLLoader= new XMLLoader(url, onTemplate,null,null,{id:e.parameters.selected});
 		}
 		/**
 		 * 
@@ -62,7 +65,6 @@
 		private function createComponent(component:XML)
 		{
 			var newcomponent:Holder=new Holder(component.@type);
-			
 			newcomponent.x = component.@x;
 			newcomponent.y = component.@y;
 			newcomponent.setSize(int(component.@width),int(component.@height));
