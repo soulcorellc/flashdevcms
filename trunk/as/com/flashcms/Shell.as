@@ -39,7 +39,6 @@ public class Shell extends MovieClip {
 		public var xMain:XMLList;
 		public var sLogo:String;
 		public var oUser:User;
-		private var mainindex:int = -1;
 		private var bHeaderLoaded:Boolean = false;
 		public function Shell(){
 			super();
