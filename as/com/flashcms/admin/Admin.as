@@ -121,7 +121,7 @@
 				break;
 				case 2:
 					idDelete = int(event.item.id);
-					oShell.showPopup("confirmation",{message:"Do you want to delete ?"},onConfirmation);
+					oShell.showPopup("confirmation",{title:"DELETE ",message:"Do you want to delete ?"},onConfirmation);
 				break;
 				case 3:
 					oFormData.section = "users";

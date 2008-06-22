@@ -55,8 +55,8 @@
 		<sURL><![CDATA[swf/editors/sectioneditor.swf]]></sURL>
 	</modules>
 	<popups>
-		<sName>templatepicker</sName>
-		<sURL><![CDATA[swf/popups/templatepicker.swf]]></sURL>
+		<sName>picker</sName>
+		<sURL><![CDATA[swf/popups/picker.swf]]></sURL>
 	</popups>
 	<popups>
 		<sName>login</sName>
@@ -116,5 +116,8 @@
 			<save><![CDATA[../webroot/xml/savetemplate.xml]]></save>
 			<get><![CDATA[../webroot/xml/getTemplate.xml]]></get>
 		</templates>
+		<contents>
+			<main><![CDATA[../webroot/xml/contents.xml]]></main>
+		</contents>
 	</urls>
 </configuration>

@@ -12,6 +12,8 @@
 	public class Confirmation extends Module{
 		private var oBar:ButtonBar;
 		private var oBG:DynamicBG;
+		public var txtTitle:TextField;
+		public var txtMessage:TextField;
 		public function Confirmation() {
 			createBG();
 		}
@@ -25,10 +27,11 @@
 		}
 		public override function init()
 		{
-			txtMessage.text = parameters.message;
+			txtMessage.text = parameters.message
+			txtTitle.text = parameters.title;
 			oBar = new ButtonBar(onOK, onCancel, "Yes", "No");
-			oBar.x = 75;
-			oBar.y = 250;
+			oBar.x = 70;
+			oBar.y = 280;
 			addChild(oBar);
 			
 		}

@@ -3,6 +3,7 @@
 	<result>
 		<success>true</success>
 	</result>
+	
 	<section label="Home" template="1">  
 		<section label="Section 1" template="2">  
 			<section label="Subsection 1" template="1"/>  
@@ -14,16 +15,20 @@
 		</section>  
 	</section>  
 	
-	<templates>
-		<id>1</id>
-		<name>Template 1</name>
-	</templates>
-	<templates>
-		<id>2</id>
-		<name>Template 2</name>
-	</templates>
-	<templates>
-		<id>3</id>
-		<name>Template 3</name>
-	</templates>
+	<content>
+		<idContent>1</idContent>
+		<title>Title Content 1</title>
+	</content>	
+	<content>
+		<idContent>2</idContent>
+		<title>Title Content 2</title>
+	</content>		
+	<content>
+		<idContent>3</idContent>
+		<title>Title Content 3</title>
+	</content>		
+	<content>
+		<idContent>4</idContent>
+		<title>Title Content 4</title>
+	</content>		
 </data>

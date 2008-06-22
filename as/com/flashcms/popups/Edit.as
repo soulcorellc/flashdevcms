@@ -11,6 +11,7 @@
 	import com.flashcms.components.ButtonBar;
 	import com.flashcms.events.PopupEvent;
 	import com.flashcms.forms.Validator;
+	import com.flashcms.design.DynamicBG;
 	/**
 	* ...
 	* @author Default
@@ -26,13 +27,19 @@
 		private var create:Boolean;
 		private var createoption:String;
 		private var editoption:String;
-		
+		private var oBG:DynamicBG;
 		
 		/**
 		 * 
 		 */
 		public function Edit() {
-			oLayout = new Layout(this,1, 50, 90);
+			createBG();	
+			oLayout = new Layout(this,2, 50, 70);
+		}
+		private function createBG()
+		{
+			oBG = new DynamicBG(550, new left(), new center(), new right());
+			addChildAt(oBG,0);
 		}
 		/**
 		 * 
@@ -48,8 +55,8 @@
 			new XMLLoader(urlschema, onXMLSchema, onErrorData, onError);
 			
 			oBar = new ButtonBar(send,close,"Save","Cancel");
-			oBar.x = 50;
-			oBar.y = 350;
+			oBar.x = 40;
+			oBar.y = 280;
 			addChild(oBar);
 		}
 		/**
@@ -116,7 +123,8 @@
 		 */
 		private function send(e:Event)
 		{
-			option = create?createoption:editoption;
+			var urldata = oShell.getURL("data", oForm.section);
+			var option = create?createoption:editoption;
 			new XMLLoader(urldata, onSaveData, onSaveError, onError, {option:option,id:id});
 		}
 		private function onSaveData(e:Event)
