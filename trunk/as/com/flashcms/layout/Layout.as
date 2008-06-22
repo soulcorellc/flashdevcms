@@ -5,8 +5,8 @@ package com.flashcms.layout{
 	
 	public class Layout{
 		public var controller:Sprite;
-		public var xmargin:int=50;
-		public var ymargin:int=50;
+		public var xmargin:int=40;
+		public var ymargin:int=85;
 		public var columns:int;
 		public var yspacing:int;
 		public var xspacing:int;

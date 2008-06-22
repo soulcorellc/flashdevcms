@@ -8,17 +8,20 @@
 	import fl.controls.Button;
 	import flash.events.MouseEvent;
 	import com.flashcms.events.PopupEvent;
+	import flash.text.TextField;
 	/**
 	* ...
 	* @author Default
 	*/
-	public class TemplatePicker extends Module{
+	public class Picker extends Module{
 		private var oBG:DynamicBG;
 		private var oXMLLoader:XMLLoader;
 		private var oXML:XML;
 		public var lbList:List;
 		public var btSelect:Button;
-		public function TemplatePicker() {
+		public var btCancel:Button;
+		public var txtTitle:TextField;
+		public function Picker() {
 			createBG();	
 		}
 		private function createBG()
@@ -28,20 +31,26 @@
 		}
 		public override function init()
 		{
-			var url = oShell.getURL("main","templates");
-			oXMLLoader=new XMLLoader(url,onDataLoaded)
+			oXMLLoader = new XMLLoader(parameters.url, onDataLoaded)
+			txtTitle.text = parameters.title;
 		}
 		private function onDataLoaded(e:Event)
 		{
 			oXML = XML(e.target.data);
-			var myDP:DataProvider = new DataProvider(<data>{oXML.templates}</data>);
+			var myDP:DataProvider = new DataProvider( < data > { oXML[parameters.tableName] }</data>);
+			trace("tableNAme " + parameters.tableName);
 			lbList.dataProvider = myDP;
-			lbList.labelField = "name";
+			lbList.labelField = parameters.labelField;
 			btSelect.addEventListener(MouseEvent.CLICK, onSelect);
+			btCancel.addEventListener(MouseEvent.CLICK, onCancel);
 		}
 		private function onSelect(e:MouseEvent)
 		{
 			dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{selected:lbList.selectedItem.id}));
+		}
+		private function onCancel(e:MouseEvent)
+		{
+			dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{selected:null}));
 		}
 	}
 	

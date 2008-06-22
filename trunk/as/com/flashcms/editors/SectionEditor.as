@@ -25,7 +25,6 @@
 		 */
 		public function SectionEditor() {
 			super("SectionEditor");
-			
 		}
 		
 		/**
@@ -33,7 +32,23 @@
 		 */
 		public override function init()
 		{
-			oShell.showPopup("templatepicker", { }, onTemplateSelected);
+			var oparameters = new Object();
+			oparameters.type = parameters.type;
+			if(parameters.type=="create"){
+				oparameters.title="SELECT A TEMPLATE TO CREATE CONTENT";
+				oparameters.url = oShell.getURL("main", "templates");
+				oparameters.labelField = "name";
+				oparameters.tableName = "templates";
+			}
+			if (parameters.type == "edit") {
+				oparameters.title="SELECT A CONTENT TO EDIT";
+				oparameters.url = oShell.getURL("main", "contents");
+				oparameters.labelField = "title";
+				oparameters.tableName = "content";
+			}
+			
+		
+			oShell.showPopup("picker", oparameters, onTemplateSelected);
 		}
 		/**
 		 * 

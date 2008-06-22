@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<result>
+		<success>true</success>
+	</result>
+	
+	<content>
+		<id>1</id>
+		<title>Content A</title>
+	</content>
+	<content>
+		<id>2</id>
+		<title>Content B</title>
+	</content>
+	<content>
+		<id>3</id>
+		<title>Content C</title>
+	</content>
+</data>

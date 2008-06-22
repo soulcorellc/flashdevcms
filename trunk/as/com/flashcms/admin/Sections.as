@@ -3,6 +3,7 @@
 	import com.yahoo.astra.fl.controls.Tree;  
 	import com.yahoo.astra.fl.controls.treeClasses.*;
 	import fl.controls.Button;
+	import fl.controls.List;
 	import fl.events.ListEvent;
 	import com.flashcms.data.XMLLoader;
 	import flash.events.Event;
@@ -10,19 +11,19 @@
 	import fl.controls.ComboBox;
 	import flash.events.MouseEvent;
 	import com.flashcms.events.NavigationEvent;
-	
+	import fl.data.DataProvider;
+
 	/**
 	* ...
 	* @author Default
 	*/
 	public class Sections extends Module{
-		var oXML:XML;
-		var oXMLLoader:XMLLoader;
+		private var oXML:XML;
+		private var oXMLLoader:XMLLoader;
 		public var treeSections:Tree;
-		public var cbTemplates:ComboBox;
-		public var btCreate:Button;
-		public var btEdit:Button;
-		public var btDelete:Button;
+		public var btAdd:Button;
+		public var btRemove:Button;
+		public var lbContent:List;
 		
 		public function Sections() {
 			super("Sections");
@@ -34,7 +35,8 @@
 		{
 			var url = oShell.getURL("main", "sections");
 			oXMLLoader = new XMLLoader(url, onXMLData, onDataError, onError);
-			
+			btAdd.enabled = false;
+			btRemove.enabled = false;
 		}
 		/**
 		 * 
@@ -43,19 +45,22 @@
 		private function onXMLData(e:Event)
 		{
 			oXML = XML(e.target.data);
+			
 			treeSections.addEventListener(ListEvent.ITEM_CLICK,onClick);
 			treeSections.dataProvider = new TreeDataProvider(XML(oXML.section));
 			treeSections.openAllNodes();
-			cbTemplates.dataProvider = new DataProvider(<data>{oXML.templates}</data>);
-			cbTemplates.labelField = "name";
-			cbTemplates.prompt = "Template of Selected Content";
-			btCreate.addEventListener(MouseEvent.CLICK, onCreate);
-			btEdit.addEventListener(MouseEvent.CLICK, onEdit);
-			btDelete.addEventListener(MouseEvent.CLICK, onDelete);
+			
+			trace(oXML.content);
+			lbContent.labelField = "title";
+			lbContent.dataProvider = new DataProvider( < data > { oXML.content }</data>);
+			lbContent.addEventListener(ListEvent.ITEM_CLICK,onSelectContent);
+			
+			btAdd.addEventListener(MouseEvent.CLICK, onCreate);
+			btRemove.addEventListener(MouseEvent.CLICK, onDelete);
 		}
 		private function onCreate(e:Event)
 		{
-			oShell.setModule(new NavigationEvent("sectioneditor", {} ));
+			//oShell.setModule(new NavigationEvent("sectioneditor", {} ));
 		}
 		private function onEdit(e:Event)
 		{
@@ -85,7 +90,15 @@
 		 */
 		private function onClick(event:ListEvent)
 		{
-			select(event.item.template);
+			btRemove.enabled = true;
+		}
+		/**
+		 * 
+		 * @param	event
+		 */
+		private function onSelectContent(event:ListEvent)
+		{
+			btAdd.enabled = true;
 		}
 		/**
 		 * 
@@ -93,13 +106,7 @@
 		 */
 		private function select(id:String)
 		{
-			for (var i = 0; i < cbTemplates.length;i++)
-			{
-				if (cbTemplates.getItemAt(i).id == id)
-				{
-					cbTemplates.selectedIndex = i;
-				}
-			}
+			
 		}
 		
 	}

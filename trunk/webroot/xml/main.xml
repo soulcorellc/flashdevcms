@@ -12,8 +12,8 @@
 		</menu>
 		<menu label="CONTENT">
 			<menuitem label="Sections" id="sections"/>
-			<menuitem label="Create Content" id="sectioneditor"/>
-			<menuitem label="Publish Content" id="sectioneditor"/>
+			<menuitem label="Create Content" id="sectioneditor" type="create" />
+			<menuitem label="Edit Content" id="sectioneditor" type="edit" />
 			<menuitem label="Files Manager" id="files"/>
 		</menu>
 		
