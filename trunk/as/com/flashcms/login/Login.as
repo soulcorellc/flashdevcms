@@ -2,6 +2,7 @@
 	import com.flashcms.core.Module;
 	import com.flashcms.events.ErrorEvent;
 	import fl.controls.Button;
+	import fl.controls.TextInput;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.text.TextField;
@@ -15,8 +16,8 @@
 	*/
 	public class Login extends Module{
 		
-		public var txtUser:TextField;
-		public var txtPass:TextField;
+		public var txtUser:TextInput;
+		public var txtPass:TextInput;
 		public var btEnter:Button;
 		public var sUserName:String="";
 		public var txtError:TextField;
@@ -36,6 +37,9 @@
 			
 			btEnter.addEventListener(MouseEvent.CLICK, onEnter);
 		}
+		/**
+		 * 
+		 */
 		private function createBG()
 		{
 			oBG = new DynamicBG(350, new left(), new center(), new right());

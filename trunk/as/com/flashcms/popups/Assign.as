@@ -9,7 +9,8 @@
 	import com.flashcms.components.ButtonBar;
 	import flash.events.Event;
 	import com.flashcms.events.PopupEvent;
-	
+	import com.flashcms.design.DynamicBG;
+	import com.flashcms.layout.Layout;
 	/**
 	* ...
 	* @author Default
@@ -20,13 +21,26 @@
 		private var mcLayout:Sprite;
 		public var scPanel:ScrollPane;
 		private var oBar:ButtonBar;
+		private var oBG:DynamicBG;
+		private var oLayout:Layout;
 		public function Assign() {
+			createBG();
+			
 			mcLayout = new Sprite();
+			oLayout = new Layout(mcLayout, 2, 30, 30);
+			oLayout.xmargin = 10;
+			oLayout.ymargin = 10;
 			oBar = new ButtonBar(onSave, onCancel, "Cancel", "Save");
-			oBar.x = 312;
-			oBar.y = 360;
+			oBar.x = 300;
+			oBar.y = 295;
 			addChild(oBar);
 		}
+		private function createBG()
+		{
+			oBG = new DynamicBG(550, new left(), new center(), new right());
+			addChildAt(oBG,0);
+		}
+		
 		/**
 		 * 
 		 */
@@ -44,6 +58,7 @@
 				component.x = 30;
 				component.y = (index * 30)+yinit;
 				mcLayout.addChild(component);
+				oLayout.addComponent(component, "", "checkbox");
 				index++;
 			
 			}

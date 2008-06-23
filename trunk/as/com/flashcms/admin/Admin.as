@@ -8,7 +8,7 @@
 	import com.flashcms.forms.FormData;
 	import com.yahoo.astra.fl.accessibility.EventTypes;
 	import fl.controls.Button;
-	import fl.controls.DataGrid;
+	import fl.controls.List;
 	import fl.events.ListEvent;
 	import fl.data.DataProvider;
 	import fl.controls.dataGridClasses.DataGridColumn;
@@ -21,8 +21,14 @@
 	* @author Default
 	*/
 	public class Admin extends Module{
-		public var dgMain:DataGrid;
+		//public var dgMain:DataGrid;
+		public var lbList:List;
 		public var btCreate:Button;
+		public var btEdit:Button;
+		public var btDelete:Button;
+		public var btUsers:Button;
+		public var btPermissions:Button;
+		
 		public var tableName:String;
 		public var sectionName:String;
 		public var xmlData:XML;
@@ -45,6 +51,7 @@
 		 */
 		public override function init()
 		{
+			
 			editoption=parameters.edit;
 			createoption=parameters.create;
 			sectionName = parameters.section;
@@ -54,8 +61,6 @@
 			tableName = parameters.content == undefined || parameters.content==""? parameters.section:parameters.content;
 			//trace("tableName : "+tableName)
 			oXMLLoader=new XMLLoader(sURL, onXMLData, onDataError, onError,{option:sOption});
-			btCreate.label = "Create New";
-			btCreate.addEventListener(MouseEvent.CLICK, onCreate);
 		}
 		/**
 		 * 
@@ -65,32 +70,47 @@
 		 */
 		private function onXMLData(event:Event)
 		{
+			
+			trace("tableName : " + tableName);
 			xmlData = XML(event.target.data);
 			editpopup = xmlData.parameters.editpopup;
-			var myDP:DataProvider = new DataProvider(<data>{xmlData[tableName]}</data>);
 			
-			dgMain.addColumn(createColumn("name","Name",300));
-			dgMain.addColumn(createColumn("edit","",120,ButtonRenderer));
-			dgMain.addColumn(createColumn("delete","",120,ButtonRenderer));
-			if (tableName == "groups"){
-				dgMain.addColumn(createColumn("users", "", 120, ButtonRenderer));
-				dgMain.addColumn(createColumn("permissions","",120,ButtonRenderer));
+			for each (var item:XML in xmlData[tableName])
+			{	
+				item.id+=<icon>{"Icon"+tableName}</icon>
+				trace(item);
 			}
-			dgMain.dataProvider = myDP;
-			dgMain.addEventListener(ListEvent.ITEM_CLICK , onClickItem);
 			
+			var myDP:DataProvider = new DataProvider(<data>{xmlData[tableName]}</data>);
+			lbList.labelField = "name";
+			lbList.dataProvider = myDP;
+			lbList.addEventListener(ListEvent.ITEM_CLICK, onListSelect);
+			lbList.iconField = "icon";
+			setUpButtons();
+		
+		}
+		private function onListSelect(e:ListEvent)
+		{
+			btCreate.enabled = true;
+			btEdit.enabled = true;
+			btDelete.enabled = true;
+			btPermissions.enabled = true;
+			btUsers.enabled = true;
+				
+		}
+		private function setUpButtons()
+		{
+			btCreate.addEventListener(MouseEvent.CLICK, onCreate);
+			btEdit.addEventListener(MouseEvent.CLICK, onEdit);
+			btDelete.addEventListener(MouseEvent.CLICK, onDelete);
+			if (tableName == "groups"){
+				btPermissions.visible = true;
+				btUsers.visible = true;
+				btPermissions.addEventListener(MouseEvent.CLICK, onPermissions);
+				btUsers.addEventListener(MouseEvent.CLICK, onUsers);
+			}
 		}
 		
-		private function createColumn(name:String,label:String,width:int=120,cellrenderer:Class=null):DataGridColumn
-		{
-			var col1:DataGridColumn = new DataGridColumn(name);
-			col1.headerText = label;
-			col1.width = width;
-			if(cellrenderer!=null){
-				col1.cellRenderer = ButtonRenderer;
-			}
-			return col1;
-		}
 		/**
 		 * 
 		 * @param	e
@@ -99,44 +119,7 @@
 		{
 			trace("Admin Error : " + e.message);
 		}
-		/**
-		 * 
-		 * 
-		 * 
-		 * @param	event
-		 */
-		private function onClickItem(event:ListEvent)
-		{
-			oFormData = new FormData(tableName, sectionName , true, xmlData);
-			switch(event.columnIndex)
-			{
-				case 1:
-					if(editpopup == "templates"){
-						oShell.setModule(new NavigationEvent("templates", { } ));
-					}
-					else
-					{
-						oShell.showPopup(editpopup, {table:tableName,section:sectionName,requiredata:true,data:xmlData,id:event.item.id}, onEdit);
-					}
-				break;
-				case 2:
-					idDelete = int(event.item.id);
-					oShell.showPopup("confirmation",{title:"DELETE ",message:"Do you want to delete ?"},onConfirmation);
-				break;
-				case 3:
-					oFormData.section = "users";
-					oShell.showPopup("assign",oFormData,onConfirmation);
-				break;
-				case 4:
-					oFormData.section = "modules";
-					oShell.showPopup("assign",oFormData,onConfirmation);
-				break;
-			}
-		}
-		/**
-		 * 
-		 * @param	e
-		 */
+		
 		private function onCreate(e:Event)
 		{
 			if(editpopup == "templates")
@@ -145,15 +128,44 @@
 			}
 			else 
 			{
-				oShell.showPopup(editpopup, {table:tableName,section:sectionName,requiredata:true,data:xmlData,create:true,editoption:editoption,createoption:createoption}, onEdit);
+				oShell.showPopup(editpopup, {table:tableName,section:sectionName,requiredata:false,data:xmlData,create:true,editoption:editoption,createoption:createoption}, onFinishEdit);
 			}
 		}
+		private function onEdit(e:MouseEvent)
+		{
+			if(editpopup == "templates"){
+				oShell.setModule(new NavigationEvent("templates", { } ));
+			}
+			else
+			{
+				oShell.showPopup(editpopup, {table:tableName,section:sectionName,requiredata:true,data:xmlData,id:lbList.selectedItem.id}, onFinishEdit);
+			}
+		}
+		private function onDelete(e:MouseEvent)
+		{
+			idDelete = lbList.selectedItem.id;
+			oShell.showPopup("confirmation",{title:"DELETE ",message:"Do you want to delete ?"},onConfirmation);
+		}
 		
+		private function onUsers(e:MouseEvent)
+		{
+			oFormData = new FormData(tableName, sectionName , true, xmlData);
+			oFormData.section = "users";
+			oShell.showPopup("assign",oFormData,onConfirmation);
+		}
+
+		private function onPermissions(e:MouseEvent)
+		{
+			oFormData = new FormData(tableName, sectionName , true, xmlData);
+			oFormData.section = "modules";
+			oShell.showPopup("assign",oFormData,onConfirmation);
+		}
+			
 		/**
 		 * 
 		 * @param	e
 		 */
-		private function onEdit(e:PopupEvent)
+		private function onFinishEdit(e:PopupEvent)
 		{
 			trace("edit closed");
 		}
@@ -165,14 +177,14 @@
 		{
 			if (e.parameters.type == "yes")
 			{
-				oXMLLoader=new XMLLoader(sURL, onDelete, onDeleteError, onError,{option:"delete",user:idDelete});
+				oXMLLoader=new XMLLoader(sURL, onFinishDelete, onDeleteError, onError,{option:"delete",user:idDelete});
 			}
 		}
 		/**
 		 * 
 		 * @param	e
 		 */
-		private function onDelete(e:Event)
+		private function onFinishDelete(e:Event)
 		{
 			oShell.setStatusMessage("User Deleted");
 		}
@@ -191,7 +203,6 @@
 		private function onError(event:IOErrorEvent)
 		{
 			oShell.setStatusMessage(event.text);
-			//trace("ioErrorHandler: " + event.text);
 		}
 		
 	}

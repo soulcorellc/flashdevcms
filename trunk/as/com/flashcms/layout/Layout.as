@@ -36,7 +36,7 @@ package com.flashcms.layout{
 		 */
 		public function addComponent(component,title:String,type:String)
 		{
-			
+			trace("added component "+component);
 			component.x = xmargin+(col*defaultwidth)+(xspacing*col);
 			component.y = ymargin + (yspacing * row);
 			if (requireLabel(type))
