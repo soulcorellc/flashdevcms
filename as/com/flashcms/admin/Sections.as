@@ -51,7 +51,15 @@
 			treeSections.openAllNodes();
 			
 			trace(oXML.content);
+			
+			for each (var item:XML in oXML.content)
+			{	
+				item.id+=<icon>{"Iconcontent"}</icon>
+				trace(item);
+			}
+			
 			lbContent.labelField = "title";
+			lbContent.iconField = "icon";
 			lbContent.dataProvider = new DataProvider( < data > { oXML.content }</data>);
 			lbContent.addEventListener(ListEvent.ITEM_CLICK,onSelectContent);
 			

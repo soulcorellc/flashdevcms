@@ -52,10 +52,18 @@
 		</data>;
 		public var xmlTools:XML =
 		<data>
-			<tools>
+			<button>
+				<type>New</type>
+				<icon>IconNew</icon>
+			</button>
+			<button>
+				<type>Open</type>
+				<icon>IconOpen</icon>
+			</button>
+			<button>
 				<type>Save</type>
 				<icon>IconSave</icon>
-			</tools>
+			</button>
 		</data>
 		public var xmlTemplate:XML = <template/>;
 		
@@ -85,7 +93,7 @@
 			mcXML.addChild(txtXML);
 			toolsPanel.setStyle( "skin", "ToolbarSkin" ); 
 			setToolBar(xmlComponents.components,componentsPanel,onStartDrag);
-			setToolBar(xmlTools.tools,toolsPanel,onToolsChange);
+			setToolBar(xmlTools.button,toolsPanel,onToolsChange);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN,onDelete)
 		}
 		/**
