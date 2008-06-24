@@ -1,5 +1,6 @@
 ﻿package com.flashcms.editors {
 	
+	import com.flashcms.components.ContentHolder;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -27,6 +28,7 @@
 		private var mcLayout:Sprite;
 		private var oXMLLoader:XMLLoader;
 		private var oXML:XML;
+		private var oContent:XML = <content/>;
 		private var xmlBar:XML =
 		<data>
 			<button>
@@ -81,8 +83,8 @@
 			toolbar.verticalAlign = VerticalAlignment.MIDDLE;
 			toolbar.verticalGap = 10;
 			toolbar.horizontalGap = 10;
-			
 		}
+		
 		private function onBarClick(e:Event)
 		{
 			switch(e.target.name) {
@@ -125,7 +127,6 @@
 				oparameters.labelField = "title";
 				oparameters.tableName = "content";
 			}
-			
 			oShell.showPopup("picker", oparameters, onTemplateSelected);
 		}
 		/**
@@ -144,8 +145,6 @@
 		private function onTemplate(event:Event)
 		{
 			oXML = XML(event.target.data);
-			trace(oXML.component);
-			
 			for each(var component:XML in oXML.component)
 			{
 				createComponent(component);
@@ -157,11 +156,17 @@
 		 */
 		private function createComponent(component:XML)
 		{
-			var newcomponent:Holder=new Holder(component.@type);
+			var newcomponent:ContentHolder=new ContentHolder(component.@type);
+			newcomponent.doubleClickEnabled = true;
 			newcomponent.x = component.@x;
 			newcomponent.y = component.@y;
 			newcomponent.setSize(int(component.@width),int(component.@height));
 			mcLayout.addChild(newcomponent);
+			newcomponent.addEventListener(MouseEvent.DOUBLE_CLICK, onEditComponent);
+		}
+		private function onEditComponent(e:Event)
+		{
+			trace("onEditComponent");
 		}
 		/**
 		 * 
