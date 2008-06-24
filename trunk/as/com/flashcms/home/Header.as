@@ -24,7 +24,6 @@
 	* @author Default
 	*/
 	public class Header extends Module{
-		
 		public var oXML:XML;
 		public var xMenu:XMLList;
 		public var oMenu:MenuBar;	
@@ -34,9 +33,11 @@
 		private var oForm:FormData;
 		private var oBG:DynamicBG;
 		public var oUserInfo;
+		/**
+		 * 
+		 */
 		public function Header() {
 			super("Header");
-			
 		}
 		/**
 		 * Starts Header functionallity
@@ -59,11 +60,17 @@
 			initUser();
 			trace(this.height);
 		}
+		/**
+		 * 
+		 */
 		private function createBG()
 		{
 			oBG = new DynamicBG(stage.stageWidth, new left(), new center(), new right());
 			addChildAt(oBG,0);
 		}
+		/**
+		 * 
+		 */
 		private function initUser()
 		{
 			oUserInfo.txtUser.text = "WELCOME, " + String(oShell.oUser.sName).toUpperCase();
@@ -80,21 +87,33 @@
 			oBG.update(stage.stageWidth);
 			oUserInfo.x = stage.stageWidth - (oUserInfo.width+20);
 		}
-		
+		/**
+		 * 
+		 * @param	event
+		 */
 		private function onError(event:LoadError)
 		{
 			trace("Header error "+event.text);
 		}
-		
+		/**
+		 * 
+		 * @param	event
+		 */
 		private function onItemClick(event:MenuEvent):void{
 			dispatchEvent(new NavigationEvent(event.item.id,event.item));
 		}
-		
+		/**
+		 * 
+		 * @param	event
+		 */
 		private function onLoadImage(event:LoadEvent)
 		{
 			this.addChild(event.loaderTarget.content);
 		}
-		
+		/**
+		 * 
+		 * @param	event
+		 */
 		function ioErrorHandler(event:IOErrorEvent)
 		{
 			trace("ioErrorHandler: " + event.text);
@@ -106,21 +125,35 @@
 			oForm = new FormData("users", "users");
 			oShell.showPopup("edit",oForm,onEdit);
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onPassword(e:Event)
 		{
 			
 			oForm = new FormData("password", "password");
 			oShell.showPopup("edit",oForm,onEdit);
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onLogout(e:Event)
 		{
 			oShell.logout();
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onEdit(e:PopupEvent)
 		{
 			
 		}
-		
+		/**
+		 * 
+		 */
 		public override function dispose()
 		{
 			removeChild(oMenu);
