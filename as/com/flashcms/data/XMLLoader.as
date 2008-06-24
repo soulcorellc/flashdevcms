@@ -62,7 +62,7 @@
 		 */
 		private function onComplete(event:Event)
 		{
-			oXML = XML(event.target.data);
+		oXML = XML(event.target.data);
 			if (oXML.result.success == "true")
 			{
 				handler.call(this,event);

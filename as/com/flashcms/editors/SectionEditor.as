@@ -27,35 +27,31 @@
 		public var toolsPanel:VBoxPane;
 		private var mcLayout:Sprite;
 		private var oXMLLoader:XMLLoader;
+		private var oXMLTemplate:XML;
 		private var oXML:XML;
 		private var oContent:XML = <content/>;
-		private var xmlBar:XML =
-		<data>
-			<button>
-				<type>New</type>
-				<icon>IconNew</icon>
-			</button>
-			<button>
-				<type>Open</type>
-				<icon>IconOpen</icon>
-			</button>
-			<button>
-				<type>Save</type>
-				<icon>IconSave</icon>
-			</button>
-		</data>
+		private var xmlBar:XMLList;
+		private var xmlComponents:XMLList;
+		
 		/**
 		 * 
 		 */
 		public function SectionEditor() {
 			super("SectionEditor");
-			setToolBar(xmlBar.button, toolsPanel, onBarClick);
+			
 		}
 		/**
 		 * 
 		 */
 		public override function init()
 		{
+			oXMLLoader = new XMLLoader(oShell.getURL("main", "editors"), onXMLLoaded);
+		}
+		
+		private function onXMLLoaded(e:Event)
+		{
+			oXML= XML(e.target.data);
+			setToolBar(oXML.button, toolsPanel, onBarClick);
 			showPicker();
 		}
 		/**
@@ -144,8 +140,8 @@
 		 */
 		private function onTemplate(event:Event)
 		{
-			oXML = XML(event.target.data);
-			for each(var component:XML in oXML.component)
+			oXMLTemplate = XML(event.target.data);
+			for each(var component:XML in oXMLTemplate.component)
 			{
 				createComponent(component);
 			}
@@ -156,17 +152,30 @@
 		 */
 		private function createComponent(component:XML)
 		{
-			var newcomponent:ContentHolder=new ContentHolder(component.@type);
-			newcomponent.doubleClickEnabled = true;
+			var newcomponent:ContentHolder = new ContentHolder(component.@type);
 			newcomponent.x = component.@x;
 			newcomponent.y = component.@y;
 			newcomponent.setSize(int(component.@width),int(component.@height));
 			mcLayout.addChild(newcomponent);
 			newcomponent.addEventListener(MouseEvent.DOUBLE_CLICK, onEditComponent);
+			
 		}
-		private function onEditComponent(e:Event)
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function onEditComponent(e:MouseEvent)
 		{
-			trace("onEditComponent");
+			showEditor(e.currentTarget.type)
+		}
+		private function showEditor(componenttype:String)
+		{
+			var editor:String = (oXML.components.(type == componenttype).editor);
+			oShell.showPopup(editor,onCloseEditor);
+		}
+		private function onCloseEditor(e:Event)
+		{
+			trace("closed");
 		}
 		/**
 		 * 

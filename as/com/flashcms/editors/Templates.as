@@ -4,6 +4,7 @@
 	import com.flashcms.events.ErrorEvent;
 	import com.yahoo.astra.fl.controls.TabBar;
 	import fl.controls.TextArea;
+	import flash.display.Loader;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -35,49 +36,35 @@
 		private var selected:Holder;
 		private var currentState:int = 0;
 		private var txtXML:TextArea;
-		public var xmlComponents:XML =
-		<data>
-			<components>
-				<type>Text</type>
-				<icon>IconText</icon>
-			</components>
-			<components>
-				<type>Image</type>
-				<icon>IconImage</icon>
-			</components>
-			<components>
-				<type>Video</type>
-				<icon>IconVideo</icon>
-			</components>
-		</data>;
-		public var xmlTools:XML =
-		<data>
-			<button>
-				<type>New</type>
-				<icon>IconNew</icon>
-			</button>
-			<button>
-				<type>Open</type>
-				<icon>IconOpen</icon>
-			</button>
-			<button>
-				<type>Save</type>
-				<icon>IconSave</icon>
-			</button>
-		</data>
+		private var oXMLLoader:XMLLoader;
+		
+		public var xmlComponents:XMLList;
+		public var xmlTools:XMLList;
 		public var xmlTemplate:XML = <template/>;
 		
 		/**
 		 * 
 		 */
 		public function Templates() {
-			
+		
 		}
 		/**
 		 * 
 		 */
 		public override function init()
 		{
+			oXMLLoader = new XMLLoader(oShell.getURL("main", "editors"), onXMLLoaded);
+		}
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function onXMLLoaded(e:Event)
+		{
+			var oXML:XML = XML(e.target.data);
+			xmlComponents = oXML.components;		
+			xmlTools = oXML.button;
+			
 			oTabBar.addEventListener(Event.CHANGE, onTabChange);
 			mcLayout = new Sprite();
 			mcXML= new Sprite();
@@ -88,13 +75,13 @@
 			txtXML = new TextArea();
 			txtXML.width = scPanel.width - 40;
 			txtXML.height = scPanel.height - 40;
-			txtXML.x = 20;
-			txtXML.y = 20;
+			txtXML.move(20, 20);
 			mcXML.addChild(txtXML);
 			toolsPanel.setStyle( "skin", "ToolbarSkin" ); 
-			setToolBar(xmlComponents.components,componentsPanel,onStartDrag);
-			setToolBar(xmlTools.button,toolsPanel,onToolsChange);
+			setToolBar(xmlComponents,componentsPanel,onStartDrag);
+			setToolBar(xmlTools,toolsPanel,onToolsChange);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN,onDelete)
+
 		}
 		/**
 		 * 
