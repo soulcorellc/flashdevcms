@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<result>
+		<success>true</success>
+	</result>
+	
+	<components>
+		<type>Text</type>
+		<icon>IconText</icon>
+		<editor>texteditor</editor>
+	</components>
+	<components>
+		<type>Image</type>
+		<icon>IconImage</icon>
+		<editor>imageeditor</editor>
+	</components>
+	<components>
+		<type>Video</type>
+		<icon>IconVideo</icon>
+		<editor>videoeditor</editor>
+	</components>
+	
+	<button>
+		<type>New</type>
+		<icon>IconNew</icon>
+	</button>
+	<button>
+		<type>Open</type>
+		<icon>IconOpen</icon>
+	</button>
+	<button>
+		<type>Save</type>
+		<icon>IconSave</icon>
+	</button>
+	
+</data>

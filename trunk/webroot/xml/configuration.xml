@@ -79,6 +79,18 @@
 		<sURL><![CDATA[swf/popups/assign.swf]]></sURL>
 	</popups>
 	
+	<popups>
+		<sName>texteditor</sName>
+		<sURL><![CDATA[swf/popups/texteditor.swf]]></sURL>
+	</popups>
+	<popups>
+		<sName>imageeditor</sName>
+		<sURL><![CDATA[swf/popups/imageeditor.swf]]></sURL>
+	</popups>
+	<popups>
+		<sName>videoeditor</sName>
+		<sURL><![CDATA[swf/popups/videoeditor.swf]]></sURL>
+	</popups>
 	<urls>
 		<core>
 			<upload><![CDATA[../webroot/xml/upload.xml]]></upload>
@@ -119,5 +131,8 @@
 		<contents>
 			<main><![CDATA[../webroot/xml/contents.xml]]></main>
 		</contents>
+		<editors>
+			<main><![CDATA[../webroot/xml/editors.xml]]></main>
+		</editors>
 	</urls>
 </configuration>

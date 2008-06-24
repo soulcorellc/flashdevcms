@@ -34,6 +34,10 @@
 			btUpload.addEventListener(MouseEvent.CLICK, browseFiles); 
 			listFiles.iconField = "icon";
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function browseFiles(e:Event)
 		{
 			fileRefList.browse(aFileTypes);

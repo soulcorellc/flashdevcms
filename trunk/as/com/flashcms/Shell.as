@@ -64,7 +64,6 @@ public class Shell extends MovieClip {
 		 */
 		public function onModuleChange(event:NavigationEvent)
 		{
-			//trace("Module " + event.sModule + " Params :" + event.parameters);
 			if(!bHeaderLoaded){
 				loadModule("background");	
 				loadModule("footer");
