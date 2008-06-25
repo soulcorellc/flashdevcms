@@ -47,7 +47,10 @@
 		{
 			oXMLLoader = new XMLLoader(oShell.getURL("main", "editors"), onXMLLoaded);
 		}
-		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onXMLLoaded(e:Event)
 		{
 			oXML= XML(e.target.data);
@@ -80,7 +83,10 @@
 			toolbar.verticalGap = 10;
 			toolbar.horizontalGap = 10;
 		}
-		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onBarClick(e:Event)
 		{
 			switch(e.target.name) {
