@@ -12,10 +12,10 @@
 	import com.yahoo.astra.fl.controls.TabBar;
 	import fl.controls.Button;
 	import fl.containers.ScrollPane;
-	import com.yahoo.astra.fl.containers.VBoxPane;
+	import com.yahoo.astra.fl.containers.HBoxPane;
 	import com.yahoo.astra.layout.modes.*;
 	import com.flashcms.components.Holder;
-	
+	import com.flashcms.components.TextBar;
 
 	/**
 	* ...
@@ -24,7 +24,8 @@
 	public class SectionEditor extends Module{
 		public var oTabBar:TabBar;
 		public var scPanel:ScrollPane;
-		public var toolsPanel:VBoxPane;
+		public var toolsPanel:HBoxPane;
+		public var optionsPanel:HBoxPane;
 		private var mcLayout:Sprite;
 		private var oXMLLoader:XMLLoader;
 		private var oXMLTemplate:XML;
@@ -32,6 +33,7 @@
 		private var oContent:XML = <content/>;
 		private var xmlBar:XMLList;
 		private var xmlComponents:XMLList;
+		private var oTextBar:TextBar;
 		
 		/**
 		 * 
@@ -63,7 +65,7 @@
 		 * @param	toolbar
 		 * @param	callback
 		 */
-		private function setToolBar(data:XMLList,toolbar:VBoxPane,callback:Function)
+		private function setToolBar(data:XMLList,toolbar:HBoxPane,callback:Function)
 		{
 			for each(var component:XML in data)
 			{
@@ -163,7 +165,7 @@
 			newcomponent.y = component.@y;
 			newcomponent.setSize(int(component.@width),int(component.@height));
 			mcLayout.addChild(newcomponent);
-			newcomponent.addEventListener(MouseEvent.DOUBLE_CLICK, onEditComponent);
+			newcomponent.addEventListener(MouseEvent.CLICK, onEditComponent);
 			
 		}
 		/**
@@ -172,12 +174,17 @@
 		 */
 		private function onEditComponent(e:MouseEvent)
 		{
-			showEditor(e.currentTarget.type)
+			showEditor(e.currentTarget)
 		}
-		private function showEditor(componenttype:String)
+		private function showEditor(component:Object)
 		{
-			var editor:String = (oXML.components.(type == componenttype).editor);
-			oShell.showPopup(editor,onCloseEditor);
+			var editor:String = (oXML.components.(type == component.type).editor);
+			switch(editor)
+			{
+				case "texteditor":
+					oTextBar = new TextBar(ContentHolder(component).txtMain);
+				break;
+			}
 		}
 		private function onCloseEditor(e:Event)
 		{
