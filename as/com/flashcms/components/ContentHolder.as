@@ -4,6 +4,7 @@
 	import flash.text.TextField;
 	import flash.utils.getDefinitionByName;
 	import flash.events.MouseEvent;
+	import flash.text.TextFieldType;
 	/**
 	* ...
 	* @author David Barrios
@@ -12,7 +13,7 @@
 		private var id:int;
 		public var type:String;
 		private var mcBackground:Sprite;
-		public var txtName:TextField;
+		public var txtMain:TextField;
 		
 		public function ContentHolder (type:String) {
 			super();
@@ -20,16 +21,24 @@
 			this.type = type;
 			mcBackground = new Sprite();
 			addChildAt(mcBackground, 0);
-			txtName.text = type;
-			var IconClass:Class = getDefinitionByName("Icon" + type) as Class;
-			var icon:Sprite= new IconClass();
-			icon.x = 6;
-			icon.y = 6;
-			addChild(icon);
 			setSize(100, 100);
 			mcBackground.doubleClickEnabled = true;
+			initEditor();
 		}
-	
+		private function initEditor()
+		{
+			switch(type)
+			{
+				case "Text":
+					txtMain = new TextField();
+					txtMain.width = this.width;
+					txtMain.height = this.height;
+					addChild(txtMain);
+					txtMain.type = TextFieldType.INPUT;
+					txtMain.wordWrap = true;
+				break;
+			}
+		}
 		public function setSize(newwidth:int,newheight:int)
 		{
 			mcBackground.graphics.clear();
@@ -37,6 +46,11 @@
 			mcBackground.graphics.lineStyle(1, 0xCCCCCC, 1);
 			mcBackground.graphics.drawRect( 0, 0, newwidth, newheight);
 			mcBackground.graphics.endFill();
+			if (txtMain != null)
+			{
+			txtMain.width = this.width;
+			txtMain.height = this.height;
+			}
 		}
 	}
 	

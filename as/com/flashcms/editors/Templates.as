@@ -11,7 +11,7 @@
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import com.flashcms.core.Module;
-	import com.yahoo.astra.fl.containers.VBoxPane;
+	import com.yahoo.astra.fl.containers.HBoxPane;
 	import com.yahoo.astra.layout.modes.*;
 	import com.flashcms.components.Holder;
 	import fl.containers.ScrollPane;
@@ -27,8 +27,8 @@
 	public class Templates extends Module{
 		public var oTabBar:TabBar;
 		public var scPanel:ScrollPane;
-		public var componentsPanel:VBoxPane;
-		public var toolsPanel:VBoxPane;
+		public var componentsPanel:HBoxPane;
+		public var toolsPanel:HBoxPane;
 		private var icon:Holder;
 		private var mcLayout:Sprite;
 		private var mcXML:Sprite;
@@ -89,7 +89,7 @@
 		 * @param	toolbar
 		 * @param	callback
 		 */
-		private function setToolBar(data:XMLList,toolbar:VBoxPane,callback:Function)
+		private function setToolBar(data:XMLList,toolbar:HBoxPane,callback:Function)
 		{
 			for each(var component:XML in data)
 			{

@@ -35,6 +35,7 @@
 		private var oTweenOut:Tween;
 		private var oTween:Tween;
 		private var oTweenY:Tween;
+		private var oTweenMask:Tween;
 		private var oMultiLoader:MultiLoader;
 		private var oModule:Module;
 		private var oManager:StageManager;
@@ -135,6 +136,7 @@
 			try {
 				this.callback = callback;
 				createMask();
+				oTweenMask=new Tween(mcMask, "alpha", Regular.easeIn, 0, 1, .2, true);
 				loadModule(name,parameters);
 			}
 			catch (e:Error){
@@ -193,9 +195,10 @@
 		 */
 		private function hideWindow(mcClip:Sprite)
 		{
-			oTweenOut = new Tween(mcClip, "scaleX", Regular.easeIn, 1, 0, 0.3, true);
+			oTweenOut = new Tween(mcClip, "scaleX", Regular.easeIn, 1, 0.6, 0.2, true);
 			oTweenOut.addEventListener(TweenEvent.MOTION_FINISH, onCloseModule);
-			oTweenY=new Tween(mcClip, "scaleY", Regular.easeIn, 1, 0, .3, true);
+			oTweenY = new Tween(mcClip, "scaleY", Regular.easeIn, 1, 0.6, .2, true);
+			oTweenMask=new Tween(mcMask, "alpha", Regular.easeIn, 1, 0, .2, true);
 		}
 		/**
 		 * 
