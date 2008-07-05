@@ -36,6 +36,7 @@
 					addChild(txtMain);
 					txtMain.type = TextFieldType.INPUT;
 					txtMain.wordWrap = true;
+					txtMain.multiline = true;
 				break;
 			}
 		}

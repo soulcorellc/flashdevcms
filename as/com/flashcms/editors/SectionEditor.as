@@ -167,6 +167,7 @@
 			mcLayout.addChild(newcomponent);
 			newcomponent.addEventListener(MouseEvent.CLICK, onEditComponent);
 			
+			
 		}
 		/**
 		 * 
@@ -182,7 +183,17 @@
 			switch(editor)
 			{
 				case "texteditor":
-					oTextBar = new TextBar(ContentHolder(component).txtMain);
+					if (oTextBar  == null)
+					{
+						oTextBar = new TextBar(ContentHolder(component).txtMain);
+						oTextBar.x = 19;
+						oTextBar.y = 420;
+						addChild(oTextBar);
+					}
+					else
+					{
+						oTextBar.update();
+					}
 				break;
 			}
 		}
