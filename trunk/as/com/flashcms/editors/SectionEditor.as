@@ -207,7 +207,7 @@
 				{
 					oTextBar = new TextBar(component["txtMain"]);
 					oTextBar.x = 19;
-					oTextBar.y = 420;
+					oTextBar.y = 390;
 					addChild(oTextBar);
 				}
 				break;

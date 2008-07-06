@@ -21,8 +21,9 @@
 	* ...
 	* @author Default
 	*/
-	public class TextBar extends Sprite{
-		public var controlsPanel:HBoxPane;
+	public class TextBar extends ToolBar{
+		public var formatPanel:HBoxPane;
+		public var fontPanel:HBoxPane;
 		public var txtText:TextField;
 		public var oFormat:TextFormat;
 		public var colorpicker:ColorPicker;
@@ -68,7 +69,7 @@
 		{
 			oFormat = new TextFormat();
 			txtText.alwaysShowSelection = true;
-			setToolBar(xmlControls.controls, controlsPanel, onClick);
+			setToolBar(xmlControls.controls, formatPanel, onClick);
 		}
 		/**
 		 * 
@@ -116,14 +117,7 @@
 			{
 			
 			}
-			//trace(mytext.htmlText);
-			//mytext.replaceSelectedText()
-			//mytext.replaceSelectedText("<b>"+mytext.text.slice(mytext.selectionBeginIndex,mytext.selectionEndIndex)+"</b>")
-			//trace(mytext.text.slice(mytext.selectionBeginIndex,mytext.selectionEndIndex));
-			//mytext.htmlText=mytext.text;
-			//trace("caretIndex:", mytext.caretIndex);
-			//trace("selectionBeginIndex:", mytext.selectionBeginIndex);
-			//trace("selectionEndIndex:", mytext.selectionEndIndex);
+			
 		}
 		/**
 		 * 
@@ -154,7 +148,7 @@
 			colorpicker.setSize(18, 18);
 			colorpicker.name = "Color";
 			colorpicker.addEventListener(Event.CHANGE, onClick);
-			toolbar.addChild(colorpicker);
+			
 			cbSize = new NumericStepper();
 			cbSize.name = "Size";
 			cbSize.maximum = 90;
@@ -162,7 +156,7 @@
 			cbSize.stepSize = 0.5;
 			cbSize.value = 12;
 			cbSize.addEventListener(Event.CHANGE, onClick);
-			toolbar.addChild(cbSize);
+			
 			cbFonts = new ComboBox();
 			cbFonts.name = "Font";
 			cbFonts.width = 200;
@@ -175,11 +169,19 @@
 			}
 			cbFonts.dataProvider = new DataProvider(fontsArray);
 			cbFonts.addEventListener(ListEvent.ITEM_CLICK, onClick);
-			toolbar.addChild(cbFonts);
+			fontPanel.setStyle( "skin", "ToolbarSkin" ); 
+			fontPanel.horizontalAlign = HorizontalAlignment.CENTER;
+			fontPanel.verticalAlign = VerticalAlignment.MIDDLE;
+			fontPanel.verticalGap = 10;
+			fontPanel.horizontalGap = 10;
+			fontPanel.addChild(cbSize);
+			fontPanel.addChild(cbFonts);
+			fontPanel.addChild(colorpicker);
+			
 		}
 		
 		
 		
 	}
 	
-}
+}	
