@@ -14,6 +14,9 @@
 	import flash.events.Event;
 	import com.yahoo.astra.layout.modes.*;
 	import fl.events.ColorPickerEvent;
+	import flash.text.Font;
+	import fl.data.DataProvider;
+	import fl.events.ListEvent;
 	/**
 	* ...
 	* @author Default
@@ -24,6 +27,7 @@
 		public var oFormat:TextFormat;
 		public var colorpicker:ColorPicker;
 		public var cbSize:NumericStepper;
+		public var cbFonts:ComboBox;
 		public var xmlControls:XML =
 		<data>
 			<controls>
@@ -65,9 +69,6 @@
 			oFormat = new TextFormat();
 			txtText.alwaysShowSelection = true;
 			setToolBar(xmlControls.controls, controlsPanel, onClick);
-			//oFormat=txtText.getTextFormat(txtText.selectionBeginIndex,txtText.selectionEndIndex);
-			//oFormat.bold=!txtFormat.bold;
-			//oFormat.underline=!txtFormat.bold;
 		}
 		/**
 		 * 
@@ -102,9 +103,19 @@
 				case "Size":
 					oFormat.size=e.target.value;
 				break;
+				case "Font":
+					oFormat.font=cbFonts.selectedItem.data;
+				break;
 			}
 			
-			txtText.setTextFormat(oFormat,txtText.selectionBeginIndex,txtText.selectionEndIndex);
+			try
+			{
+				txtText.setTextFormat(oFormat, txtText.selectionBeginIndex, txtText.selectionEndIndex);
+			}
+			catch(e:Event)
+			{
+			
+			}
 			//trace(mytext.htmlText);
 			//mytext.replaceSelectedText()
 			//mytext.replaceSelectedText("<b>"+mytext.text.slice(mytext.selectionBeginIndex,mytext.selectionEndIndex)+"</b>")
@@ -152,15 +163,22 @@
 			cbSize.value = 12;
 			cbSize.addEventListener(Event.CHANGE, onClick);
 			toolbar.addChild(cbSize);
+			cbFonts = new ComboBox();
+			cbFonts.name = "Font";
+			cbFonts.width = 200;
+			var allFonts:Array = Font.enumerateFonts(true);
+			var fontsArray:Array=new Array();
+			allFonts.sortOn("fontName", Array.CASEINSENSITIVE);
+			for (var i:int = 0; i < allFonts.length; i++)
+			{
+			    fontsArray.push(new String(allFonts[i].fontName));
+			}
+			cbFonts.dataProvider = new DataProvider(fontsArray);
+			cbFonts.addEventListener(ListEvent.ITEM_CLICK, onClick);
+			toolbar.addChild(cbFonts);
 		}
 		
-		public function update()
-		{
-			var size = txtText.getTextFormat(txtText.selectionBeginIndex, txtText.selectionEndIndex).size;
-			
-			cbSize.value = size == null? 12:size;
-			
-		}
+		
 		
 	}
 	

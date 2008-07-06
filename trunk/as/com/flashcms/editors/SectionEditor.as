@@ -1,6 +1,8 @@
 ﻿package com.flashcms.editors {
 	
 	import com.flashcms.components.ContentHolder;
+	import com.flashcms.components.ImageHolder;
+	import com.flashcms.components.VideoHolder;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -15,8 +17,9 @@
 	import com.yahoo.astra.fl.containers.HBoxPane;
 	import com.yahoo.astra.layout.modes.*;
 	import com.flashcms.components.Holder;
+	import com.flashcms.components.TextHolder;
 	import com.flashcms.components.TextBar;
-
+	import com.flashcms.components.ImageBar;
 	/**
 	* ...
 	* @author Default
@@ -34,6 +37,7 @@
 		private var xmlBar:XMLList;
 		private var xmlComponents:XMLList;
 		private var oTextBar:TextBar;
+		private var oImageBar:ImageBar;
 		
 		/**
 		 * 
@@ -160,10 +164,22 @@
 		 */
 		private function createComponent(component:XML)
 		{
-			var newcomponent:ContentHolder = new ContentHolder(component.@type);
+			var newcomponent:ContentHolder;
+			switch(String(component.@type))
+			{
+				case "Text":
+					newcomponent = new TextHolder(component.@width,component.@height);
+				break;
+				case "Video":
+					newcomponent = new VideoHolder(component.@width,component.@height);
+				break;
+				case "Image":
+					newcomponent = new ImageHolder(component.@width,component.@height);
+				break;
+			}
+			
 			newcomponent.x = component.@x;
 			newcomponent.y = component.@y;
-			newcomponent.setSize(int(component.@width),int(component.@height));
 			mcLayout.addChild(newcomponent);
 			newcomponent.addEventListener(MouseEvent.CLICK, onEditComponent);
 			
@@ -177,26 +193,38 @@
 		{
 			showEditor(e.currentTarget)
 		}
+		/**
+		 * 
+		 * @param	component
+		 */
 		private function showEditor(component:Object)
 		{
 			var editor:String = (oXML.components.(type == component.type).editor);
 			switch(editor)
 			{
 				case "texteditor":
-					if (oTextBar  == null)
-					{
-						oTextBar = new TextBar(ContentHolder(component).txtMain);
-						oTextBar.x = 19;
-						oTextBar.y = 420;
-						addChild(oTextBar);
-					}
-					else
-					{
-						oTextBar.update();
-					}
+				if (oTextBar  == null)
+				{
+					oTextBar = new TextBar(component["txtMain"]);
+					oTextBar.x = 19;
+					oTextBar.y = 420;
+					addChild(oTextBar);
+				}
 				break;
+				case "imageeditor":
+					oImageBar = new ImageBar();
+					oImageBar.x = 19;
+					oImageBar.y = 420;
+					addChild(oImageBar);
+					
+				break;
+				
 			}
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onCloseEditor(e:Event)
 		{
 			trace("closed");
