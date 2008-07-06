@@ -5,7 +5,7 @@
 	* ...
 	* @author Default
 	*/
-	public class ImageBar extends Sprite{
+	public class ImageBar extends ToolBar{
 		
 		public function ImageBar() {
 			
