@@ -2,6 +2,7 @@
 	
 	import com.flashcms.components.ContentHolder;
 	import com.flashcms.components.ImageHolder;
+	import com.flashcms.components.ToolBar;
 	import com.flashcms.components.VideoHolder;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -38,7 +39,7 @@
 		private var xmlComponents:XMLList;
 		private var oTextBar:TextBar;
 		private var oImageBar:ImageBar;
-		
+		private var currentBar:ToolBar;
 		/**
 		 * 
 		 */
@@ -200,22 +201,27 @@
 		private function showEditor(component:Object)
 		{
 			var editor:String = (oXML.components.(type == component.type).editor);
+			if (currentBar!= null){
+			removeChild(currentBar);
+			currentBar = null;
+			}
 			switch(editor)
 			{
 				case "texteditor":
-				if (oTextBar  == null)
+				if (currentBar  == null)
 				{
-					oTextBar = new TextBar(component["txtMain"]);
-					oTextBar.x = 19;
-					oTextBar.y = 390;
-					addChild(oTextBar);
+					currentBar = new TextBar(component["txtMain"]);
+					currentBar.x = 19;
+					currentBar.y = 390;
+					addChild(currentBar);
 				}
 				break;
 				case "imageeditor":
-					oImageBar = new ImageBar();
-					oImageBar.x = 19;
-					oImageBar.y = 420;
-					addChild(oImageBar);
+				case "videoeditor":
+					currentBar = new ImageBar();
+					currentBar.x = 19;
+					currentBar.y = 420;
+					addChild(currentBar);
 					
 				break;
 				
