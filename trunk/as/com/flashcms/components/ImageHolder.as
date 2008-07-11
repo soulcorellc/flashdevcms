@@ -7,6 +7,7 @@
 	*/
 	public class ImageHolder extends ContentHolder{
 		private var oDefault:Sprite;
+		public var sURL:String="";
 		/**
 		 * 
 		 * @param	nwidth

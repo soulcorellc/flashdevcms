@@ -202,8 +202,8 @@
 		{
 			var editor:String = (oXML.components.(type == component.type).editor);
 			if (currentBar!= null){
-			removeChild(currentBar);
-			currentBar = null;
+				removeChild(currentBar);
+				currentBar = null;
 			}
 			switch(editor)
 			{
@@ -218,11 +218,10 @@
 				break;
 				case "imageeditor":
 				case "videoeditor":
-					currentBar = new ImageBar();
+					currentBar = new ImageBar(component["sURL"]);
 					currentBar.x = 19;
 					currentBar.y = 420;
 					addChild(currentBar);
-					
 				break;
 				
 			}
