@@ -5,7 +5,7 @@
 	* @author Default
 	*/
 	public class VideoHolder extends ContentHolder{
-		
+		public var sURL:String="";
 		public function VideoHolder(nwidth:int,nheight:int) {
 			super("Video");
 			setSize(nwidth, nheight);
