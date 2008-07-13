@@ -218,7 +218,7 @@
 				break;
 				case "imageeditor":
 				case "videoeditor":
-					currentBar = new ImageBar(component["sURL"]);
+					currentBar = new ImageBar(component);
 					currentBar.x = 19;
 					currentBar.y = 420;
 					addChild(currentBar);

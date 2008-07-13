@@ -13,12 +13,14 @@
 		public var txtURL:TextInput;
 		public var btChange:Button;
 		public var btSelect:Button;
+		public var component;
 		/**
 		 * 
 		 * @param	url
 		 */
-		public function ImageBar(url:String) {
-			sURL = url;
+	public function ImageBar(component:Object) {
+			this.component=component
+			sURL = component["sURL"];
 			init();
 			
 		}
@@ -30,7 +32,8 @@
 		}
 		private function onChange(e:MouseEvent)
 		{
-			trace(sURL);
+			component.sURL = txtURL.text;
+			component.update();
 		}
 		
 	}
