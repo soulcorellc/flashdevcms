@@ -33,7 +33,7 @@ public class Shell extends MovieClip {
 		private var oHeader:Module;
 		private var oFooter:Module;
 		private var oMain:Module;
-		private var oBackground:Module;
+		//private var oBackground:Module;
 		private var oParameters:Object;
 		public var xMenu:XMLList;
 		public var xMain:XMLList;
@@ -65,7 +65,7 @@ public class Shell extends MovieClip {
 		public function onModuleChange(event:NavigationEvent)
 		{
 			if(!bHeaderLoaded){
-				loadModule("background");	
+				//loadModule("background");	
 				loadModule("footer");
 				loadModule("header");
 				bHeaderLoaded = true;
@@ -204,19 +204,14 @@ public class Shell extends MovieClip {
 					break;
 					case "Footer":
 						oFooter = Module(event.loaderTarget.content);
-						oFooter.sManager = new StageManager(oFooter, 0, 100, 0, 50, true)
-						initModule(oFooter,1);
-					break;
-					case "Background":
-						oBackground = Module(event.loaderTarget.content);
-						oBackground.y = 120;
-						initModule(oBackground,0);
+						oFooter.sManager = new StageManager(oFooter, 0, 100, 0, 100, true)
+						initModule(oFooter,0);
 					break;
 					default:
 						removeSection(oMain);
 						oMain = Module(event.loaderTarget.content);
 						oMain.sManager = new StageManager(oMain, 50, 54, 50, 50, true);
-						initModule(oMain,2);
+						initModule(oMain,1);
 					break;
 				}
 			}
@@ -288,7 +283,7 @@ public class Shell extends MovieClip {
 			removeSection(oHeader);
 			removeSection(oMain);
 			removeSection(oFooter);
-			removeSection(oBackground);
+			//removeSection(oBackground);
 			bHeaderLoaded = false;
 			showPopup("login", null, onClose);
 			

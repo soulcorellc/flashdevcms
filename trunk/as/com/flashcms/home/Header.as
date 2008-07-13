@@ -46,10 +46,10 @@
 		{
 			createBG();
 			oMenu = new MenuBar(this);
-			var oStyle = new TextFormat("Verdana", 10, 0xFFE8C6, true, false, false, '', '', TextFormatAlign.LEFT, 0, 0, 0, 0);
+			var oStyle = new TextFormat("Verdana", 10, 0x333333, true, false, false, '', '', TextFormatAlign.LEFT, 0, 0, 0, 0);
 			oMenu.setStyle("textFormat",oStyle)
-			oMenu.y = 73;
-			oMenu.x = 120;
+			oMenu.y = 36;
+			oMenu.x = 170;
 			oMenu.addEventListener(MenuEvent.ITEM_CLICK, onItemClick);
 			oMultiLoader = new MultiLoader();
 			oMultiLoader.addEventListener(LoadEvent.LOAD_EVENT, onLoadImage);
@@ -73,7 +73,7 @@
 		 */
 		private function initUser()
 		{
-			oUserInfo.txtUser.text = "WELCOME, " + String(oShell.oUser.sName).toUpperCase();
+			oUserInfo.txtUser.text = "Welcome, " + String(oShell.oUser.sName);
 			oUserInfo.btProfile.addEventListener(MouseEvent.CLICK, onProfile);
 			oUserInfo.btPassword.addEventListener(MouseEvent.CLICK, onPassword);
 			oUserInfo.btLogout.addEventListener(MouseEvent.CLICK, onLogout);
@@ -85,7 +85,7 @@
 		override public function onResize(event:Event)
 		{
 			oBG.update(stage.stageWidth);
-			oUserInfo.x = stage.stageWidth - (oUserInfo.width+20);
+			oUserInfo.x = stage.stageWidth - (oUserInfo.width+50);
 		}
 		/**
 		 * 
