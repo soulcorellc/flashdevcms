@@ -7,6 +7,7 @@
 	import com.flashcms.events.*;
 	import flash.display.DisplayObject;
 	import flash.display.LoaderInfo;
+	import flash.events.ProgressEvent;
 	/**
 	* ...
 	* @author David Barrios
@@ -43,6 +44,7 @@
 			oLoader = new Loader();
 			oLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
 			oLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoaded);
+			oLoader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onProgress);
 			oRequest = new URLRequest(aMovies[0]);
 			oLoader.load(oRequest);
 			
@@ -67,7 +69,10 @@
 			}
 			
 		}
-		
+		private function onProgress(e:ProgressEvent)
+		{
+			dispatchEvent(e);
+		}
 		/**
 		 * 
 		 * @param	event
