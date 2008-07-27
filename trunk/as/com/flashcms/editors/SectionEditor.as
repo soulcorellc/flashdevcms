@@ -211,16 +211,16 @@
 				if (currentBar  == null)
 				{
 					currentBar = new TextBar(component["txtMain"]);
-					currentBar.x = 19;
-					currentBar.y = 390;
+					currentBar.x = 0;
+					currentBar.y = 350;
 					addChild(currentBar);
 				}
 				break;
 				case "imageeditor":
 				case "videoeditor":
 					currentBar = new ImageBar(component);
-					currentBar.x = 19;
-					currentBar.y = 420;
+					currentBar.x = 0;
+					currentBar.y = 350;
 					addChild(currentBar);
 				break;
 				

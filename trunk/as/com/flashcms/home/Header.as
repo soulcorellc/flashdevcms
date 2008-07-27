@@ -29,7 +29,7 @@
 		public var oMenu:MenuBar;	
 		private var sMainURL:String;
 		private var oRequest:URLRequest;
-		private var oMultiLoader:MultiLoader;
+		
 		private var oForm:FormData;
 		private var oBG:DynamicBG;
 		public var oUserInfo;
@@ -51,12 +51,7 @@
 			oMenu.y = 36;
 			oMenu.x = 170;
 			oMenu.addEventListener(MenuEvent.ITEM_CLICK, onItemClick);
-			oMultiLoader = new MultiLoader();
-			oMultiLoader.addEventListener(LoadEvent.LOAD_EVENT, onLoadImage);
-			oMultiLoader.addEventListener(LoadError.LOAD_ERROR, onError);
 			oMenu.dataProvider = XML(oShell.xMenu);
-			oMultiLoader.add(oShell.sLogo);
-			oMultiLoader.start();
 			initUser();
 			trace(this.height);
 		}
@@ -77,6 +72,7 @@
 			oUserInfo.btProfile.addEventListener(MouseEvent.CLICK, onProfile);
 			oUserInfo.btPassword.addEventListener(MouseEvent.CLICK, onPassword);
 			oUserInfo.btLogout.addEventListener(MouseEvent.CLICK, onLogout);
+			oUserInfo.x = stage.stageWidth - (oUserInfo.width+50);
 		}
 		/**
 		 * Called when stage is resized
@@ -101,14 +97,6 @@
 		 */
 		private function onItemClick(event:MenuEvent):void{
 			dispatchEvent(new NavigationEvent(event.item.id,event.item));
-		}
-		/**
-		 * 
-		 * @param	event
-		 */
-		private function onLoadImage(event:LoadEvent)
-		{
-			this.addChild(event.loaderTarget.content);
 		}
 		/**
 		 * 
