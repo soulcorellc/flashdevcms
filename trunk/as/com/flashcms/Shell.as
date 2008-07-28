@@ -288,6 +288,7 @@ public class Shell extends MovieClip {
 			showPopup("login", null, onClose);
 			
 		}
+		
 		public function setStatusMessage(message:String)
 		{
 			oFooter.setData(message);

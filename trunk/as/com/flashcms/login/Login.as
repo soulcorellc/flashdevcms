@@ -5,6 +5,7 @@
 	import fl.controls.TextInput;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	import flash.text.TextField;
 	import com.flashcms.events.PopupEvent;
 	import flash.events.MouseEvent;
@@ -63,9 +64,9 @@
 			txtError.text = event.message;
 		}
 		
-		private function onError(event:Error)
+		private function onError(event:IOErrorEvent)
 		{
-			trace("onError");
+			trace("FILE NOT FOUND ON LOGIN "+event.text);
 		}
 		
 		

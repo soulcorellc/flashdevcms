@@ -93,46 +93,46 @@
 	</popups>
 	<urls>
 		<core>
-			<upload><![CDATA[../webroot/xml/upload.xml]]></upload>
+			<upload><![CDATA[xml/upload.xml]]></upload>
 		</core>
 		<login>
-			<main><![CDATA[../webroot/xml/login.xml]]></main>
+			<main><![CDATA[xml/login.xml]]></main>
 		</login>
 		<language>
 			<main><![CDATA[]]></main>
 		</language>
 		<home>
-			<main><![CDATA[../webroot/xml/main.xml]]></main>
+			<main><![CDATA[xml/main.xml]]></main>
 		</home>
 		<assign>
-			<main><![CDATA[../webroot/xml/assignusers.xml]]></main>
+			<main><![CDATA[xml/assignusers.xml]]></main>
 		</assign>
 		<users>
-			<main><![CDATA[../webroot/xml/users.xml]]></main>
-			<data><![CDATA[../webroot/xml/getUser.xml]]></data>
-			<schema><![CDATA[../webroot/xml/forms/users.xml]]></schema>
+			<main><![CDATA[xml/users.xml]]></main>
+			<data><![CDATA[xml/getUser.xml]]></data>
+			<schema><![CDATA[xml/forms/users.xml]]></schema>
 		</users>
 		<groups>
-			<main><![CDATA[../webroot/xml/groups.xml]]></main>
-			<data><![CDATA[../webroot/xml/getGroup.xml]]></data>
-			<schema><![CDATA[../webroot/xml/forms/groups.xml]]></schema>
+			<main><![CDATA[xml/groups.xml]]></main>
+			<data><![CDATA[xml/getGroup.xml]]></data>
+			<schema><![CDATA[xml/forms/groups.xml]]></schema>
 		</groups>
 		<password>
-			<schema><![CDATA[../webroot/xml/forms/password.xml]]></schema>
+			<schema><![CDATA[xml/forms/password.xml]]></schema>
 		</password>
 		<sections>
-			<main><![CDATA[../webroot/xml/sections.xml]]></main>
+			<main><![CDATA[xml/sections.xml]]></main>
 		</sections>
 		<templates>
-			<main><![CDATA[../webroot/xml/templates.xml]]></main>
-			<save><![CDATA[../webroot/xml/savetemplate.xml]]></save>
-			<get><![CDATA[../webroot/xml/getTemplate.xml]]></get>
+			<main><![CDATA[xml/templates.xml]]></main>
+			<save><![CDATA[xml/savetemplate.xml]]></save>
+			<get><![CDATA[xml/getTemplate.xml]]></get>
 		</templates>
 		<contents>
-			<main><![CDATA[../webroot/xml/contents.xml]]></main>
+			<main><![CDATA[xml/contents.xml]]></main>
 		</contents>
 		<editors>
-			<main><![CDATA[../webroot/xml/editors.xml]]></main>
+			<main><![CDATA[xml/editors.xml]]></main>
 		</editors>
 	</urls>
 </configuration>
