@@ -7,6 +7,7 @@
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
 	
+	
 	/**
 	* ...
 	* @author Default
@@ -32,7 +33,7 @@
 			this.errorhandler = errorhandler;
 			this.dataerrorhandler = dataerrorhandler;
 			oRequest = new URLRequest(url);
-			
+			/*
 			if (variables != null)
 			{
 				var postvars:URLVariables = new URLVariables();
@@ -43,7 +44,7 @@
 				oRequest.data = postvars;
 				oRequest.method = URLRequestMethod.POST;
 			}
-				
+			*/
 			oLoader = new URLLoader(oRequest);
 			oLoader.addEventListener(Event.COMPLETE, onComplete);
 			if (errorhandler == null)
