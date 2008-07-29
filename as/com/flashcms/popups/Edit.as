@@ -23,7 +23,7 @@
 		private var oLayout:Layout;
 		private var oBar:ButtonBar;
 		private var oForm:FormData;
-		private var id:int;
+		private var id:int=0;
 		private var create:Boolean;
 		private var createoption:String;
 		private var editoption:String;
@@ -46,6 +46,7 @@
 		 */
 		public override function init()
 		{
+			trace("parameters : " + parameters);
 			oForm = new FormData(parameters.table, parameters.section, parameters.requiredata, parameters.data);
 			id = parameters.id;
 			create = parameters.create;
@@ -56,7 +57,7 @@
 			
 			oBar = new ButtonBar(send,close,"Save","Cancel");
 			oBar.x = 40;
-			oBar.y = 280;
+			oBar.y = 270;
 			addChild(oBar);
 		}
 		/**
