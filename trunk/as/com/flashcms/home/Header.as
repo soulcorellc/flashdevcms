@@ -1,4 +1,5 @@
 ﻿package com.flashcms.home {
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import com.yahoo.astra.fl.controls.MenuBar;
 	import com.yahoo.astra.fl.events.MenuEvent;
@@ -29,10 +30,8 @@
 		public var oMenu:MenuBar;	
 		private var sMainURL:String;
 		private var oRequest:URLRequest;
-		
-		private var oForm:FormData;
 		private var oBG:DynamicBG;
-		public var oUserInfo;
+		public var oUserInfo:UserInfo;
 		/**
 		 * 
 		 */
@@ -110,8 +109,7 @@
 		//USER
 		private function onProfile(e:Event)
 		{
-			oForm = new FormData("users", "users");
-			oShell.showPopup("edit",oForm,onEdit);
+			oShell.showPopup("edit",{table:"users", section:"users"},onEdit);
 		}
 		/**
 		 * 
@@ -119,9 +117,7 @@
 		 */
 		private function onPassword(e:Event)
 		{
-			
-			oForm = new FormData("password", "password");
-			oShell.showPopup("edit",oForm,onEdit);
+			oShell.showPopup("edit",{table:"password",section:"password"},onEdit);
 		}
 		/**
 		 * 

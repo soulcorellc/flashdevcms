@@ -5,6 +5,7 @@
 	* @author Default
 	*/
 	public class FormData {
+		public var id:String = "";
 		public var table:String;
 		public var section:String;
 		public var data:XML;

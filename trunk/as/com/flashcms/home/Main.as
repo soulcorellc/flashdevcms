@@ -9,8 +9,10 @@
 	public class Main extends Module{
 		private var initialX:int=10;
 		private var initialY:int=10;
-		private var distanceY:int = 85;
-		private var totalItems:int=0;
+		private var distanceY:int = 30;
+		private var distanceX:int = 20;
+		private var totalItems:int = 0;
+		private var columns = 3;
 		public function Main() {
 			super("Main");
 		}
@@ -22,9 +24,10 @@
 			trace("init main");
 			for (var i in oShell.xMain)
 			{
+				var index:int = totalItems%columns;
 				var oSection:SectionItem = new SectionItem(oShell.xMain[i]);
-				oSection.x = initialX;
-				oSection.y = (distanceY* totalItems) + initialY;
+				oSection.x = initialX +((oSection.width+distanceX)*index);
+				oSection.y = totalItems<columns? initialY : initialY+oSection.height+distanceY;
 				addChild(oSection);
 				totalItems++;
 			}
