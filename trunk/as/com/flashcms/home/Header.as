@@ -1,4 +1,5 @@
 ﻿package com.flashcms.home {
+	import com.yahoo.astra.fl.controls.Menu;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import com.yahoo.astra.fl.controls.MenuBar;
@@ -13,6 +14,7 @@
 	import flash.events.IOErrorEvent;
 	import flash.events.Event;
 	import flash.display.SimpleButton;
+	import flash.text.Font;
 	import flash.text.TextField;
 	import com.flashcms.events.PopupEvent;
 	import com.flashcms.forms.FormData;
@@ -32,6 +34,7 @@
 		private var oRequest:URLRequest;
 		private var oBG:DynamicBG;
 		public var oUserInfo:UserInfo;
+		private var oFont:Font;
 		/**
 		 * 
 		 */
@@ -44,15 +47,33 @@
 		override public function init()
 		{
 			createBG();
+			oFont = new Gotham();
+			
 			oMenu = new MenuBar(this);
-			var oStyle = new TextFormat("Verdana", 10, 0x333333, true, false, false, '', '', TextFormatAlign.LEFT, 0, 0, 0, 0);
-			oMenu.setStyle("textFormat",oStyle)
+			
+			var oStyle = new TextFormat(oFont.fontName, 10, 0x333333, true, false, false, '', '', TextFormatAlign.LEFT, 0, 0, 0, 0);
+			oMenu.setStyle("textFormat", oStyle);
+			oMenu.setStyle("embedFonts", true);
+			//oMenu.width = 800;
+			//oMenu.autoSizeButtonsToTextWidth = false;
+			//oMenu.setRendererStyle("textFormat", oStyle);
+			//oMenu.setRendererStyle("embedFonts",true);
 			oMenu.y = 36;
 			oMenu.x = 170;
 			oMenu.addEventListener(MenuEvent.ITEM_CLICK, onItemClick);
 			oMenu.dataProvider = XML(oShell.xMenu);
+			
+			for each(var tempmenu:Menu in oMenu.menus)
+			{
+				tempmenu.setRendererStyle("textFormat", oStyle);
+				tempmenu.setRendererStyle("embedFonts", true);
+				tempmenu.drawNow();
+				tempmenu.invalidate();
+			}
+			oMenu.drawNow();
+			oMenu.invalidate();
+			
 			initUser();
-			trace(this.height);
 		}
 		/**
 		 * 
