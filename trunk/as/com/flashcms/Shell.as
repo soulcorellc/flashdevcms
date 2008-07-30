@@ -1,24 +1,25 @@
 ﻿package com.flashcms {
 
-	import com.flashcms.events.ErrorEvent;
-	import flash.display.Loader;
-	import flash.display.MovieClip;
-	import flash.display.Stage;
-	import flash.events.IOErrorEvent;
-	import flash.events.Event;
-	import com.flashcms.events.PopupEvent;
-	import flash.display.LoaderInfo;	
-	import com.flashcms.data.MultiLoader;
-	import com.flashcms.core.PopupManager;
-	import com.flashcms.core.Module;
-	import com.flashcms.events.LoadEvent;
-	import com.flashcms.events.NavigationEvent;
-	import com.flashcms.deeplinking.Navigation;
-	import com.flashcms.layout.StageManager;
-	import com.flashcms.core.User;
-	import com.flashcms.events.LoginEvent;
-	import com.flashcms.data.XMLLoader;
-	import flash.external.ExternalInterface;
+import flash.display.Loader;
+import flash.display.MovieClip;
+import flash.display.Stage;
+import flash.events.IOErrorEvent;
+import flash.events.Event;
+import flash.display.LoaderInfo;
+import flash.external.ExternalInterface;
+import com.flashcms.events.ErrorEvent;
+import com.flashcms.events.PopupEvent;
+import com.flashcms.events.LoadEvent;
+import com.flashcms.events.NavigationEvent;
+import com.flashcms.data.MultiLoader;
+import com.flashcms.core.User;
+import com.flashcms.core.PopupManager;
+import com.flashcms.core.Module;
+import com.flashcms.deeplinking.Navigation;
+import com.flashcms.layout.StageManager;
+import com.flashcms.events.LoginEvent;
+import com.flashcms.data.XMLLoader;
+
 		
 public class Shell extends MovieClip {
 		private var oXML:XML;
@@ -75,7 +76,6 @@ public class Shell extends MovieClip {
 				case "":
 					loadModule("main"); 
 				break;
-
 				default:
 					loadModule(event.sModule,event.parameters);
 				break;
@@ -225,7 +225,8 @@ public class Shell extends MovieClip {
 		 */
 		private function removeSection(oSection:Module)
 		{
-			try{
+			try
+			{
 				if(oSection!= null){
 					oSection.dispose();
 					if(oSection.sManager!=null && oSection.sManager.stage!=null){
@@ -252,7 +253,8 @@ public class Shell extends MovieClip {
 		 */
 		private function initModule(oModule:Module,index:int=-1)
 		{
-			try{
+			try
+			{
 				oModule.oShell = this;
 				oModule.parameters = oParameters;
 				if (index != -1){
