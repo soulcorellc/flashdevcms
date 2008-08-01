@@ -51,11 +51,12 @@
 			
 			oMenu = new MenuBar(this);
 			
-			var oStyle = new TextFormat(oFont.fontName, 10, 0x333333, true, false, false, '', '', TextFormatAlign.LEFT, 0, 0, 0, 0);
+			var oStyle = new TextFormat("Verdana", 9, 0x333333, true, false, false, '', '', TextFormatAlign.LEFT, 0, 0, 0, 0);
+			//oMenu.setStyle("embedFonts", true);
 			oMenu.setStyle("textFormat", oStyle);
-			oMenu.setStyle("embedFonts", true);
-			//oMenu.width = 800;
-			//oMenu.autoSizeButtonsToTextWidth = false;
+			
+			oMenu.width = 800;
+			oMenu.autoSizeButtonsToTextWidth = false;
 			//oMenu.setRendererStyle("textFormat", oStyle);
 			//oMenu.setRendererStyle("embedFonts",true);
 			oMenu.y = 36;
@@ -66,7 +67,7 @@
 			for each(var tempmenu:Menu in oMenu.menus)
 			{
 				tempmenu.setRendererStyle("textFormat", oStyle);
-				tempmenu.setRendererStyle("embedFonts", true);
+				//tempmenu.setRendererStyle("embedFonts", true);
 				tempmenu.drawNow();
 				tempmenu.invalidate();
 			}
