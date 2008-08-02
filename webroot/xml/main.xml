@@ -18,15 +18,15 @@
 		</menu>
 		
 		<menu label="Layout">
-			<menuitem label="Templates" id="admin" section="templates"/>
+			<menuitem label="Templates" id="admin" section="templates" popup="templates" />
 			<menuitem label="Create Template" id="templates"/>
-			<menuitem label="Themes" id="50"/>
-			<menuitem label="Site Layout" id="50"/>
+			<menuitem label="Themes" id="admin" section="themes" option="getall" editoption="create" createoption="setuser" popup="themes" />
+			<menuitem label="Site Layout" id="layout"/>
 		</menu>
 					
 		<menu label="Users and Groups">
-			<menuitem label="Manage Users" id="admin" section="users" option="getall" editoption="create" createoption="setuser" />
-			<menuitem label="Manage Groups" id="admin" section="groups" option="getallgroups" editoption="editprofile" createoption="createprofile"/>
+			<menuitem label="Manage Users" id="admin" section="users" option="getall" editoption="create" createoption="setuser" popup="edit" />
+			<menuitem label="Manage Groups" id="admin" section="groups" option="getallgroups" editoption="editprofile" createoption="createprofile" popup="edit" />
 		</menu>
 				
 		<menu label="Administration">
@@ -35,11 +35,11 @@
 		</menu>
 		
 		<menu label="Site">
-			<menuitem label="View Site"/>
+			<menuitem label="View Site" id="site" />
 		</menu>
 		
 		<menu label="Help">
-			<menuitem label="About"/>
+			<menuitem label="About" id="about" />
 		</menu>
 	</menus>
 	

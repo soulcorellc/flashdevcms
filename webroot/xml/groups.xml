@@ -71,7 +71,5 @@
 		<id>8</id>
 		<name>Preferences</name>
 	</modules>
-	<parameters>
-		<editpopup>edit</editpopup>
-	</parameters>
+	
 </data>

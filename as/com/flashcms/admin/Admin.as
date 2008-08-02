@@ -55,6 +55,7 @@
 			editoption=parameters.edit;
 			createoption=parameters.create;
 			sectionName = parameters.section;
+			editpopup = parameters.popup;
 			sURL = oShell.getURL("main", sectionName);
 			sOption = parameters.option;
 			//trace("sOption : " + sOption);
@@ -71,14 +72,11 @@
 		private function onXMLData(event:Event)
 		{
 			
-			trace("tableName : " + tableName);
 			xmlData = XML(event.target.data);
-			editpopup = xmlData.parameters.editpopup;
-			
+		
 			for each (var item:XML in xmlData[tableName])
 			{	
 				item.id+=<icon>{"Icon"+tableName}</icon>
-				trace(item);
 			}
 			
 			var myDP:DataProvider = new DataProvider(<data>{xmlData[tableName]}</data>);

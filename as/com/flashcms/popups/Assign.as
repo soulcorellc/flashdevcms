@@ -11,6 +11,7 @@
 	import com.flashcms.events.PopupEvent;
 	import com.flashcms.design.DynamicBG;
 	import com.flashcms.layout.Layout;
+	
 	/**
 	* ...
 	* @author Default
@@ -32,9 +33,12 @@
 			oLayout.ymargin = 10;
 			oBar = new ButtonBar(onSave, onCancel, "Cancel", "Save");
 			oBar.x = 300;
-			oBar.y = 295;
+			oBar.y = 270;
 			addChild(oBar);
 		}
+		/**
+		 * 
+		 */
 		private function createBG()
 		{
 			oBG = new DynamicBG(550, new left(), new center(), new right());

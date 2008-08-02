@@ -76,11 +76,21 @@ public class Shell extends MovieClip {
 				case "":
 					loadModule("main"); 
 				break;
+				case "about":
+					showPopup("about");
+				break;
+				case "site":
+					trace("site");
+				break;
 				default:
 					loadModule(event.sModule,event.parameters);
 				break;
 			}	
 			oModuleLoader.start();
+		}
+		private function openURL(url:String)
+		{
+		
 		}
 		/**
 		 * Add a SWF file to multiloader
