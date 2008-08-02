@@ -31,7 +31,7 @@
 			txtTitle.text = parameters.title;
 			oBar = new ButtonBar(onOK, onCancel, "Yes", "No");
 			oBar.x = 70;
-			oBar.y = 280;
+			oBar.y = 270;
 			addChild(oBar);
 			
 		}

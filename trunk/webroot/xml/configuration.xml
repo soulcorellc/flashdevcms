@@ -54,6 +54,13 @@
 		<sName>sectioneditor</sName>
 		<sURL><![CDATA[swf/editors/sectioneditor.swf]]></sURL>
 	</modules>
+	
+	<modules>
+		<id>10</id>
+		<sName>layout</sName>
+		<sURL><![CDATA[swf/editors/layout.swf]]></sURL>
+	</modules>
+	
 	<popups>
 		<sName>picker</sName>
 		<sURL><![CDATA[swf/popups/picker.swf]]></sURL>
@@ -80,17 +87,13 @@
 	</popups>
 	
 	<popups>
-		<sName>texteditor</sName>
-		<sURL><![CDATA[swf/popups/texteditor.swf]]></sURL>
+		<sName>themes</sName>
+		<sURL><![CDATA[swf/popups/themes.swf]]></sURL>
 	</popups>
 	<popups>
-		<sName>imageeditor</sName>
-		<sURL><![CDATA[swf/popups/imageeditor.swf]]></sURL>
-	</popups>
-	<popups>
-		<sName>videoeditor</sName>
-		<sURL><![CDATA[swf/popups/videoeditor.swf]]></sURL>
-	</popups>
+		<sName>about</sName>
+		<sURL><![CDATA[swf/popups/about.swf]]></sURL>
+	</popups>	
 	<urls>
 		<core>
 			<upload><![CDATA[xml/upload.xml]]></upload>
@@ -107,6 +110,9 @@
 		<assign>
 			<main><![CDATA[xml/assignusers.xml]]></main>
 		</assign>
+		<themes>
+			<main><![CDATA[xml/themes.xml]]></main>
+		</themes>
 		<users>
 			<main><![CDATA[xml/users.xml]]></main>
 			<data><![CDATA[xml/getUser.xml]]></data>
