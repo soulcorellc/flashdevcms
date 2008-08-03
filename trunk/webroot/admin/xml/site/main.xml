@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<site>
+	<result>
+		<success>true</success>
+	</result>
+	<themes>
+		<background>0x003366</background>
+		<header>0x003366</header>
+		<footer>0x003366</footer>
+		<menu>0x003366</menu>
+	</themes>
+	<images>
+		<header>headerimage.jpg</header>
+	</images>
+	<sections>
+		<section>
+			<id>1</id>
+			<name>Home</name>
+			<parent></parent>
+		</section>
+		<section>
+			<id>2</id>
+			<name>Options</name>
+			<parent></parent>
+		</section>
+		<section>
+			<id>2</id>
+			<name>Bio</name>
+			<parent></parent>
+		</section>
+		<section>
+			<id>2</id>
+			<name>About</name>
+			<parent></parent>
+		</section>
+	</sections>
+</site>
