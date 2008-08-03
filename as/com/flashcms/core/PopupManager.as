@@ -16,7 +16,7 @@
 	import flash.net.URLVariables;
 	import flash.net.URLRequest;
 	
-	import com.flashcms.Shell;
+	import com.flashcms.ShellAdmin;
 	import com.flashcms.login.Login;
 	import com.flashcms.layout.StageManager;
 	import com.flashcms.events.PopupEvent;
@@ -31,7 +31,7 @@
 		private var mcHolder:MovieClip;
 		private var oStage:Stage;
 		private var xmlPopups:XMLList;
-		private var oShell:Shell;
+		private var oShell:ShellAdmin;
 		private var oTweenOut:Tween;
 		private var oTween:Tween;
 		private var oTweenY:Tween;
@@ -50,7 +50,7 @@
 		 * @param	popups
 		 * @param	stageref
 		 */
-		public function PopupManager(shell:Shell , popups:XMLList, stageref:Stage) {
+		public function PopupManager(shell:ShellAdmin , popups:XMLList, stageref:Stage) {
 			
 			oStage = stageref;
 			xmlPopups = popups;
@@ -117,6 +117,7 @@
 		 */
 		private function executeEvent()
 		{
+			if(callback != null)
 			callback.call(this, nextevent);
 		}
 		/**
