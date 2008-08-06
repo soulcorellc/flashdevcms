@@ -90,6 +90,11 @@
 		<sName>themes</sName>
 		<sURL><![CDATA[swf/popups/themes.swf]]></sURL>
 	</popups>
+	
+	<popups>
+		<sName>layout</sName>
+		<sURL><![CDATA[swf/popups/layout.swf]]></sURL>
+	</popups>
 	<popups>
 		<sName>about</sName>
 		<sURL><![CDATA[swf/popups/about.swf]]></sURL>
