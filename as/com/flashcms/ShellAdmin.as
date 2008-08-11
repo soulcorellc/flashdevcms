@@ -41,6 +41,9 @@ public class ShellAdmin extends MovieClip {
 		public var sLogo:String;
 		public var oUser:User;
 		private var bHeaderLoaded:Boolean = false;
+		/**
+		 * 
+		 */
 		public function ShellAdmin(){
 			super();
 			init();
@@ -57,7 +60,6 @@ public class ShellAdmin extends MovieClip {
 			oModuleLoader.addEventListener(LoadEvent.LOAD_EVENT, onModuleLoaded);
 			oUser = new User();
 		}
-	
 		/**
 		 * 
 		 * @param	module name of the module to be loaded

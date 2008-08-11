@@ -57,8 +57,6 @@
 			
 			oMenu.width = 800;
 			oMenu.autoSizeButtonsToTextWidth = false;
-			//oMenu.setRendererStyle("textFormat", oStyle);
-			//oMenu.setRendererStyle("embedFonts",true);
 			oMenu.y = 36;
 			oMenu.x = 170;
 			oMenu.addEventListener(MenuEvent.ITEM_CLICK, onItemClick);
@@ -67,7 +65,6 @@
 			for each(var tempmenu:Menu in oMenu.menus)
 			{
 				tempmenu.setRendererStyle("textFormat", oStyle);
-				//tempmenu.setRendererStyle("embedFonts", true);
 				tempmenu.drawNow();
 				tempmenu.invalidate();
 			}
