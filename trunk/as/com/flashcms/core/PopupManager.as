@@ -43,6 +43,8 @@
 		private var nextevent:Event;
 		private var nextparameters:Object;
 		private var callback:Function;
+		private var preloader:CubeLoader;
+		private var preloaderManager:StageManager;
 		/**
 		 * 
 		 * @param	root
@@ -67,7 +69,10 @@
 			mcMask = new Sprite();
 			mcHolder = new MovieClip();
 			addChild(mcMask);
-			
+			preloader = new CubeLoader();
+			preloader.scaleX = .25;
+			preloader.scaleY = .25;
+			preloaderManager = new StageManager(preloader, 50, 50, 50, 50, true);
 		}
 		/**
 		 * create black mask under the window
@@ -137,6 +142,7 @@
 			try {
 				this.callback = callback;
 				createMask();
+				showPreloader();
 				oTweenMask=new Tween(mcMask, "alpha", Regular.easeIn, 0, 1, .2, true);
 				loadModule(name,parameters);
 			}
@@ -165,6 +171,7 @@
 		private function onLoadWindow(oEvent:LoadEvent)
 		{
 			
+
 			addChild(mcHolder);
 			oModule = Module(oEvent.loaderTarget.content);
 			oModule.oShell = oShell;
@@ -217,6 +224,16 @@
 		private function onErrorWindow(oEvent:IOErrorEvent)
 		{
 			trace("Window :"+oEvent);
+		}
+		private function showPreloader()
+		{
+			addChild(preloader);
+			addChild(preloaderManager);
+		}
+		private function hidePreloader()
+		{
+			removeChild(preloader);
+			removeChild(preloaderManager);
 		}
 	}
 	
