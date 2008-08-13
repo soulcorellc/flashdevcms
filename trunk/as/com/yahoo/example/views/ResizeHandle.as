@@ -118,7 +118,6 @@ package com.yahoo.example.views
 			this.handleDragHandler(event);
 			this.stage.removeEventListener(MouseEvent.MOUSE_MOVE, handleDragHandler);
 			this.stage.removeEventListener(MouseEvent.MOUSE_UP, handleDragStopHandler);
-			trace(this.y);
 			var dragEvent:DragEvent = new DragEvent(DragEvent.DRAG_END, this.calculateOffset());
 			this.dispatchEvent(dragEvent);
 		}

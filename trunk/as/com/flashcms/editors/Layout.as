@@ -27,7 +27,7 @@
 		public var config:Array;
 		public var panel:BorderPane;
 		public var MIN_WIDTH:int = 100;
-		public var menuMode:String = "right";
+		public var menuMode:String = "left";
 		public function Layout() 
 		{
 			
@@ -48,8 +48,8 @@
 			config=[  
 				{target: this.mcHeader, constraint: BorderConstraints.TOP},
 				{target: this.resizeHandle, constraint: BorderConstraints.TOP },
-				{target: this.mcMenu, constraint: BorderConstraints.RIGHT, maintainAspectRatio: false },
-				{target: this.hresizeHandle, constraint: BorderConstraints.RIGHT},
+				{target: this.mcMenu, constraint: BorderConstraints.LEFT, maintainAspectRatio: false },
+				{target: this.hresizeHandle, constraint: BorderConstraints.LEFT},
 				{target: this.mcFooter, constraint: BorderConstraints.BOTTOM}  
 			];  	
 			panel.configuration = config;
@@ -73,14 +73,9 @@
 		function resizeDragUpdateHandler(event:DragEvent):void
 		{
 			var value = Math.min(2 * panel.height / 3, Math.max(0, dragStartWidth + event.delta));
-			if(mcHeader.height> 50 || value> mcHeader.height){
-				mcHeader.height = value;
-				resizeHandle.y = mcHeader.height;
-			}
-			else
-			{
-				resizeHandle.y = 50;
-			}
+			value = Math.max(MIN_WIDTH, value);
+			mcHeader.height = value;
+			resizeHandle.y = mcHeader.height;
 		}
 		/**
 		 * 
@@ -95,24 +90,21 @@
 		 */
 		function hresizeDragUpdateHandler(event:DragEvent):void
 		{
-			var value=Math.min(2 * panel.width/ 3, Math.max(0, hdragStartWidth + event.delta));
-			if(mcMenu.width> MIN_WIDTH || value> mcMenu.width){
-				if (menuMode == "right")
-				{
-					trace("value " + value);
-					mcMenu.width = value;
-					hresizeHandle.x = (panel.width-value) ;
-				}
-				else
-				{
-					mcMenu.width = value;
-					hresizeHandle.x = mcMenu.width;
-				}
+			var value;
+			if (menuMode == "right")
+			{
+				
+				event.delta *= -1;
+				value = Math.round(Math.min(2 * panel.width / 3, Math.max(0, hdragStartWidth + event.delta)));
+				mcMenu.width = value;
+				hresizeHandle.x = panel.width-value;
 			}
 			else
 			{
-				hresizeHandle.x = MIN_WIDTH;
-			
+				value= Math.min(2 * panel.width / 3, Math.max(0, hdragStartWidth + event.delta));
+				value = Math.max(MIN_WIDTH, value);
+				mcMenu.width = value;
+				hresizeHandle.x = mcMenu.width;
 			}
 		}
 	}
