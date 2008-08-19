@@ -19,7 +19,7 @@ import com.flashcms.deeplinking.Navigation;
 import com.flashcms.layout.StageManager;
 import com.flashcms.events.LoginEvent;
 import com.flashcms.data.XMLLoader;
-
+import gs.TweenMax;
 		
 public class ShellAdmin extends MovieClip {
 		private var oXML:XML;
@@ -33,7 +33,7 @@ public class ShellAdmin extends MovieClip {
 		private var oNavigation:Navigation;
 		private var oHeader:Module;
 		private var oFooter:Module;
-		private var oMain:Module;
+		public var oMain:Module;
 		//private var oBackground:Module;
 		private var oParameters:Object;
 		public var xMenu:XMLList;
@@ -90,6 +90,7 @@ public class ShellAdmin extends MovieClip {
 					trace("site");
 				break;
 				default:
+					//TweenMax.to(oMain, 2, { x:stage.stageWidth * 2 } );
 					loadModule(event.sModule,event.parameters);
 				break;
 			}	
@@ -199,6 +200,7 @@ public class ShellAdmin extends MovieClip {
 		 */
 		public function showPopup(name:String,parameters:Object=null,callback:Function=null)
 		{
+			
 			addChild(oPopupManager);
 			oPopupManager.show(name,parameters,callback);
 		}
@@ -234,7 +236,10 @@ public class ShellAdmin extends MovieClip {
 						removeSection(oMain);
 						oMain = Module(event.loaderTarget.content);
 						oMain.sManager = new StageManager(oMain, 50, 54, 50, 50, true);
-						initModule(oMain,1);
+						initModule(oMain, 1);
+						//TweenMax.to(oMain, 0, { blurFilter: { blurX:5, blurY:5, quality:2 }} );
+						//TweenMax.to(oMain, 2, { x:oMain.x} );
+						
 					break;
 				}
 			}

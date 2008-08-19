@@ -6,11 +6,14 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.text.TextField;
 	
 	import com.yahoo.astra.layout.modes.BorderConstraints;
 	import com.yahoo.example.views.ResizeHandle;
 	import com.yahoo.example.events.DragEvent;
 	import com.flashcms.layout.LayoutObject;
+	import com.flashcms.editors.utils.Bar;
+	import com.flashcms.data.XMLLoader;
 	/**
 	* ...
 	* @author David Barrios
@@ -22,12 +25,20 @@
 		public var mcHeader:Sprite;
 		public var mcFooter:Sprite;
 		public var mcMenu:Sprite;
+		public var mcBar:Bar;
 		public var resizeHandle:ResizeHandle;
 		public var hresizeHandle:ResizeHandle;
 		public var config:Array;
 		public var panel:BorderPane;
 		public var MIN_WIDTH:int = 100;
-		public var menuMode:String = "left";
+		public var MIN_HEIGHT:int = 60;
+		public var menutype:int = 0;
+		public var txtSizeH:TextField;
+		public var txtSizeM:TextField;
+		private var oXMLLoader:XMLLoader;
+		private var oXML:XML;
+		private var menuwidth:int;
+		private var headerheight:int;
 		public function Layout() 
 		{
 			
@@ -37,6 +48,31 @@
 		 */
 		public override function init()
 		{
+			loadXML();
+		}
+		private function loadXML()
+		{
+			oXMLLoader = new XMLLoader(oShell.getURL("layout", "editors"), onXMLData);
+		}
+		
+		private function onXMLData(e:Event)
+		{
+			oXML = XML(e.target.data);
+			menutype = oXML.configuration.(name == "menutype").value;
+			menuwidth = oXML.configuration.(name == "menu").value;
+			headerheight = oXML.configuration.(name == "header").value;
+			txtSizeH.text = String(headerheight);
+			txtSizeM.text = String(menuwidth);
+			mcHeader.height = headerheight;
+			mcMenu.width = menuwidth;
+			draw();
+			mcBar.setMenu(menutype);
+		}
+		
+		private function draw()
+		{
+			mcBar.addEventListener(Event.CHANGE, onMenuChange);
+			mcBar.addEventListener("save", onSave);
 			hresizeHandle = new ResizeHandle();
 			hresizeHandle.direction = "horizontal";
 			resizeHandle = new ResizeHandle();
@@ -45,20 +81,47 @@
 			resizeHandle.addEventListener(DragEvent.DRAG_UPDATE, resizeDragUpdateHandler);
 			hresizeHandle.addEventListener(DragEvent.DRAG_START, hresizeDragStartHandler);
 			hresizeHandle.addEventListener(DragEvent.DRAG_UPDATE, hresizeDragUpdateHandler);
+			if (menutype== 0)
+				setLeftConfig()
+			else
+				setRightConfig();
+			panel.verticalGap = 5;	
+		}
+		private function setLeftConfig()
+		{
+			txtSizeM.x = 4;	
 			config=[  
 				{target: this.mcHeader, constraint: BorderConstraints.TOP},
 				{target: this.resizeHandle, constraint: BorderConstraints.TOP },
 				{target: this.mcMenu, constraint: BorderConstraints.LEFT, maintainAspectRatio: false },
 				{target: this.hresizeHandle, constraint: BorderConstraints.LEFT},
-				{target: this.mcFooter, constraint: BorderConstraints.BOTTOM}  
-			];  	
+				{target: this.mcBar, constraint: BorderConstraints.BOTTOM}
+			];
 			panel.configuration = config;
-			panel.verticalGap = 5;
-			
 		}
-		private function showPopup(e:Event)
+		private function setRightConfig()
 		{
-			oShell.showPopup("layout", null, onClosePopup);
+			txtSizeM.x = 680;
+			config=[  
+				{target: this.mcHeader, constraint: BorderConstraints.TOP},
+				{target: this.resizeHandle, constraint: BorderConstraints.TOP },
+				{target: this.mcMenu, constraint: BorderConstraints.RIGHT, maintainAspectRatio: false },
+				{target: this.hresizeHandle, constraint: BorderConstraints.RIGHT},
+				{target: this.mcBar, constraint: BorderConstraints.BOTTOM}
+			];
+			panel.configuration = config;
+		}
+		private function onMenuChange(e:Event)
+		{
+			menutype = e.target.menuType ;
+			if (e.target.menuType == 0)
+			setLeftConfig()
+			else
+			setRightConfig();
+		}
+		private function onSave(e:Event)
+		{
+			oShell.setStatusMessage("Saved!");
 		}
 		private function onClosePopup(e:PopupEvent)
 		{
@@ -73,9 +136,11 @@
 		function resizeDragUpdateHandler(event:DragEvent):void
 		{
 			var value = Math.min(2 * panel.height / 3, Math.max(0, dragStartWidth + event.delta));
-			value = Math.max(MIN_WIDTH, value);
+			value = Math.max(MIN_HEIGHT, value);
 			mcHeader.height = value;
 			resizeHandle.y = mcHeader.height;
+			txtSizeH.text = String(Math.round(value));
+			
 		}
 		/**
 		 * 
@@ -91,7 +156,7 @@
 		function hresizeDragUpdateHandler(event:DragEvent):void
 		{
 			var value;
-			if (menuMode == "right")
+			if (menutype == 1)
 			{
 				
 				event.delta *= -1;
@@ -106,6 +171,7 @@
 				mcMenu.width = value;
 				hresizeHandle.x = mcMenu.width;
 			}
+			txtSizeM.text = String(Math.round(value));
 		}
 	}
 	

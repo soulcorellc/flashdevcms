@@ -22,6 +22,7 @@
 	import com.flashcms.events.PopupEvent;
 	import com.flashcms.events.LoginEvent;
 	import com.flashcms.events.LoadEvent;
+	
 	/**
 	* ...
 	* @author David Barrios
@@ -170,8 +171,6 @@
 		 */
 		private function onLoadWindow(oEvent:LoadEvent)
 		{
-			
-
 			addChild(mcHolder);
 			oModule = Module(oEvent.loaderTarget.content);
 			oModule.oShell = oShell;
