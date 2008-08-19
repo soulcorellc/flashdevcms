@@ -29,7 +29,7 @@
 			createBG();
 			oMessage = new OutputMessage();
 			oMessage.x = 10;
-			oMessage.y = 2;
+			oMessage.y = 5;
 			addChild(oMessage);
 		}
 		public override function setData(message:String)

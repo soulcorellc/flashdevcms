@@ -1,12 +1,13 @@
 ﻿package com.flashcms 
 {
+	import com.flashcms.site.Header;
 	import flash.display.MovieClip;
 	import com.flashcms.site.Background;
 	import com.flashcms.data.XMLLoader;
 	import flash.events.Event;
 	import flash.display.StageScaleMode;
 	import flash.display.StageAlign;
-	
+	import gs.TweenMax;
 	/**
 	* ...
 	* @author David Barrios
@@ -18,6 +19,8 @@
 		private var urlConfiguration:String = "./admin/xml/site/main.xml";
 		private var oXML:XML;
 		private var themes:XMLList;
+		private var configuration:XMLList;
+		private var oHeader:Header;
 		public function Shell() 
 		{
 			init();
@@ -28,13 +31,13 @@
 		 */
 		private function init()
 		{
-			setLayout();
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
 			oXMLLoader = new XMLLoader(urlConfiguration, onSiteData, onError);
 		}
 		private function setLayout()
 		{
-			stage.scaleMode = StageScaleMode.NO_SCALE;
-			stage.align = StageAlign.TOP_LEFT;	
+			trace("ok");
 		}
 		/**
 		 * 
@@ -49,12 +52,18 @@
 		{
 			oXML = XML(event.target.data);
 			themes = new XMLList(oXML.themes);
+			configuration = XMLList(oXML.configuration);
 			createBackground();
 			loadHeader();
 			loadFooter();
 		}
 		private function loadHeader()
-		{}
+		{
+			oHeader = new Header();
+			oHeader.mcBackground.width = stage.stageWidth;
+			TweenMax.to(oHeader.mcBackground, 0, {colorMatrixFilter:{colorize:themes.header}} );
+			addChild(oHeader);
+		}
 		private function loadFooter()
 		{}
 		/**

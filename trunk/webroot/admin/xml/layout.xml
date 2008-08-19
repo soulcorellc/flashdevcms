@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<result>
+		<success>true</success>
+		<message>Usuario no valido</message>
+	</result>
+	
+	<configuration>
+		<name>header</name>
+		<value>150</value>
+	</configuration>
+	<configuration>
+		<name>menu</name>
+		<value>350</value>
+	</configuration>
+	<configuration>
+		<name>menutype</name>
+		<value>1</value>
+	</configuration>
+	<configuration>
+		<name>headerimage</name>
+		<value></value>
+	</configuration>
+		
+</data>

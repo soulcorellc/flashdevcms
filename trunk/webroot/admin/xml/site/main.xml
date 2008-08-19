@@ -5,10 +5,20 @@
 	</result>
 	<themes>
 		<background>0x003366</background>
-		<header>0x003366</header>
+		<header>0xFFFFFF</header>
 		<footer>0x003366</footer>
 		<menu>0x003366</menu>
 	</themes>
+	
+	<configuration>
+		<name>header</name>
+		<value>350</value>
+	</configuration>
+	<configuration>
+		<name>menu</name>
+		<value>300</value>
+	</configuration>
+	
 	<images>
 		<header>headerimage.jpg</header>
 	</images>

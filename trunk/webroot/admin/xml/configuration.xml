@@ -144,6 +144,7 @@
 		</contents>
 		<editors>
 			<main><![CDATA[xml/editors.xml]]></main>
+			<layout><![CDATA[xml/layout.xml]]></layout>
 		</editors>
 	</urls>
 </configuration>
