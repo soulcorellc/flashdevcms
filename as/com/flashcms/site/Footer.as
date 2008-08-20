@@ -4,23 +4,23 @@
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	
 	/**
 	* ...
 	* @author David Barrios
 	*/
-	public class Header extends MovieClip 
+	public class Footer extends MovieClip 
 	{
 		public var sManager:StageManager;
 		public var mcBackground:Sprite;
-		public function Header() 
+		public function Footer() 
 		{
-			sManager = new StageManager(this, 0, 0, 0, 0, true);	
+			sManager = new StageManager(this, 0, 100, 0, 100, true)	
 		}
 		public function onResize(e:Event=null)
 		{
-			mcBackground.width = stage.stageWidth;	
+			mcBackground.width = stage.stageWidth;
 		}
-		
 	}
 	
 }

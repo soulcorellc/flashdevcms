@@ -55,7 +55,7 @@
 		 */
 		private function onError(event:IOErrorEvent)
 		{
-			trace("error on :<" + aMovies[0]+">");
+			//trace("mloader error on :[" + aMovies[0]+"]");
 			aMovies.shift();
 			oError = new LoadError(event.text);
 			dispatchEvent(oError);

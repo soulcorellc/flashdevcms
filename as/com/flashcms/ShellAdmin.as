@@ -41,7 +41,6 @@ public class ShellAdmin extends MovieClip {
 		public var sLogo:String;
 		public var oUser:User;
 		private var bHeaderLoaded:Boolean = false;
-		private var preloader:CubeLoader;
 		/**
 		 * 
 		 */
@@ -60,13 +59,6 @@ public class ShellAdmin extends MovieClip {
 			oModuleLoader = new MultiLoader();
 			oModuleLoader.addEventListener(LoadEvent.LOAD_EVENT, onModuleLoaded);
 			oUser = new User();
-			
-			preloader = new CubeLoader();
-			preloader.scaleX = .25;
-			preloader.scaleY = .25;
-			preloader.x = 300;
-			preloader.y = 300;
-		
 		}
 		/**
 		 * 

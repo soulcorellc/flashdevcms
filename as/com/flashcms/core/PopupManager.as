@@ -22,6 +22,7 @@
 	import com.flashcms.events.PopupEvent;
 	import com.flashcms.events.LoginEvent;
 	import com.flashcms.events.LoadEvent;
+	import com.flashcms.events.LoadError;
 	
 	/**
 	* ...
@@ -46,6 +47,7 @@
 		private var callback:Function;
 		private var preloader:CubeLoader;
 		private var preloaderManager:StageManager;
+		private var lastpopup:String;
 		/**
 		 * 
 		 * @param	root
@@ -67,6 +69,7 @@
 			
 			oMultiLoader = new MultiLoader();
 			oMultiLoader.addEventListener(LoadEvent.LOAD_EVENT, onLoadWindow);
+			oMultiLoader.addEventListener(LoadError.LOAD_ERROR, onErrorWindow);
 			mcMask = new Sprite();
 			mcHolder = new MovieClip();
 			addChild(mcMask);
@@ -141,6 +144,7 @@
 		public function show(name:String,parameters:Object=null,callback:Function=null)
 		{
 			try {
+				lastpopup = name;
 				this.callback = callback;
 				createMask();
 				showPreloader();
@@ -160,9 +164,10 @@
 		private function loadModule(name:String,parameters:Object)
 		{
 			
+			var url = xmlPopups.(sName == name).sURL;
 			nextparameters = parameters;
 			//trace("nextparameters : "+nextparameters.name);
-			oMultiLoader.add(xmlPopups.(sName == name).sURL);
+			oMultiLoader.add(url);
 			oMultiLoader.start();
 		}
 		/**
@@ -194,6 +199,7 @@
 		}
 		private function onModuleDisplayed(event:TweenEvent)
 		{
+			hidePreloader();
 			oModule.init();
 		}
 		/**
@@ -220,19 +226,21 @@
 		 * Handle IO Error for loaded windows
 		 * @param	oEvent
 		 */
-		private function onErrorWindow(oEvent:IOErrorEvent)
+		private function onErrorWindow(oEvent:LoadError)
 		{
-			trace("Window :"+oEvent);
+			trace("Error loading popup :"+lastpopup);
 		}
 		private function showPreloader()
 		{
-			addChild(preloader);
 			addChild(preloaderManager);
+			addChild(preloader);
+			
 		}
 		private function hidePreloader()
 		{
-			removeChild(preloader);
 			removeChild(preloaderManager);
+			removeChild(preloader);
+			
 		}
 	}
 	

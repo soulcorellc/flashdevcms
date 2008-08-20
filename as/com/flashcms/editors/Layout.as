@@ -14,6 +14,7 @@
 	import com.flashcms.layout.LayoutObject;
 	import com.flashcms.editors.utils.Bar;
 	import com.flashcms.data.XMLLoader;
+	import flash.text.TextFieldAutoSize;
 	/**
 	* ...
 	* @author David Barrios
@@ -35,6 +36,7 @@
 		public var menutype:int = 0;
 		public var txtSizeH:TextField;
 		public var txtSizeM:TextField;
+		public var txtTitle:TextField;
 		private var oXMLLoader:XMLLoader;
 		private var oXML:XML;
 		private var menuwidth:int;
@@ -48,6 +50,7 @@
 		 */
 		public override function init()
 		{
+			txtTitle.autoSize = TextFieldAutoSize.LEFT;
 			loadXML();
 		}
 		private function loadXML()
@@ -61,6 +64,7 @@
 			menutype = oXML.configuration.(name == "menutype").value;
 			menuwidth = oXML.configuration.(name == "menu").value;
 			headerheight = oXML.configuration.(name == "header").value;
+			txtTitle.text = oXML.configuration.(name == "headertext").value;
 			txtSizeH.text = String(headerheight);
 			txtSizeM.text = String(menuwidth);
 			mcHeader.height = headerheight;
@@ -86,6 +90,14 @@
 			else
 				setRightConfig();
 			panel.verticalGap = 5;	
+			
+			txtTitle.addEventListener(MouseEvent.CLICK, onTitleClick);
+			
+			
+		}
+		private function onTitleClick(e:MouseEvent)
+		{
+			oShell.showPopup("texteditor",{text:txtTitle.htmlText},onClosePopup);	
 		}
 		private function setLeftConfig()
 		{
@@ -125,6 +137,10 @@
 		}
 		private function onClosePopup(e:PopupEvent)
 		{
+			if (e.parameters.saved)
+			{
+				txtTitle.htmlText = e.parameters.text;
+			}
 		}
 		function resizeDragStartHandler(event:DragEvent):void{
 			dragStartWidth = mcHeader.height;

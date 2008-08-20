@@ -5,14 +5,14 @@
 	</result>
 	<themes>
 		<background>0x003366</background>
-		<header>0xFFFFFF</header>
-		<footer>0x003366</footer>
+		<header>0x006699</header>
+		<footer>0x006699</footer>
 		<menu>0x003366</menu>
 	</themes>
 	
 	<configuration>
-		<name>header</name>
-		<value>350</value>
+		<name>headerheight</name>
+		<value>200</value>
 	</configuration>
 	<configuration>
 		<name>menu</name>

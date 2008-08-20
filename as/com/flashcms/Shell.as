@@ -1,12 +1,15 @@
 ﻿package com.flashcms 
 {
+	import com.flashcms.site.Footer;
 	import com.flashcms.site.Header;
 	import flash.display.MovieClip;
 	import com.flashcms.site.Background;
 	import com.flashcms.data.XMLLoader;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.display.StageScaleMode;
 	import flash.display.StageAlign;
+	import com.flashcms.layout.StageManager;
 	import gs.TweenMax;
 	/**
 	* ...
@@ -21,6 +24,7 @@
 		private var themes:XMLList;
 		private var configuration:XMLList;
 		private var oHeader:Header;
+		private var oFooter:Footer;
 		public function Shell() 
 		{
 			init();
@@ -31,14 +35,13 @@
 		 */
 		private function init()
 		{
+			oHeader = new Header();
+			oFooter = new Footer;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			oXMLLoader = new XMLLoader(urlConfiguration, onSiteData, onError);
 		}
-		private function setLayout()
-		{
-			trace("ok");
-		}
+		
 		/**
 		 * 
 		 */
@@ -54,18 +57,19 @@
 			themes = new XMLList(oXML.themes);
 			configuration = XMLList(oXML.configuration);
 			createBackground();
-			loadHeader();
-			loadFooter();
+			initModule(oHeader,themes.header);
+			initModule(oFooter, themes.footer);
+			oHeader.mcBackground.height = configuration.(name == "headerheight").value;
 		}
-		private function loadHeader()
+		
+		private function initModule(oModule,color)
 		{
-			oHeader = new Header();
-			oHeader.mcBackground.width = stage.stageWidth;
-			TweenMax.to(oHeader.mcBackground, 0, {colorMatrixFilter:{colorize:themes.header}} );
-			addChild(oHeader);
+			TweenMax.to(oModule.mcBackground, 0, {colorMatrixFilter:{colorize:color}} );
+			stage.addEventListener(Event.RESIZE, oModule.onResize);
+			addChild(oModule);
+			addChild(oModule.sManager);
+			oModule.onResize();
 		}
-		private function loadFooter()
-		{}
 		/**
 		 * 
 		 * @param	e
