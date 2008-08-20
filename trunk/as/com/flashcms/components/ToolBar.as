@@ -19,8 +19,10 @@
 		 */
 		function initheader()
 		{
-			mcHeader.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
-			mcHeader.addEventListener(MouseEvent.MOUSE_UP, onStopDrag);
+			if(mcHeader!=null){
+				mcHeader.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
+				mcHeader.addEventListener(MouseEvent.MOUSE_UP, onStopDrag);
+			}
 		}
 		/**
 		 * 

@@ -61,6 +61,12 @@
 		<sURL><![CDATA[swf/editors/layout.swf]]></sURL>
 	</modules>
 	
+	<modules>
+		<id>11</id>
+		<sName>options</sName>
+		<sURL><![CDATA[swf/sections/options.swf]]></sURL>
+	</modules>
+	
 	<popups>
 		<sName>picker</sName>
 		<sURL><![CDATA[swf/popups/picker.swf]]></sURL>
@@ -98,7 +104,12 @@
 	<popups>
 		<sName>about</sName>
 		<sURL><![CDATA[swf/popups/about.swf]]></sURL>
-	</popups>	
+	</popups>
+	<popups>
+		<sName>texteditor</sName>
+		<sURL><![CDATA[swf/popups/texteditor.swf]]></sURL>
+	</popups>
+	
 	<urls>
 		<core>
 			<upload><![CDATA[xml/upload.xml]]></upload>

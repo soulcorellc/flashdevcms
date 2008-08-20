@@ -60,13 +60,17 @@
 		/**
 		 * 
 		 */
-		public function TextBar(field:TextField) {
-			txtText = field;
-			init();
+		public function TextBar(field:TextField=null) {
+			
+			if(field){
+				txtText = field;
+				init();
+			}
 			
 		}
-		private function init()
+		public function init()
 		{
+			trace("init called");
 			oFormat = new TextFormat();
 			txtText.alwaysShowSelection = true;
 			setToolBar(xmlControls.controls, formatPanel, onClick);

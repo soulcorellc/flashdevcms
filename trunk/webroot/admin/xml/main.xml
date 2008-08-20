@@ -30,7 +30,7 @@
 		</menu>
 				
 		<menu label="Administration">
-			<menuitem label="Options" id="options" />
+			<menuitem label="Site Options" id="options" />
 		</menu>
 		
 		<menu label="Site">

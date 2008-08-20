@@ -21,5 +21,9 @@
 		<name>headerimage</name>
 		<value></value>
 	</configuration>
+	<configuration>
+		<name>headertext</name>
+		<value>MY SITE</value>
+	</configuration>
 		
 </data>
