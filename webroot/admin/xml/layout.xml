@@ -4,11 +4,25 @@
 		<success>true</success>
 		<message>Usuario no valido</message>
 	</result>
+
 	
 	<configuration>
-		<name>header</name>
-		<value>150</value>
+		<name>headercolor</name>
+		<value>0x006699</value>
 	</configuration>
+	<configuration>
+		<name>footercolor</name>
+		<value>0x006699</value>
+	</configuration>
+	<configuration>
+		<name>menucolor</name>
+		<value>0xCCCCFF</value>
+	</configuration>
+	<configuration>
+		<name>background</name>
+		<value>0x003366</value>
+	</configuration>
+	
 	<configuration>
 		<name>menu</name>
 		<value>350</value>
@@ -18,8 +32,8 @@
 		<value>1</value>
 	</configuration>
 	<configuration>
-		<name>headerimage</name>
-		<value></value>
+		<name>header</name>
+		<value>150</value>
 	</configuration>
 	<configuration>
 		<name>headertext</name>

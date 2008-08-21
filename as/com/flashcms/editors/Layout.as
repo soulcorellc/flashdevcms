@@ -15,6 +15,7 @@
 	import com.flashcms.editors.utils.Bar;
 	import com.flashcms.data.XMLLoader;
 	import flash.text.TextFieldAutoSize;
+	import gs.TweenMax;
 	/**
 	* ...
 	* @author David Barrios
@@ -65,6 +66,12 @@
 			menuwidth = oXML.configuration.(name == "menu").value;
 			headerheight = oXML.configuration.(name == "header").value;
 			txtTitle.text = oXML.configuration.(name == "headertext").value;
+			TweenMax.to(mcHeader, 0, { colorMatrixFilter: { colorize:oXML.configuration.(name == "headercolor").value }} );
+			TweenMax.to(mcMenu, 0, { colorMatrixFilter: { colorize:oXML.configuration.(name == "menucolor").value }} );
+			TweenMax.to(mcBar, 0, { colorMatrixFilter: { colorize:oXML.configuration.(name == "footercolor").value }} );
+			
+			
+			panel.setStyle("color", oXML.configuration.(name == "background").value);
 			txtSizeH.text = String(headerheight);
 			txtSizeM.text = String(menuwidth);
 			mcHeader.height = headerheight;
