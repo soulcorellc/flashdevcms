@@ -340,7 +340,10 @@ public class ShellAdmin extends MovieClip {
 		 */
 		public function getURL(name:String,section:String=null):String
 		{
-			return section == null? xURLs[name] : xURLs[section][name];
+			var url:String=section == null? xURLs[name] : xURLs[section][name];
+			var server:String = xURLs["server"];
+			
+			return server + url;
 		}
 		
 		

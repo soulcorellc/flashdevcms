@@ -17,6 +17,7 @@
 	*/
 	public class Login extends Module{
 		
+		public var txtTitle:TextField;
 		public var txtUser:TextInput;
 		public var txtPass:TextInput;
 		public var btEnter:Button;
@@ -35,7 +36,11 @@
 		 */
 		public override function init()
 		{
-			
+			txtUser.tabIndex = 0;
+			txtPass.tabIndex = 1;
+			btEnter.tabIndex = 2;
+			txtError.tabEnabled = false;
+			txtTitle.tabEnabled = false;
 			btEnter.addEventListener(MouseEvent.CLICK, onEnter);
 		}
 		/**
@@ -52,7 +57,14 @@
 		 */
 		public function onEnter(e:Event)
 		{
-			oXMLLoader = new XMLLoader(oShell.getURL("main", "login"), onXMLData, onDataError,onError,{option:sOption,user:txtUser.text,password:txtPass.text});
+			if(txtUser.text!="" && txtPass.text != ""){ 
+				var url:String = oShell.getURL("login", "core");
+				oXMLLoader = new XMLLoader(url, onXMLData, onDataError, onError, { option:sOption, user:txtUser.text, password:txtPass.text } );
+			}
+			else
+			{
+				txtError.text="Escriba usuario y contraseña"
+			}
 		}
 		private function onXMLData(event:Event)
 		{
