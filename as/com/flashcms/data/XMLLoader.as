@@ -33,7 +33,7 @@
 			this.errorhandler = errorhandler;
 			this.dataerrorhandler = dataerrorhandler;
 			oRequest = new URLRequest(url);
-			/*
+			
 			if (variables != null)
 			{
 				var postvars:URLVariables = new URLVariables();
@@ -42,9 +42,9 @@
 					postvars[i] = variables[i];
 				}
 				oRequest.data = postvars;
-				oRequest.method = URLRequestMethod.POST;
+				oRequest.method = URLRequestMethod.GET;
 			}
-			*/
+			
 			oLoader = new URLLoader(oRequest);
 			oLoader.addEventListener(Event.COMPLETE, onComplete);
 			if (errorhandler == null)
