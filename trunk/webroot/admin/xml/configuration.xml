@@ -128,11 +128,11 @@
 		<themes>
 			<main><![CDATA[admin/xml/themes.xml]]></main>
 		</themes>
-		<users>
-			<main><![CDATA[admin/xml/users.xml]]></main>
+		<user>
+			<main><![CDATA[net/users.aspx]]></main>
 			<data><![CDATA[admin/xml/getUser.xml]]></data>
 			<schema><![CDATA[admin/xml/forms/users.xml]]></schema>
-		</users>
+		</user>
 		<groups>
 			<main><![CDATA[admin/xml/groups.xml]]></main>
 			<data><![CDATA[admin/xml/getGroup.xml]]></data>
