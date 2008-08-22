@@ -3,12 +3,12 @@
 	<result>
 		<success>true</success>
 	</result>
-	<users>
+	<user>
 		<idUser type="textfield" required="true"/>
 		<name type="textfield" required="true"/>
 		<password type="textfield" password="true" required="true"/>
 		<confirmpassword type="textfield" password="true" required="true"/>
 		<active type="checkbox" required="true"/>
 		<idProfile type="combobox" provider="groups" label="name" required="true"/>
-	</users>
+	</user>
 </data>

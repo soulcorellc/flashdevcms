@@ -115,7 +115,7 @@
 		 */
 		private function onDataError(e:ErrorEvent)
 		{
-			trace("Admin Error : " + e.message);
+			trace("Admin Error : " + e);
 		}
 		
 		private function onCreate(e:Event)
