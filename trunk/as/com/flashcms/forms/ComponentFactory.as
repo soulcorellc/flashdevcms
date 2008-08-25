@@ -31,6 +31,7 @@
 					component = new CheckBox();
 				break;
 			}
+			component.name = data.name();
 			return component;
 		}
 		

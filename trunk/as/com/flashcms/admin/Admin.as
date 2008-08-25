@@ -36,9 +36,10 @@
 		private var oFormData:FormData;
 		private var sOption:String;
 		private var sURL:String;
-		private var idDelete:int;
+		private var idDelete:String;
 		private var editoption:String;
 		private var createoption:String;
+		private var idcolumn:String;
 		private var oXMLLoader:XMLLoader;
 		/**
 		 * 
@@ -52,6 +53,7 @@
 		public override function init()
 		{
 			
+			idcolumn = parameters.idcolumn;
 			editoption=parameters.edit;
 			createoption=parameters.create;
 			sectionName = parameters.section;
@@ -141,7 +143,7 @@
 		}
 		private function onDelete(e:MouseEvent)
 		{
-			idDelete = lbList.selectedItem.id;
+			idDelete = lbList.selectedItem[idcolumn];
 			oShell.showPopup("confirmation",{title:"DELETE ",message:"Do you want to delete ?"},onConfirmation);
 		}
 		
@@ -185,6 +187,7 @@
 		private function onFinishDelete(e:Event)
 		{
 			oShell.setStatusMessage("User Deleted");
+			init();
 		}
 		/**
 		 * 
