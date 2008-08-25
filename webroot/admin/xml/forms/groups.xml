@@ -4,6 +4,6 @@
 		<success>true</success>
 	</result>
 	<groups>
-		<name type="textfield" required="true"/>
+		<name type="textfield" required="true" title="Group Name" />
 	</groups>
 </data>

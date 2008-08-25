@@ -29,6 +29,14 @@
 			return component;
 		}
 		
+		public static function setCombo(component,data:XMLList,labelfield:String)
+		{
+			trace(data);
+			var myDP:DataProvider = new DataProvider(<data>{data}</data>);	
+			component.dataProvider = myDP;
+			component.labelField = labelfield;
+		}
+		
 	}
 	
 }

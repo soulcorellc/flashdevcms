@@ -4,7 +4,7 @@
 	import flash.display.DisplayObject;
 	import com.flashcms.core.Module;
 	import com.flashcms.events.ErrorEvent;
-	import com.flashcms.layout.Layout;
+	import com.flashcms.layout.LayoutSchema;
 	import com.flashcms.data.XMLLoader;
 	import com.flashcms.forms.ComponentFactory;
 	import com.flashcms.forms.ComponentData;
@@ -12,6 +12,7 @@
 	import com.flashcms.events.PopupEvent;
 	import com.flashcms.forms.Validator;
 	import com.flashcms.design.DynamicBG;
+	import flash.text.TextField;
 	/**
 	* ...
 	* @author Default
@@ -20,7 +21,7 @@
 		private var oXMLLoader:XMLLoader;
 		private var oXML:XML;
 		private var oXMLSchema:XML;
-		private var oLayout:Layout;
+		private var oLayout:LayoutSchema;
 		private var oBar:ButtonBar;
 		private var oForm:FormData;
 		private var id:int=0;
@@ -28,13 +29,14 @@
 		private var createoption:String;
 		private var editoption:String;
 		private var oBG:DynamicBG;
+		//private var txtMessage:TextField;
 		
 		/**
 		 * 
 		 */
 		public function Edit() {
 			createBG();	
-			oLayout = new Layout(this,2, 50, 70);
+			oLayout = new LayoutSchema(this,2, 50, 70);
 		}
 		private function createBG()
 		{
@@ -69,6 +71,7 @@
 			oXMLSchema = XML(event.target.data);
 			if (oForm.requiredata)
 			{
+			
 				var urldata = oShell.getURL("data", oForm.section);
 				new XMLLoader(urldata, onXMLData, onErrorData, onError, {option:"getuser",id:id} );
 			}
@@ -99,13 +102,24 @@
 		 */
 		private function createForm()
 		{
+			trace("data : " + oForm.data);
+			trace(oForm.requiredata);
 			
 			for each(var component:XML in oXMLSchema[oForm.table].children())
 			{
 				var obj = addChild(ComponentFactory.getComponent(component));
-				oLayout.addComponent(obj, component.name(), component.@type);
+				oLayout.addComponent(obj, component.@title, component.@type,component.@datafield,component.@required);
+				
 				if(oForm.requiredata){
 					ComponentData.setData(obj, component, XML(oXML[oForm.table][component.name()]) , oForm.data);
+				}
+				else
+				{
+					if (component.@type.toString()=="combobox")
+					{
+						
+						ComponentData.setCombo(obj, oForm.data[component.@provider], "name");
+					}
 				}
 			}
 		}
@@ -124,9 +138,19 @@
 		 */
 		private function send(e:Event)
 		{
-			var urldata = oShell.getURL("data", oForm.section);
-			var option = create?createoption:editoption;
-			new XMLLoader(urldata, onSaveData, onSaveError, onError, {option:option,id:id});
+			if (oLayout.getIsValid())
+			{
+				txtMessage.text="Sending Form.."
+				var formobject = oLayout.getFormObject();
+				formobject.option = option;
+				var urldata = oShell.getURL("data", oForm.section);
+				var option = create?createoption:editoption;
+				new XMLLoader(urldata, onSaveData, onSaveError, onError, formobject);
+			}
+			else
+			{
+				txtMessage.text="Please correct the errors"
+			}
 		}
 		private function onSaveData(e:Event)
 		{

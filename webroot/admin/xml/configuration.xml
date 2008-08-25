@@ -131,7 +131,7 @@
 		<user>
 			<main><![CDATA[net/users.aspx]]></main>
 			<data><![CDATA[admin/xml/getUser.xml]]></data>
-			<schema><![CDATA[admin/xml/forms/users.xml]]></schema>
+			<schema><![CDATA[admin/xml/forms/user.xml]]></schema>
 		</user>
 		<groups>
 			<main><![CDATA[admin/xml/groups.xml]]></main>

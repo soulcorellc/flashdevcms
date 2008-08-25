@@ -29,7 +29,7 @@
 		 * @param	variables
 		 */
 		public function XMLLoader(url:String,handler:Function,dataerrorhandler:Function=null,errorhandler:Function=null,variables:Object=null) {
-			trace("URL " + url);
+			
 			this.handler = handler;
 			this.errorhandler = errorhandler;
 			this.dataerrorhandler = dataerrorhandler;
@@ -65,8 +65,6 @@
 		private function onComplete(event:Event)
 		{
 			oXML = XML(event.target.data);
-			trace("oXML : " + oXML);
-			trace("sucess " + oXML.result.success);
 			if (oXML.result.success == "true")
 			{
 				handler.call(this,event);
