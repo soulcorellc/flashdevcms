@@ -25,7 +25,7 @@
 		</menu>
 					
 		<menu label="Users and Groups">
-			<menuitem label="Manage Users" id="admin" section="user" option="getallusers" editoption="create" createoption="setuser" popup="edit" idcolumn="idUser" />
+			<menuitem label="Manage Users" id="admin" section="user" option="getallusers" editoption="edituser" createoption="setuser" popup="edit" idcolumn="idUser" />
 			<menuitem label="Manage Groups" id="admin" section="groups" option="getallgroups" editoption="editprofile" createoption="createprofile" popup="edit" />
 		</menu>
 				
