@@ -130,7 +130,7 @@
 		</themes>
 		<user>
 			<main><![CDATA[net/users.aspx]]></main>
-			<data><![CDATA[admin/xml/getUser.xml]]></data>
+			<data><![CDATA[net/users.aspx]]></data>
 			<schema><![CDATA[admin/xml/forms/user.xml]]></schema>
 		</user>
 		<groups>

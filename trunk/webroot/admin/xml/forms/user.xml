@@ -6,8 +6,8 @@
 	<user>
 		<idUser type="textfield" required="true" title="UserName" />
 		<name type="textfield" required="true" title="Full Name" />
-		<password type="textfield" password="true" required="true" title="Password" />
-		<confirmpassword type="textfield" password="true" required="true" title="Confirm Password" />
+		<passw type="textfield" password="true" required="true" title="Password" />
+		<confirmpassword type="textfield" password="true" required="true" title="Confirm Password" ignoredata="true" />
 		<active type="checkbox" required="true" title="Active" />
 		<idProfile type="combobox" provider="profile" label="name" required="true" datafield="idProfile" title="Profile" />
 	</user>

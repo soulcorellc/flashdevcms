@@ -24,10 +24,9 @@
 		private var oLayout:LayoutSchema;
 		private var oBar:ButtonBar;
 		private var oForm:FormData;
-		private var id:int=0;
+		private var id:String;
 		private var create:Boolean;
-		private var createoption:String;
-		private var editoption:String;
+		private var option:String;
 		private var oBG:DynamicBG;
 		//private var txtMessage:TextField;
 		
@@ -48,12 +47,12 @@
 		 */
 		public override function init()
 		{
-			trace("parameters : " + parameters);
 			oForm = new FormData(parameters.table, parameters.section, parameters.requiredata, parameters.data);
 			id = parameters.id;
+			trace("parameters.id " + parameters.id);
 			create = parameters.create;
-			editoption = parameters.editoption;
-			createoption=parameters.createoption;
+			option = parameters.option;
+			
 			var urlschema:String = oShell.getURL("schema", oForm.section);
 			new XMLLoader(urlschema, onXMLSchema, onErrorData, onError);
 			
@@ -71,9 +70,8 @@
 			oXMLSchema = XML(event.target.data);
 			if (oForm.requiredata)
 			{
-			
-				var urldata = oShell.getURL("data", oForm.section);
-				new XMLLoader(urldata, onXMLData, onErrorData, onError, {option:"getuser",id:id} );
+				var urldata = oShell.getURL("main", oForm.section);
+				new XMLLoader(urldata, onXMLData, onErrorData, onError, {option:"getuser",user:id} );
 			}
 			else
 			{
@@ -102,16 +100,16 @@
 		 */
 		private function createForm()
 		{
-			trace("data : " + oForm.data);
-			trace(oForm.requiredata);
 			
 			for each(var component:XML in oXMLSchema[oForm.table].children())
 			{
 				var obj = addChild(ComponentFactory.getComponent(component));
 				oLayout.addComponent(obj, component.@title, component.@type,component.@datafield,component.@required);
 				
-				if(oForm.requiredata){
+				if(oForm.requiredata && component.@ignoredata!="true"){
+					
 					ComponentData.setData(obj, component, XML(oXML[oForm.table][component.name()]) , oForm.data);
+				
 				}
 				else
 				{
@@ -144,7 +142,7 @@
 				var formobject = oLayout.getFormObject();
 				formobject.option = option;
 				var urldata = oShell.getURL("data", oForm.section);
-				var option = create?createoption:editoption;
+				
 				new XMLLoader(urldata, onSaveData, onSaveError, onError, formobject);
 			}
 			else
@@ -154,17 +152,17 @@
 		}
 		private function onSaveData(e:Event)
 		{
-			trace("saved");
+			close();
 		}
 		private function onSaveError(e:Event)
 		{
-			trace("error saving");
+			txtMessage.text="Error Saving." 
 		}
 		/**
 		 * 
 		 * @param	e
 		 */
-		private function close(e:Event)
+		private function close(e:Event=null)
 		{
 			dispatchEvent(new PopupEvent(PopupEvent.CLOSE));
 		}

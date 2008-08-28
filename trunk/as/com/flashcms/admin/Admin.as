@@ -54,8 +54,8 @@
 		{
 			
 			idcolumn = parameters.idcolumn;
-			editoption=parameters.edit;
-			createoption=parameters.create;
+			editoption=parameters.editoption;
+			createoption=parameters.createoption;
 			sectionName = parameters.section;
 			editpopup = parameters.popup;
 			sURL = oShell.getURL("main", sectionName);
@@ -122,13 +122,14 @@
 		
 		private function onCreate(e:Event)
 		{
+			trace("create option: " + createoption);
 			if(editpopup == "templates")
 			{
 				oShell.setModule(new NavigationEvent("templates", {} ));
 			}
 			else 
 			{
-				oShell.showPopup(editpopup, {table:tableName,section:sectionName,requiredata:false,data:xmlData,create:true,editoption:editoption,createoption:createoption}, onFinishEdit);
+				oShell.showPopup(editpopup, {table:tableName,section:sectionName,requiredata:false,data:xmlData,create:true,option:createoption}, onFinishEdit);
 			}
 		}
 		private function onEdit(e:MouseEvent)
@@ -138,7 +139,7 @@
 			}
 			else
 			{
-				oShell.showPopup(editpopup, {table:tableName,section:sectionName,requiredata:true,data:xmlData,id:lbList.selectedItem.id}, onFinishEdit);
+				oShell.showPopup(editpopup, {table:tableName,section:sectionName,requiredata:true,data:xmlData,create:false,option:editoption,id:lbList.selectedItem[idcolumn]}, onFinishEdit);
 			}
 		}
 		private function onDelete(e:MouseEvent)
@@ -167,7 +168,7 @@
 		 */
 		private function onFinishEdit(e:PopupEvent)
 		{
-			trace("edit closed");
+			init();
 		}
 		/*
 		 * 
