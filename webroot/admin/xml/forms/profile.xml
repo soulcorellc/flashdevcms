@@ -3,7 +3,7 @@
 	<result>
 		<success>true</success>
 	</result>
-	<groups>
-		<name type="textfield" required="true" title="Group Name" />
-	</groups>
+	<profile>
+		<name type="textfield" required="true" title="Profile Name" />
+	</profile>
 </data>
