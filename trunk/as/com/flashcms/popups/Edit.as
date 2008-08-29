@@ -70,7 +70,7 @@
 			oXMLSchema = XML(event.target.data);
 			if (oForm.requiredata)
 			{
-				var urldata = oShell.getURL("main", oForm.section);
+				var urldata = oShell.getURL("data", oForm.section);
 				new XMLLoader(urldata, onXMLData, onErrorData, onError, {option:"getuser",user:id} );
 			}
 			else

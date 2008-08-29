@@ -40,6 +40,7 @@
 		private var editoption:String;
 		private var createoption:String;
 		private var idcolumn:String;
+		private var deleteid:String;
 		private var oXMLLoader:XMLLoader;
 		/**
 		 * 
@@ -58,6 +59,7 @@
 			createoption=parameters.createoption;
 			sectionName = parameters.section;
 			editpopup = parameters.popup;
+			deleteid = parameters.deleteid;
 			sURL = oShell.getURL("main", sectionName);
 			sOption = parameters.option;
 			//trace("sOption : " + sOption);
@@ -103,7 +105,7 @@
 			btCreate.addEventListener(MouseEvent.CLICK, onCreate);
 			btEdit.addEventListener(MouseEvent.CLICK, onEdit);
 			btDelete.addEventListener(MouseEvent.CLICK, onDelete);
-			if (tableName == "groups"){
+			if (tableName == "profile"){
 				btPermissions.visible = true;
 				btUsers.visible = true;
 				btPermissions.addEventListener(MouseEvent.CLICK, onPermissions);
@@ -144,6 +146,7 @@
 		}
 		private function onDelete(e:MouseEvent)
 		{
+			trace("idColumn : " + idcolumn);
 			idDelete = lbList.selectedItem[idcolumn];
 			oShell.showPopup("confirmation",{title:"DELETE ",message:"Do you want to delete ?"},onConfirmation);
 		}
@@ -178,7 +181,11 @@
 		{
 			if (e.parameters.type == "yes")
 			{
-				oXMLLoader=new XMLLoader(sURL, onFinishDelete, onDeleteError, onError,{option:"delete",user:idDelete});
+				var objsend = new Object();
+				objsend.option = "delete";
+				objsend[deleteid]=idDelete
+				
+				oXMLLoader=new XMLLoader(oShell.getURL("data", sectionName), onFinishDelete, onDeleteError, onError,objsend);
 			}
 		}
 		/**

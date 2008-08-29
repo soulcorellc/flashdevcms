@@ -116,6 +116,18 @@
 			<upload><![CDATA[xml/upload.xml]]></upload>
 			<login><![CDATA[net/users.aspx]]></login>
 		</core>
+		<user>
+			<main><![CDATA[net/users.aspx]]></main>
+			<data><![CDATA[net/users.aspx]]></data>
+			<edit><![CDATA[net/users.aspx?option=getuser]]></edit>
+			<schema><![CDATA[admin/xml/forms/user.xml]]></schema>
+		</user>
+		<profile>
+			<main><![CDATA[net/users.aspx]]></main>
+			<data><![CDATA[net/profiles.aspx]]></data>
+			<edit><![CDATA[net/users.aspx?option=getuser]]></edit>
+			<schema><![CDATA[admin/xml/forms/profile.xml]]></schema>
+		</profile>
 		<language>
 			<main><![CDATA[]]></main>
 		</language>
@@ -128,16 +140,8 @@
 		<themes>
 			<main><![CDATA[admin/xml/themes.xml]]></main>
 		</themes>
-		<user>
-			<main><![CDATA[net/users.aspx]]></main>
-			<data><![CDATA[net/users.aspx]]></data>
-			<schema><![CDATA[admin/xml/forms/user.xml]]></schema>
-		</user>
-		<groups>
-			<main><![CDATA[admin/xml/groups.xml]]></main>
-			<data><![CDATA[admin/xml/getGroup.xml]]></data>
-			<schema><![CDATA[admin/xml/forms/groups.xml]]></schema>
-		</groups>
+
+		
 		<password>
 			<schema><![CDATA[admin/xml/forms/password.xml]]></schema>
 		</password>
