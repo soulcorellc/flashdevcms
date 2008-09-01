@@ -128,7 +128,10 @@
 		//USER
 		private function onProfile(e:Event)
 		{
-			oShell.showPopup("edit",{table:"users", section:"users"},onEdit);
+			oShell.showPopup("edit", { table:"users", section:"users" }, onEdit);
+			
+			oShell.showPopup("", {table:tableName,section:sectionName,requiredata:true,data:xmlData,create:false,option:editoption,id:lbList.selectedItem[idcolumn]}, onFinishEdit);
+			
 		}
 		/**
 		 * 

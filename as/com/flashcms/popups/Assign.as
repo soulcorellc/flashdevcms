@@ -1,5 +1,6 @@
 ﻿package com.flashcms.popups {
 	import com.flashcms.core.Module;
+	import com.flashcms.data.XMLLoader;
 	import com.flashcms.forms.FormData;
 	import com.yahoo.astra.fl.accessibility.EventTypes;
 	import fl.containers.ScrollPane;
@@ -24,6 +25,7 @@
 		private var oBar:ButtonBar;
 		private var oBG:DynamicBG;
 		private var oLayout:Layout;
+		private var oXMLLoader:XMLLoader:
 		public function Assign() {
 			createBG();
 			
@@ -58,6 +60,7 @@
 			for each (var item:XML in xmlList)
 			{
 				var component:CheckBox = new CheckBox();
+				component.name = item.name();
 				component.label = item.name;
 				component.x = 30;
 				component.y = (index * 30)+yinit;
@@ -67,6 +70,11 @@
 			
 			}
 			scPanel.update();
+			loadData();
+		}
+		private function loadData()
+		{
+			oXMLLoader=new XMLLoader(oShell.get
 		}
 		private function onSave(e:Event)
 		{
