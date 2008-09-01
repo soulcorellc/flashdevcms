@@ -10,6 +10,7 @@
 		
 		public static function setData(component,schema:XML,data:XML,formdata:XML)
 		{
+			trace("setting " + component + " data " + data.text()+" is a "+schema.@type);
 			switch(schema.@type.toString())
 			{
 				case ComponentTypes.ComboBox:

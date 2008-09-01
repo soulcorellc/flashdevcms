@@ -28,6 +28,9 @@
 		private var create:Boolean;
 		private var option:String;
 		private var oBG:DynamicBG;
+		private var optiondata:String;
+		private var idcolumn:String;
+		private var datatable:String;
 		//private var txtMessage:TextField;
 		
 		/**
@@ -49,9 +52,9 @@
 		{
 			oForm = new FormData(parameters.table, parameters.section, parameters.requiredata, parameters.data);
 			id = parameters.id;
-			trace("parameters.id " + parameters.id);
 			create = parameters.create;
 			option = parameters.option;
+			
 			
 			var urlschema:String = oShell.getURL("schema", oForm.section);
 			new XMLLoader(urlschema, onXMLSchema, onErrorData, onError);
@@ -68,10 +71,18 @@
 		private function onXMLSchema(event:Event)
 		{
 			oXMLSchema = XML(event.target.data);
+			
+			optiondata = oXMLSchema.options.optiondata;
+			idcolumn = oXMLSchema.options.idcolumn;
+			datatable= oXMLSchema.options.datatable;
+			
 			if (oForm.requiredata)
 			{
 				var urldata = oShell.getURL("data", oForm.section);
-				new XMLLoader(urldata, onXMLData, onErrorData, onError, {option:"getuser",user:id} );
+				var objdata:Object = new Object();
+				objdata.option = optiondata;
+				objdata[idcolumn] = id;
+				new XMLLoader(urldata, onXMLData, onErrorData, onError, objdata );
 			}
 			else
 			{
@@ -85,6 +96,7 @@
 		private function onXMLData(event:Event)
 		{
 			oXML = (XML(event.target.data));
+			
 			createForm();
 		}
 		/**
@@ -101,15 +113,13 @@
 		private function createForm()
 		{
 			
-			for each(var component:XML in oXMLSchema[oForm.table].children())
+			for each(var component:XML in oXMLSchema[datatable].children())
 			{
 				var obj = addChild(ComponentFactory.getComponent(component));
 				oLayout.addComponent(obj, component.@title, component.@type,component.@datafield,component.@required);
 				
 				if(oForm.requiredata && component.@ignoredata!="true"){
-					
-					ComponentData.setData(obj, component, XML(oXML[oForm.table][component.name()]) , oForm.data);
-				
+					ComponentData.setData(obj, component, XML(oXML[datatable][component.name()]) , oForm.data);
 				}
 				else
 				{
@@ -120,6 +130,7 @@
 					}
 				}
 			}
+			
 		}
 		
 		/**

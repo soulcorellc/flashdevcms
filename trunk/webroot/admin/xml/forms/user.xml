@@ -11,4 +11,9 @@
 		<active type="checkbox" required="true" title="Active" />
 		<idProfile type="combobox" provider="profile" label="name" required="true" datafield="idProfile" title="Profile" />
 	</user>
+	<options>
+		<optiondata>getuser</optiondata>
+		<idcolumn>user</idcolumn>
+		<datatable>user</datatable>
+	</options>
 </data>

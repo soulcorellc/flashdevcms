@@ -3,10 +3,10 @@
 	<result>
 		<success>true</success>
 	</result>
-	<profiles>
-		<idProfile type="textfield" required="true" title="ID" />
-		<name type="textfield" required="true" title="Full Name" />
-	</profiles>
+	<profile>
+		<idProfile type="textfield" required="true" title="ID" ignoredata="true" />
+		<name type="textfield" required="true" title="Full Name" ignoredata="true" />
+	</profile>
 	<options>
 		<optiondata>getprofile</optiondata>
 		<idcolumn>idProfile</idcolumn>
