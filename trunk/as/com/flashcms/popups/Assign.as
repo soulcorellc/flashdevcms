@@ -11,7 +11,7 @@
 	import flash.events.Event;
 	import com.flashcms.events.PopupEvent;
 	import com.flashcms.design.DynamicBG;
-	import com.flashcms.layout.Layout;
+	import com.flashcms.layout.LayoutSchema;
 	
 	/**
 	* ...
@@ -24,13 +24,14 @@
 		public var scPanel:ScrollPane;
 		private var oBar:ButtonBar;
 		private var oBG:DynamicBG;
-		private var oLayout:Layout;
-		private var oXMLLoader:XMLLoader:
+		private var oLayout:LayoutSchema;
+		private var oXMLLoader:XMLLoader;
+		private var oXMLUsers:XML;
 		public function Assign() {
 			createBG();
 			
 			mcLayout = new Sprite();
-			oLayout = new Layout(mcLayout, 2, 30, 30);
+			oLayout = new LayoutSchema(mcLayout, 2, 30, 30);
 			oLayout.xmargin = 10;
 			oLayout.ymargin = 10;
 			oBar = new ButtonBar(onSave, onCancel, "Cancel", "Save");
@@ -60,12 +61,12 @@
 			for each (var item:XML in xmlList)
 			{
 				var component:CheckBox = new CheckBox();
+				
 				component.name = item.name();
-				component.label = item.name;
 				component.x = 30;
 				component.y = (index * 30)+yinit;
 				mcLayout.addChild(component);
-				oLayout.addComponent(component, "", "checkbox");
+				oLayout.addComponent(component, item.name, "checkbox");
 				index++;
 			
 			}
@@ -74,7 +75,14 @@
 		}
 		private function loadData()
 		{
-			oXMLLoader=new XMLLoader(oShell.get
+			var urlusers = oShell.getURL("data", oForm.section);
+			trace("URL "+urlusers+" "+oForm.section);
+			oXMLLoader = new XMLLoader(urlusers, onUsers,null,null,{option:"getprofileuser",idprofile:"1"});
+		}
+		private function onUsers(e:Event)
+		{
+			trace(e.target);
+		
 		}
 		private function onSave(e:Event)
 		{
