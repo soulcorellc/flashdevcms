@@ -38,7 +38,7 @@ package com.flashcms.layout{
 		 */
 		public function addComponent(component,title:String,type:String,datafield:String=null,required:String=null)
 		{
-			aComponents.push({object:component,type:type,datafield:datafield,required:required.toString(),title:title});
+			aComponents.push({object:component,type:type,datafield:datafield,required:required,title:title});
 			component.x = xmargin+(col*defaultwidth)+(xspacing*col);
 			component.y = ymargin + (yspacing * row);
 			if (requireLabel(type))

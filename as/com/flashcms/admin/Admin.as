@@ -154,7 +154,7 @@
 		private function onUsers(e:MouseEvent)
 		{
 			oFormData = new FormData(tableName, sectionName , true, xmlData);
-			oFormData.section = "users";
+			oFormData.section = "user";
 			oShell.showPopup("assign",oFormData,onConfirmation);
 		}
 
