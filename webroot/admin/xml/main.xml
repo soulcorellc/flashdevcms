@@ -18,7 +18,7 @@
 		</menu>
 		
 		<menu label="Layout">
-			<menuitem label="Templates" id="admin" section="templates" popup="templates" />
+			<menuitem label="Templates" id="admin" section="template" option="getall" popup="templates" idcolumn="idTemplate" deleteid="idTemplate"/>
 			<menuitem label="Create Template" id="templates"/>
 			<menuitem label="Themes" id="admin" section="themes" option="getall" editoption="create" createoption="setuser" popup="themes" />
 			<menuitem label="Site Layout" id="layout"/>
