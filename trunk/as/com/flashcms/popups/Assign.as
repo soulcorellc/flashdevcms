@@ -75,13 +75,14 @@
 		}
 		private function loadData()
 		{
-			var urlusers = oShell.getURL("data", oForm.section);
+			var urlusers = oShell.getURL("data", "profile");
 			trace("URL "+urlusers+" "+oForm.section);
-			oXMLLoader = new XMLLoader(urlusers, onUsers,null,null,{option:"getprofileuser",idprofile:"1"});
+			oXMLLoader = new XMLLoader(urlusers, onUsers,null,null,{option:"getprofilemodules",idprofile:"1"});
 		}
 		private function onUsers(e:Event)
 		{
-			trace(e.target);
+			oXMLUsers = XML(e.target.data);
+			trace(oXMLUsers.users[0].name);
 		
 		}
 		private function onSave(e:Event)

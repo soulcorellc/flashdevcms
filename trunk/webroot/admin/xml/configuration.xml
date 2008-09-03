@@ -148,11 +148,11 @@
 		<sections>
 			<main><![CDATA[admin/xml/sections.xml]]></main>
 		</sections>
-		<templates>
-			<main><![CDATA[admin/xml/templates.xml]]></main>
-			<save><![CDATA[admin/xml/savetemplate.xml]]></save>
-			<get><![CDATA[admin/xml/getTemplate.xml]]></get>
-		</templates>
+		<template>
+			<main><![CDATA[net/templates.aspx]]></main>
+			<data><![CDATA[net/templates.aspx]]></data>
+			<edit><![CDATA[net/templates.aspx]]></edit>
+		</template>
 		<contents>
 			<main><![CDATA[admin/xml/contents.xml]]></main>
 		</contents>
