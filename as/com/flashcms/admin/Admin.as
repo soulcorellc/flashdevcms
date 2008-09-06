@@ -26,7 +26,7 @@
 		public var btCreate:Button;
 		public var btEdit:Button;
 		public var btDelete:Button;
-		public var btUsers:Button;
+		
 		public var btPermissions:Button;
 		
 		public var tableName:String;
@@ -97,7 +97,7 @@
 			btEdit.enabled = true;
 			btDelete.enabled = true;
 			btPermissions.enabled = true;
-			btUsers.enabled = true;
+			
 				
 		}
 		private function setUpButtons()
@@ -107,9 +107,9 @@
 			btDelete.addEventListener(MouseEvent.CLICK, onDelete);
 			if (tableName == "profile"){
 				btPermissions.visible = true;
-				btUsers.visible = true;
+				
 				btPermissions.addEventListener(MouseEvent.CLICK, onPermissions);
-				btUsers.addEventListener(MouseEvent.CLICK, onUsers);
+				
 			}
 		}
 		
@@ -150,18 +150,12 @@
 			idDelete = lbList.selectedItem[idcolumn];
 			oShell.showPopup("confirmation",{title:"DELETE ",message:"Do you want to delete ?"},onConfirmation);
 		}
-		
-		private function onUsers(e:MouseEvent)
-		{
-			oFormData = new FormData(tableName, sectionName , true, xmlData);
-			oFormData.section = "user";
-			oShell.showPopup("assign",oFormData,onConfirmation);
-		}
 
 		private function onPermissions(e:MouseEvent)
 		{
 			oFormData = new FormData(tableName, sectionName , true, xmlData);
 			oFormData.section = "modules";
+			oFormData.id = lbList.selectedItem[idcolumn];
 			oShell.showPopup("assign",oFormData,onConfirmation);
 		}
 			

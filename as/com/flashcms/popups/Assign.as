@@ -34,7 +34,7 @@
 			oLayout = new LayoutSchema(mcLayout, 2, 30, 30);
 			oLayout.xmargin = 10;
 			oLayout.ymargin = 10;
-			oBar = new ButtonBar(onSave, onCancel, "Cancel", "Save");
+			oBar = new ButtonBar(onCancel, onSave, "Cancel", "Save");
 			oBar.x = 300;
 			oBar.y = 270;
 			addChild(oBar);
@@ -53,16 +53,16 @@
 		 */
 		public override function init()
 		{
+			trace("ID " + parameters.id);
 			scPanel.source = mcLayout;
 			oForm = new FormData(parameters.table, parameters.section, parameters.requiredata, parameters.data);		
-			xmlList = oForm.data[oForm.section];
+			xmlList = oForm.data["modules"];
 			var index:int = 0;
 			var yinit:int = 30;
 			for each (var item:XML in xmlList)
 			{
 				var component:CheckBox = new CheckBox();
-				
-				component.name = item.name();
+				component.name = item.idModule;
 				component.x = 30;
 				component.y = (index * 30)+yinit;
 				mcLayout.addChild(component);
@@ -75,11 +75,10 @@
 		}
 		private function loadData()
 		{
-			var urlusers = oShell.getURL("data", "profile");
-			trace("URL "+urlusers+" "+oForm.section);
-			oXMLLoader = new XMLLoader(urlusers, onUsers,null,null,{option:"getprofilemodules",idprofile:"1"});
+			var urlusers = oShell.getURL("permissions", "profile");
+			oXMLLoader = new XMLLoader(urlusers, onModules,null,null,{option:"getprofilemodules",idprofile:parameters.id});
 		}
-		private function onUsers(e:Event)
+		private function onModules(e:Event)
 		{
 			oXMLUsers = XML(e.target.data);
 			trace(oXMLUsers.users[0].name);
@@ -87,12 +86,14 @@
 		}
 		private function onSave(e:Event)
 		{
+			oLayout.getFormObject();
 			dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{type:"yes"}));
 		}
 		private function onCancel(e:Event)
 		{
-			dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{type:"yes"}));
+			dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{type:"no"}));
 		}
+		
 	}
 	
 }

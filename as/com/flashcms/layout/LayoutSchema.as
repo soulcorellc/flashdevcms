@@ -145,6 +145,7 @@ package com.flashcms.layout{
 						
 				}
 			}
+			trace("Form Object");
 			for (var j in formobj)
 			trace(j + " : " + formobj[j]);
 			return formobj;
