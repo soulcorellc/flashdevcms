@@ -8,33 +8,33 @@
 	
 	<menus>
 		<menu label="Main">
-			<menuitem label="Home" id="" />
+			<menuitem module="home" label="Home" id="" />
 		</menu>
 		<menu label="Content">
-			<menuitem label="Sections" id="sections"/>
-			<menuitem label="Create Content" id="sectioneditor" type="create" />
-			<menuitem label="Edit Content" id="sectioneditor" type="edit" />
-			<menuitem label="Files Manager" id="files"/>
+			<menuitem module="sections" label="Sections" id="sections"/>
+			<menuitem module="createcontent" label="Create Content" id="sectioneditor" type="create" />
+			<menuitem module="editcontent" label="Edit Content" id="sectioneditor" type="edit" />
+			<menuitem module="files" label="Files Manager" id="files"/>
 		</menu>
 		
 		<menu label="Layout">
-			<menuitem label="Templates" id="admin" section="template" option="getall" popup="templates" idcolumn="idTemplate" deleteid="idTemplate"/>
-			<menuitem label="Create Template" id="templates"/>
-			<menuitem label="Themes" id="admin" section="themes" option="getall" editoption="create" createoption="setuser" popup="themes" />
-			<menuitem label="Site Layout" id="layout"/>
+			<menuitem module="templates" label="Templates" id="admin" section="template" option="getall" popup="templates" idcolumn="idTemplate" deleteid="idTemplate"/>
+			<menuitem module="createtemplate" label="Create Template" id="templates"/>
+			<menuitem module="themes" label="Themes" id="admin" section="themes" option="getall" editoption="create" createoption="setuser" popup="themes" />
+			<menuitem module="layout" label="Site Layout" id="layout"/>
 		</menu>
 					
 		<menu label="Users and Groups">
-			<menuitem label="Manage Users" id="admin" section="user" option="getallusers" editoption="edituser" createoption="setuser" popup="edit" idcolumn="idUser" deleteid="user" />
-			<menuitem label="Manage Profiles" id="admin" section="profile" option="getprofiles" editoption="editprofile" createoption="setprofile" popup="edit" idcolumn="idProfile" deleteid="idprofile" />
+			<menuitem module="users" label="Manage Users" id="admin" section="user" option="getallusers" editoption="edituser" createoption="setuser" popup="edit" idcolumn="idUser" deleteid="user" />
+			<menuitem module="profiles" label="Manage Profiles" id="admin" section="profile" option="getprofiles" editoption="editprofile" createoption="setprofile" popup="edit" idcolumn="idProfile" deleteid="idprofile" />
 		</menu>
 				
 		<menu label="Administration">
-			<menuitem label="Site Options" id="options" />
+			<menuitem module="options" label="Site Options" id="options" />
 		</menu>
 		
 		<menu label="Site">
-			<menuitem label="View Site" id="site" />
+			<menuitem module="site" label="View Site" id="site" />
 		</menu>
 		
 		<menu label="Help">

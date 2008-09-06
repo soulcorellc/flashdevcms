@@ -145,10 +145,51 @@ package com.flashcms.layout{
 						
 				}
 			}
-			trace("Form Object");
-			for (var j in formobj)
-			trace(j + " : " + formobj[j]);
 			return formobj;
+		}
+		public function getFormArray():Array
+		{
+			var formobj:Array = new Array();
+			for (var i in aComponents)
+			{
+				var name=aComponents[i].object.name;
+				switch (aComponents[i].type)
+				{
+					case ComponentTypes.CheckBox:
+					if (aComponents[i].object.selected)
+					{
+						formobj.push(aComponents[i].object.name);
+					}
+					break;	
+				}
+			}
+			return formobj;
+		}
+		/**
+		 * 
+		 * @param	aValues
+		 */
+		public function setValues(aValues:Array)
+		{
+			for (var i in aValues)
+			{
+				getComponent(aValues[i]).selected = true;
+			}
+		}
+		/**
+		 * 
+		 * @param	name
+		 */
+		public function getComponent(name:String)
+		{
+			for (var x in aComponents)
+			{
+				if (aComponents[x].object.name == name)
+				{
+						return aComponents[x].object;
+				}
+			}
+			return null;
 		}
 	}
 }

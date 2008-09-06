@@ -37,7 +37,7 @@
 			var sparams:String = "";
 			for (var i in parameters)
 			{
-				if(i!= "id" && i!="label" && i!="selected"){
+				if(i != "id" && i!="label" && i!="selected" && i!="module"){
 					sparams += i + "=" + parameters[i] + "&";
 				}
 			}
