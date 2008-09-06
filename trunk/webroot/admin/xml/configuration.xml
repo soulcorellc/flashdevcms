@@ -126,6 +126,7 @@
 			<main><![CDATA[net/users.aspx]]></main>
 			<data><![CDATA[net/profiles.aspx]]></data>
 			<edit><![CDATA[net/users.aspx?option=getuser]]></edit>
+			<permissions><![CDATA[net/profiles.aspx]]></permissions>
 			<schema><![CDATA[admin/xml/forms/profile.xml]]></schema>
 		</profile>
 		<language>
@@ -140,8 +141,6 @@
 		<themes>
 			<main><![CDATA[admin/xml/themes.xml]]></main>
 		</themes>
-
-		
 		<password>
 			<schema><![CDATA[admin/xml/forms/password.xml]]></schema>
 		</password>
