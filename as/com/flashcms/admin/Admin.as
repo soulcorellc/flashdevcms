@@ -137,7 +137,7 @@
 		private function onEdit(e:MouseEvent)
 		{
 			if(editpopup == "templates"){
-				oShell.setModule(new NavigationEvent("templates", { } ));
+				oShell.setModule(new NavigationEvent("templates", {idtemplate:lbList.selectedItem[idcolumn],edit:true}));
 			}
 			else
 			{

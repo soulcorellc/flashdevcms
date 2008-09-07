@@ -68,6 +68,11 @@
 	</modules>
 	
 	<popups>
+		<sName>name</sName>
+		<sURL><![CDATA[swf/popups/name.swf]]></sURL>
+	</popups>
+
+	<popups>
 		<sName>picker</sName>
 		<sURL><![CDATA[swf/popups/picker.swf]]></sURL>
 	</popups>

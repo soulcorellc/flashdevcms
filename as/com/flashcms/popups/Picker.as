@@ -21,6 +21,7 @@
 		public var btSelect:Button;
 		public var btCancel:Button;
 		public var txtTitle:TextField;
+		public var idfield:String;
 		public function Picker() {
 			createBG();	
 		}
@@ -33,12 +34,12 @@
 		{
 			oXMLLoader = new XMLLoader(parameters.url, onDataLoaded)
 			txtTitle.text = parameters.title;
+			idfield=parameters.idfield;
 		}
 		private function onDataLoaded(e:Event)
 		{
 			oXML = XML(e.target.data);
 			var myDP:DataProvider = new DataProvider( < data > { oXML[parameters.tableName] }</data>);
-			trace("tableNAme " + parameters.tableName);
 			lbList.dataProvider = myDP;
 			lbList.labelField = parameters.labelField;
 			btSelect.addEventListener(MouseEvent.CLICK, onSelect);
@@ -46,7 +47,7 @@
 		}
 		private function onSelect(e:MouseEvent)
 		{
-			dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{selected:lbList.selectedItem.id}));
+			dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{selected:lbList.selectedItem[idfield]}));
 		}
 		private function onCancel(e:MouseEvent)
 		{
