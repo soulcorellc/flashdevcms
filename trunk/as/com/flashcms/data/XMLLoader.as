@@ -65,19 +65,19 @@
 		private function onComplete(event:Event)
 		{
 			try{
-			oXML = XML(event.target.data);
-			if (oXML.result.success == "true")
-			{
-				handler.call(this,event);
-			}
-			else 
-			{
-				dataerrorhandler.call(this,new ErrorEvent(ErrorEvent.DATA_ERROR,oXML.result.message));
-			}
+				oXML = XML(event.target.data);
+				if (oXML.result.success == "true")
+				{
+					handler.call(this,event);
+				}
+				else 
+				{
+					dataerrorhandler.call(this,new ErrorEvent(ErrorEvent.DATA_ERROR,oXML.result.message));
+				}
 			}
 			catch (e:Error)
 			{
-				trace("Blank XML");
+				trace("Unable to parse XML : "+e.getStackTrace());
 			}
 		}
 		/**

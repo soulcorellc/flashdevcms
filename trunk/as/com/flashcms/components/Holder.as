@@ -17,6 +17,7 @@
 		private var mcResize:Sprite;
 		private var mcBackground:Sprite; 
 		private var mcGuide:Sprite;
+		private var isDraggable:Boolean;
 		public function Holder(type:String,isDraggable:Boolean=false) {
 			
 			mcGuide = new Sprite();
@@ -30,7 +31,7 @@
 			icon.x = 6;
 			icon.y = 6;
 			addChild(icon);
-			
+			this.isDraggable = isDraggable;
 			if(isDraggable){
 				addChild(mcGuide);
 				createResize();
@@ -47,6 +48,10 @@
 			mcBackground.graphics.lineStyle(1, 0xCCCCCC, 1);
 			mcBackground.graphics.drawRect( 0, 0, newwidth, newheight);
 			mcBackground.graphics.endFill();
+			if (isDraggable){
+				mcResize.x = this.width;
+				mcResize.y = this.height;
+			}
 		}
 		public function setDragable()
 		{

@@ -17,7 +17,9 @@
 	import fl.containers.ScrollPane;
 	import fl.controls.Button;
 	import flash.events.KeyboardEvent;
+	import flash.text.TextField;
 	import flash.ui.Keyboard;
+	import com.flashcms.events.PopupEvent;
 
 	
 	/**
@@ -25,23 +27,29 @@
 	* @author Default
 	*/
 	public class Templates extends Module{
+		public var xmlComponents:XMLList;
+		public var xmlTools:XMLList;
+		public var xmlTemplate:XML=<data/>;
+		public var xmlLoadedTemplate:XML;
+		public var sURL:String;
 		public var oTabBar:TabBar;
 		public var scPanel:ScrollPane;
 		public var componentsPanel:HBoxPane;
 		public var toolsPanel:HBoxPane;
+		public var txtName:TextField;
 		private var icon:Holder;
 		private var mcLayout:Sprite;
 		private var mcXML:Sprite;
-		private var id:int = 0;
+		private var idtemplate:int = -1;
 		private var selected:Holder;
 		private var currentState:int = 0;
 		private var txtXML:TextArea;
 		private var oXMLLoader:XMLLoader;
-		
-		public var xmlComponents:XMLList;
-		public var xmlTools:XMLList;
-		public var xmlTemplate:XML = <template/>;
-		
+		private var oXMLTemplate:XMLLoader;
+		private var id:int = 0;
+		private var aComponents:Array;
+		private var sTemplateName:String;
+		private var edit:Boolean;
 		/**
 		 * 
 		 */
@@ -53,7 +61,12 @@
 		 */
 		public override function init()
 		{
+			idtemplate = parameters.idtemplate == undefined? -1:parameters.idtemplate;
+			edit = parameters.edit == undefined? false:true;
+			
+			sURL=oShell.getURL("main", "template");
 			oXMLLoader = new XMLLoader(oShell.getURL("main", "editors"), onXMLLoaded);
+			aComponents = new Array();
 		}
 		/**
 		 * 
@@ -81,8 +94,111 @@
 			setToolBar(xmlComponents,componentsPanel,onStartDrag);
 			setToolBar(xmlTools,toolsPanel,onToolsChange);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN,onDelete)
-
+			if (idtemplate != -1)
+			{
+				loadTemplate();
+			}
+			else
+			{
+				showNamePicker();
+			}
+			
 		}
+		private function showNamePicker()
+		{
+			var oparameters = new Object();
+			oparameters.title="WRITE A NAME FOR THE NEW TEMPLATE ";
+			oShell.showPopup("name", oparameters, onNameSelected);
+		}
+		private function onNameSelected(e:PopupEvent)
+		{
+			sTemplateName = (e.parameters.name);
+			txtName.text = "Template : " + sTemplateName;
+		}
+		private function loadTemplate()
+		{
+			oXMLTemplate = new XMLLoader(sURL, onTemplateLoaded, null, null, {option:"gettemplate",idTemplate:idtemplate } );
+		}
+		private function onTemplateLoaded(e:Event)
+		{
+			try{
+				xmlLoadedTemplate = XML(e.target.data);
+				sTemplateName = xmlLoadedTemplate.user[0].name;
+				txtName.text = "Template : "+sTemplateName;
+				var templatestring:String = xmlLoadedTemplate.user[0].content;
+				var oXMLTemp:XML = new XML(templatestring);
+				xmlTemplate = new XML(oXMLTemp.toString());
+			}
+			catch (e:Error)
+			{
+				trace("Error template: " + e.message);	
+			}
+			for each(var component:XML in xmlTemplate.component)
+			{
+				
+				createComponent(component);
+			}
+			edit = true;
+			
+		}
+		
+		
+		private function createComponent(component:XML)
+		{
+			var newcomponent:Holder;
+			newcomponent = new Holder(component.@type, true);
+			newcomponent.setSize(component.@width,component.@height);
+			newcomponent.id = component.@id;
+			newcomponent.x = component.@x;
+			newcomponent.y = component.@y;
+			mcLayout.addChild(newcomponent);
+			newcomponent.setDragable();
+			newcomponent.addEventListener("Resize", onHolderResize);
+			newcomponent.addEventListener("Select", onSelect);
+			id = int(component.@id) + 1 ;
+			aComponents.push(newcomponent);
+		}
+		private function showPicker()
+		{
+			var oparameters = new Object();
+			oparameters.title="SELECT A TEMPLATE ";
+			oparameters.url = oShell.getURL("main", "template")+"?option=getall";
+			oparameters.labelField = "name";
+			oparameters.idfield = "idTemplate";
+			oparameters.tableName = "template";
+			oShell.showPopup("picker", oparameters, onTemplateSelected);
+		}
+		private function onTemplateSelected(e:PopupEvent)
+		{
+			idtemplate = e.parameters.selected;
+			reset();
+			loadTemplate();
+		}
+		private function reset()
+		{
+			xmlTemplate = new XML();
+			for (var i in aComponents){
+				mcLayout.removeChild(aComponents[i]);
+			}
+			aComponents = new Array();
+			id = 0;
+		}
+		private function getIsValid(id:int)
+		{
+			
+			if (xmlTemplate.component != null)
+			{
+				for each(var component:XML in xmlTemplate.component)
+				{
+					if (int(component.@id) == id)
+					{
+							return false;
+					}
+				}
+			}
+			return true;
+		}
+		
 		/**
 		 * 
 		 * @param	data
@@ -119,10 +235,22 @@
 			switch(e.target.name)
 			{
 				case "Save":
-				var url = oShell.getURL("save", "templates");
-				var variables = new Object();
-				variables.xml = xmlTemplate;
-				new XMLLoader(url, onSave, onDataError, onError, variables);
+					if (edit == true)
+					{
+						new XMLLoader(sURL, onSave, onDataError, onError, {option:"edittemplate",idTemplate:idtemplate,name:sTemplateName,content:xmlTemplate});
+					}
+					else
+					{
+						new XMLLoader(sURL, onSave, onDataError, onError, {option:"savetemplate",name:sTemplateName,content:xmlTemplate});
+					}
+				break;
+				case "Open":
+					showPicker();
+				break;
+				case "New":
+					edit = false;
+					reset();
+					showNamePicker();
 				break;
 			}
 		}
@@ -175,7 +303,6 @@
 		 */
 		private function showXML()
 		{
-			trace("showXML");
 			txtXML.text = xmlTemplate;
 			scPanel.source = mcXML;
 		}
@@ -258,6 +385,7 @@
 			var point = new Point(icon.x, icon.y);
 			var point2 = this.localToGlobal(point);
 			mcLayout.globalToLocal(point2);
+			trace("valid id : "+getIsValid(id));
 			icon.id = id;
 			icon.x = mcLayout.globalToLocal(point2).x;
 			icon.y=scPanel.globalToLocal(point2).y;
@@ -265,6 +393,7 @@
 			scPanel.update();
 			icon.setDragable();
 			id++;
+			aComponents.push(icon);
 		}
 		/**
 		 * 
