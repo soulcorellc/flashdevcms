@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<header>0x003366</header>
+	<footer>0x003366</footer>
+	<background>0x003366</background>
+	<menu background="0x003366">
+		<up>0x003366</up>
+		<over>0x003366</over>
+		<uptext>0x003366</uptext>
+		<overtext>0x003366</overtext>
+		<submenu>
+			<up>0x003366</up>
+			<over>0x003366</over>
+			<uptext>0x003366</uptext>
+			<overtext>0x003366</overtext>
+		</submenu>
+	</menu>
+</data>
