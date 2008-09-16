@@ -19,12 +19,18 @@
 	{
 		private var oBackground:Background;
 		private var oXMLLoader:XMLLoader;
-		private var urlConfiguration:String = "./admin/xml/site/main.xml";
+		private var oXMLMainLoader:XMLLoader;
+		private var urlConfiguration:String = "./admin/xml/site/configuration.xml";
 		private var oXML:XML;
+		private var oMainXML:XML;
 		private var themes:XMLList;
 		private var configuration:XMLList;
 		private var oHeader:Header;
 		private var oFooter:Footer;
+		private var xURLs:XMLList;
+		/**
+		 * 
+		 */
 		public function Shell() 
 		{
 			init();
@@ -39,29 +45,47 @@
 			oFooter = new Footer;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
-			oXMLLoader = new XMLLoader(urlConfiguration, onSiteData, onError);
+			oXMLLoader = new XMLLoader(urlConfiguration, onConfiguration, onError);
 		}
-		
 		/**
 		 * 
 		 */
 		private function createBackground()
 		{
-			oBackground = new Background(uint(themes.background), stage.stageWidth, stage.stageHeight);
+			oBackground = new Background(0x003366, stage.stageWidth, stage.stageHeight);
 			stage.addEventListener(Event.RESIZE, onStageResize);
 			addChild(oBackground);
 		}
-		private function onSiteData(event:Event)
+		/**
+		 * 
+		 * @param	event
+		 */
+		private function onConfiguration(event:Event)
 		{
 			oXML = XML(event.target.data);
-			themes = new XMLList(oXML.themes);
-			configuration = XMLList(oXML.configuration);
-			createBackground();
-			initModule(oHeader,themes.header);
-			initModule(oFooter, themes.footer);
-			oHeader.mcBackground.height = configuration.(name == "headerheight").value;
+			xURLs = oXML.urls;
+			oXMLMainLoader = new XMLLoader(getURL("main", "core"), onMainData, null, null, { option:"getconfiguration" } );
 		}
-		
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function onMainData(event:Event)
+		{
+			oMainXML=XML(event.target.data);
+			//themes = new XMLList(oXML.themes);
+			configuration = XMLList(oMainXML.configuration);
+			createBackground();
+			initModule(oHeader,0x006699);
+			initModule(oFooter, 0x006699);
+			trace("jeder "+configuration.(property == "headerheight").val);
+			oHeader.mcBackground.height = configuration.(property == "headerheight").val;
+		}
+		/**
+		 * 
+		 * @param	oModule
+		 * @param	color
+		 */
 		private function initModule(oModule,color)
 		{
 			TweenMax.to(oModule.mcBackground, 0, {colorMatrixFilter:{colorize:color}} );
@@ -77,6 +101,19 @@
 		private function onStageResize(e:Event)
 		{
 			oBackground.update(stage.stageWidth,stage.stageHeight);
+		}
+		/**
+		 * 
+		 * @param	name
+		 * @param	section
+		 * @return
+		 */
+		public function getURL(name:String,section:String=null):String
+		{
+			var url:String=section == null? xURLs[name] : xURLs[section][name];
+			var server:String = xURLs["server"];
+			trace(".."+url);
+			return server + url;
 		}
 		/**
 		 * 

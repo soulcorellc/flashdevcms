@@ -176,7 +176,7 @@
 		}
 		private function reset()
 		{
-			xmlTemplate = new XML();
+			xmlTemplate = new XML("<data/>");
 			for (var i in aComponents){
 				mcLayout.removeChild(aComponents[i]);
 			}
@@ -260,7 +260,8 @@
 		 */
 		private function onSave(e:Event)
 		{
-			trace("saved");
+			oShell.setStatusMessage("Template saved");
+			edit = true;
 		}
 		/**
 		 * 
