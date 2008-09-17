@@ -104,28 +104,42 @@
 			}
 			
 		}
+		/**
+		 * 
+		 */
 		private function showNamePicker()
 		{
 			var oparameters = new Object();
 			oparameters.title="WRITE A NAME FOR THE NEW TEMPLATE ";
 			oShell.showPopup("name", oparameters, onNameSelected);
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onNameSelected(e:PopupEvent)
 		{
-			sTemplateName = (e.parameters.name);
+			sTemplateName = e.parameters.name!= null?e.parameters.name:"untitled template" ;
 			txtName.text = "Template : " + sTemplateName;
 		}
+		/**
+		 * 
+		 */
 		private function loadTemplate()
 		{
 			oXMLTemplate = new XMLLoader(sURL, onTemplateLoaded, null, null, {option:"gettemplate",idTemplate:idtemplate } );
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onTemplateLoaded(e:Event)
 		{
 			try{
 				xmlLoadedTemplate = XML(e.target.data);
-				sTemplateName = xmlLoadedTemplate.user[0].name;
+				sTemplateName = xmlLoadedTemplate.template[0].name;
 				txtName.text = "Template : "+sTemplateName;
-				var templatestring:String = xmlLoadedTemplate.user[0].content;
+				var templatestring:String = xmlLoadedTemplate.template[0].content;
 				var oXMLTemp:XML = new XML(templatestring);
 				xmlTemplate = new XML(oXMLTemp.toString());
 			}
@@ -141,8 +155,10 @@
 			edit = true;
 			
 		}
-		
-		
+		/**
+		 * 
+		 * @param	component
+		 */
 		private function createComponent(component:XML)
 		{
 			var newcomponent:Holder;
@@ -261,7 +277,9 @@
 		private function onSave(e:Event)
 		{
 			oShell.setStatusMessage("Template saved");
+			idtemplate = edit==false? XML(e.target.data).template.idTemplate:idtemplate;
 			edit = true;
+			trace(idtemplate);
 		}
 		/**
 		 * 
@@ -386,7 +404,6 @@
 			var point = new Point(icon.x, icon.y);
 			var point2 = this.localToGlobal(point);
 			mcLayout.globalToLocal(point2);
-			trace("valid id : "+getIsValid(id));
 			icon.id = id;
 			icon.x = mcLayout.globalToLocal(point2).x;
 			icon.y=scPanel.globalToLocal(point2).y;

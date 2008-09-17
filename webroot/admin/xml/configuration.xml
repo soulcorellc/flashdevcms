@@ -144,7 +144,8 @@
 			<main><![CDATA[admin/xml/assignusers.xml]]></main>
 		</assign>
 		<themes>
-			<main><![CDATA[admin/xml/themes.xml]]></main>
+			<main><![CDATA[net/themes.aspx]]></main>
+			<data><![CDATA[net/themes.aspx]]></data>
 		</themes>
 		<password>
 			<schema><![CDATA[admin/xml/forms/password.xml]]></schema>

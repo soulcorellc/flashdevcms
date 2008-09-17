@@ -20,7 +20,7 @@
 		<menu label="Layout">
 			<menuitem module="templates" label="Templates" id="admin" section="template" option="getall" popup="templates" idcolumn="idTemplate" deleteid="idTemplate"/>
 			<menuitem module="createtemplate" label="Create Template" id="templates"/>
-			<menuitem module="themes" label="Themes" id="admin" section="themes" option="getall" editoption="create" createoption="setuser" popup="themes" />
+			<menuitem module="themes" label="Themes" id="admin" section="themes" option="getall" editoption="edittheme" idcolumn="idTheme" deleteid="idTheme" createoption="settheme" popup="themes" />
 			<menuitem module="layout" label="Site Layout" id="layout"/>
 		</menu>
 					
