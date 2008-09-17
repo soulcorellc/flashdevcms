@@ -78,7 +78,6 @@
 			createBackground();
 			initModule(oHeader,0x006699);
 			initModule(oFooter, 0x006699);
-			trace("jeder "+configuration.(property == "headerheight").val);
 			oHeader.mcBackground.height = configuration.(property == "headerheight").val;
 		}
 		/**

@@ -13,7 +13,8 @@ package com.flashcms.layout{
 		public var total:int = 0;
 		private var col:int = 0;
 		private var row:int = 0;
-		private var defaultwidth = 200;
+		public var defaultwidth = 200;
+		public var bChangeWidth:Boolean=true;
 		private var aComponents:Array;
 		/**
 		 * 
@@ -49,7 +50,10 @@ package com.flashcms.layout{
 			{
 				component.label = title;
 			}
-			component.width = defaultwidth;
+			if (bChangeWidth)
+			{
+				component.width = defaultwidth;
+			}
 			if (col == columns -1)
 			{
 				col = 0;
