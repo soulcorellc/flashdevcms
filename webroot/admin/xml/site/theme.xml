@@ -3,16 +3,13 @@
 	<header>0x003366</header>
 	<footer>0x003366</footer>
 	<background>0x003366</background>
-	<menu background="0x003366">
-		<up>0x003366</up>
-		<over>0x003366</over>
-		<uptext>0x003366</uptext>
-		<overtext>0x003366</overtext>
-		<submenu>
-			<up>0x003366</up>
-			<over>0x003366</over>
-			<uptext>0x003366</uptext>
-			<overtext>0x003366</overtext>
-		</submenu>
-	</menu>
+	<menu_background>0x003366</menu_background>
+	<menu_up>0x003366</menu_up>
+	<menu_over>0x003366</menu_over>
+	<menu_uptext>0x003366</menu_uptext>
+	<menu_overtext>0x003366</menu_overtext>
+	<submenu_up>0x003366</submenu_up>
+	<submenu_over>0x003366</submenu_over>
+	<submenu_uptext>0x003366</submenu_uptext>
+	<submenu_overtext>0x003366</submenu_overtext>
 </data>

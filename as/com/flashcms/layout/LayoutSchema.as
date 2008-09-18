@@ -118,6 +118,7 @@ package com.flashcms.layout{
 			switch(type)
 			{
 				case ComponentTypes.CheckBox:
+				case ComponentTypes.Theme:
 					return false;
 				break;
 				default:
@@ -145,6 +146,9 @@ package com.flashcms.layout{
 					break;
 					case ComponentTypes.ComboBox:
 						formobj[aComponents[i].object.name] =  aComponents[i].object.selectedItem[aComponents[i].datafield];
+					break;
+					case ComponentTypes.Theme:
+						formobj[aComponents[i].object.name] = aComponents[i].object.cPicker.selectedColor;
 					break;
 						
 				}
