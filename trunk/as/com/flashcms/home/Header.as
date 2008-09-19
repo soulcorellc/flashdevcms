@@ -130,7 +130,7 @@
 		{
 			oShell.showPopup("edit", { table:"users", section:"users" }, onEdit);
 			
-			oShell.showPopup("", {table:tableName,section:sectionName,requiredata:true,data:xmlData,create:false,option:editoption,id:lbList.selectedItem[idcolumn]}, onFinishEdit);
+//			oShell.showPopup("", {table:tableName,section:sectionName,requiredata:true,data:xmlData,create:false,option:editoption,id:lbList.selectedItem[idcolumn]}, onFinishEdit);
 			
 		}
 		/**

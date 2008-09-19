@@ -5,25 +5,33 @@
 	import com.flashcms.components.ButtonBar;
 	import com.flashcms.editors.utils.ThemeItem;
 	import fl.containers.ScrollPane;
+	import fl.controls.TextInput;
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import flash.events.Event;
 	import com.flashcms.events.PopupEvent;
 	import com.flashcms.layout.LayoutSchema;
 	import com.flashcms.data.XMLLoader;
+	
 	/**
 	* ...
 	* @author David Barrios
 	*/
 	public class Themes extends Module
 	{
+		public var scPanel:ScrollPane;
+		public var txtName:TextInput;
 		private var oBG:DynamicBG;
 		private var oBar:ButtonBar;
 		private var oLayout:LayoutSchema;
-		public var scPanel:ScrollPane;
 		private var mcHolder:MovieClip;
+		private var bCreate:Boolean;
+		private var id:String;
 		private var oXMLLoader:XMLLoader;
-		private var oXML:XML =
+		private var oXMLEdit:XML;
+		private var oXMLTemp:XML;
+		private var oXML:XML;
+		private var oXMLDefault:XML =
 		<data>
 			<header name="Header">0x003366</header>
 			<footer name="Footer">0x003366</footer>
@@ -44,6 +52,8 @@
 		}
 		public override function init()
 		{
+			bCreate = parameters.create ;
+			id = parameters.id;
 			oLayout = new LayoutSchema(this, 3, 50, 0);
 			oLayout.defaultwidth = 150;
 			oLayout.bChangeWidth = false;
@@ -54,15 +64,33 @@
 			scPanel.source = mcHolder;
 	
 			oBar = new ButtonBar(doSave, onCancel, "Save", "Cancel");
-			oBar.x = 80;
-			oBar.y = 270;
+			oBar.x = 20;
+			oBar.y = 310;
 			addChild(oBar);
-			gotoAndStop(2);
+			
+			if (bCreate== true){
+				txtName.text = "New Template";
+				oXML = oXMLDefault;
+				createItems();
+			}
+			else
+			{
+				oXMLLoader = new XMLLoader(oShell.getURL("main", "themes"), onLoadTheme,null,null,{option:"gettheme",idTheme:parameters.id});
+			}
+		}
+		private function onLoadTheme(e:Event)
+		{
+			oXMLEdit = XML(e.target.data);
+			txtName.text=oXMLEdit.themes[0].name;
+			var templatestring:String = oXMLEdit.themes[0].data;
+			var oXMLTemp:XML = new XML(templatestring);
+			trace(templatestring);
+			oXML = new XML(oXMLTemp.toString());
 			createItems();
 		}
 		private function createItems()
 		{
-			
+			trace("creating items on edit");
 			for each(var theme:XML in oXML.children()){
 				var item:ThemeItem = new ThemeItem(theme.@name);
 				item.name = theme.name();
@@ -88,12 +116,15 @@
 		private function doSave(e:Event)
 		{
 			var obj = oLayout.getFormObject();
-			var strData:String = "";
+			var strData:String = "<data>";
 			for (var i in obj)
-			strData += "<" + i + ">" + obj[i] + "</" + i + ">";
-			strData += "";
-			oXMLLoader = new XMLLoader(oShell.getURL("main", "themes"), onSave,null,null,{option:"settheme",name:"nuevo tema",data:strData});
+			strData += "<" + i + " name='"+oXMLDefault[i].@name+"'>" + obj[i] + "</" + i + ">";
+			strData += "</data>";
 			
+			if(bCreate==true)
+			oXMLLoader = new XMLLoader(oShell.getURL("main", "themes"), onSave,null,null,{option:"settheme",name:txtName.text,data:strData});
+			else
+			oXMLLoader = new XMLLoader(oShell.getURL("main", "themes"), onSave,null,null,{option:"edittheme",idTheme:id,name:txtName.text,data:strData});
 		}
 		private function onSave(e:Event)
 		{
