@@ -33,6 +33,7 @@
 		private var mcLayout:Sprite;
 		private var oXMLLoader:XMLLoader;
 		private var oXMLTemplate:XML;
+		private var oXMLContent:XML;
 		private var oXML:XML;
 		private var oContent:XML = <content/>;
 		private var xmlBar:XMLList;
@@ -40,6 +41,7 @@
 		private var oTextBar:TextBar;
 		private var oImageBar:ImageBar;
 		private var currentBar:ToolBar;
+		private var sURLTemplates:String;
 		/**
 		 * 
 		 */
@@ -62,6 +64,7 @@
 		{
 			oXML= XML(e.target.data);
 			setToolBar(oXML.button, toolsPanel, onBarClick);
+			sURLTemplates=oShell.getURL("main", "template")
 			showPicker();
 		}
 		/**
@@ -115,7 +118,7 @@
 		 */
 		private function saveContent()
 		{
-			trace("Save!");
+			
 		}
 		/**
 		 * 
@@ -126,14 +129,17 @@
 			oparameters.type = parameters.type;
 			if(parameters.type=="create"){
 				oparameters.title="SELECT A TEMPLATE TO CREATE CONTENT";
-				oparameters.url = oShell.getURL("main", "templates");
+				oparameters.url = oShell.getURL("main", "template")+"?option=getall";
 				oparameters.labelField = "name";
-				oparameters.tableName = "templates";
+				oparameters.idfield = "idTemplate";
+				oparameters.tableName = "template";
+				
 			}
 			if (parameters.type == "edit") {
-				oparameters.title="SELECT A CONTENT TO EDIT";
-				oparameters.url = oShell.getURL("main", "contents");
-				oparameters.labelField = "title";
+				oparameters.title = "SELECT A CONTENT TO EDIT";
+				oparameters.url = oShell.getURL("main", "content")+"?option=getall";
+				oparameters.labelField = "name";
+				oparameters.idfield = "idContent";
 				oparameters.tableName = "content";
 			}
 			oShell.showPopup("picker", oparameters, onTemplateSelected);
@@ -145,19 +151,26 @@
 		private function onTemplateSelected(e:PopupEvent)
 		{
 			draw();
-			var url = oShell.getURL("get", "templates");
-			oXMLLoader= new XMLLoader(url, onTemplate,null,null,{id:e.parameters.selected});
+			//oXMLLoader = new XMLLoader(url, onTemplate, null, null, { id:e.parameters.selected } );
+			oXMLLoader = new XMLLoader(sURLTemplates, onTemplate, null, null, {option:"gettemplate",idTemplate:e.parameters.selected } );
 		}
 		/**
 		 * 
 		 */
 		private function onTemplate(event:Event)
 		{
+			
 			oXMLTemplate = XML(event.target.data);
+			var templatestring:String = oXMLTemplate.template[0].content;
+			var oXMLTemp:XML = new XML(templatestring);
+			oXMLTemplate = new XML(oXMLTemp.toString());
+			
+			
 			for each(var component:XML in oXMLTemplate.component)
 			{
 				createComponent(component);
 			}
+			scPanel.update();
 		}
 		/**
 		 * 

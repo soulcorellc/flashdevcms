@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<result>
+		<success>true</success>
+	</result>
+	<user>
+		<idUser type="textfield" required="true" title="UserName" />
+		<name type="textfield" required="true" title="Full Name" />
+		<passw type="textfield" password="true" required="true" title="Password" />
+		<confirmpassword type="textfield" password="true" required="true" title="Confirm Password" ignoredata="true" />
+	</user>
+	<options>
+		<optiondata>getuser</optiondata>
+		<idcolumn>user</idcolumn>
+		<datatable>user</datatable>
+	</options>
+</data>

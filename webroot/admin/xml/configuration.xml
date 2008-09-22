@@ -134,6 +134,10 @@
 			<permissions><![CDATA[net/profiles.aspx]]></permissions>
 			<schema><![CDATA[admin/xml/forms/profile.xml]]></schema>
 		</profile>
+		<userprofile>
+			<data><![CDATA[net/users.aspx]]></data>
+			<schema><![CDATA[admin/xml/forms/userprofile.xml]]></schema>
+		</userprofile>
 		<language>
 			<main><![CDATA[]]></main>
 		</language>
@@ -158,9 +162,9 @@
 			<data><![CDATA[net/templates.aspx]]></data>
 			<edit><![CDATA[net/templates.aspx]]></edit>
 		</template>
-		<contents>
-			<main><![CDATA[admin/xml/contents.xml]]></main>
-		</contents>
+		<content>
+			<main><![CDATA[net/content.aspx]]></main>
+		</content>
 		<editors>
 			<main><![CDATA[admin/xml/editors.xml]]></main>
 			<layout><![CDATA[admin/xml/layout.xml]]></layout>
