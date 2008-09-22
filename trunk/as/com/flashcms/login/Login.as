@@ -69,7 +69,7 @@
 		private function onXMLData(event:Event)
 		{
 			oXML = XML(event.target.data);
-			dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{sName:oXML.user.nombre}));	
+			dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{sID:oXML.user.idUser,sName:oXML.user.idUser}));	
 		}
 		private function onDataError(event:ErrorEvent)
 		{

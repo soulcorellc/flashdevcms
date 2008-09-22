@@ -122,7 +122,9 @@ public class ShellAdmin extends MovieClip {
 		private function onClose(e:PopupEvent)
 		{
 			try {
+				oUser.sID = e.parameters.sID;
 				oUser.sName = e.parameters.sName;
+				
 				oUser.bLogged = true;
 				//start navigation
 				if (oNavigation == null) {
@@ -301,7 +303,7 @@ public class ShellAdmin extends MovieClip {
 		public function logout()
 		{
 			oUser.bLogged = false;
-			oUser.sName = "";
+			oUser.sID = "";
 			removeSection(oHeader);
 			removeSection(oMain);
 			removeSection(oFooter);

@@ -76,7 +76,7 @@
 			preloader = new CubeLoader();
 			preloader.scaleX = .25;
 			preloader.scaleY = .25;
-			preloaderManager = new StageManager(preloader, 50, 50, 50, 50, true);
+			
 		}
 		/**
 		 * create black mask under the window
@@ -85,8 +85,10 @@
 		{
 			oManager = new StageManager(mcMask, 0, 0, 0, 0, true);
 			oManagerCenter = new StageManager(mcHolder, 50, 50, 0, 0, true);
+			preloaderManager = new StageManager(preloader, 50, 50, 50, 50, true);
 			addChild(oManager);
 			addChild(oManagerCenter);
+			addChild(preloaderManager);
 			oStage.addEventListener(Event.RESIZE, onResize);
 			mcMask.addEventListener(MouseEvent.CLICK, onMaskClick);
 			onResize();
@@ -199,6 +201,7 @@
 		}
 		private function onModuleDisplayed(event:TweenEvent)
 		{
+			
 			hidePreloader();
 			oModule.init();
 		}
@@ -232,15 +235,14 @@
 		}
 		private function showPreloader()
 		{
-			addChild(preloaderManager);
 			addChild(preloader);
-			
 		}
+		/**
+		 * 
+		 */
 		private function hidePreloader()
 		{
-			removeChild(preloaderManager);
-			removeChild(preloader);
-			
+			removeChild(preloader);	
 		}
 	}
 	

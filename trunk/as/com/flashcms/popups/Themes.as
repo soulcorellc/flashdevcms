@@ -90,11 +90,11 @@
 		}
 		private function createItems()
 		{
-			trace("creating items on edit");
-			for each(var theme:XML in oXML.children()){
+			
+			for each(var theme:XML in oXMLDefault.children()){
 				var item:ThemeItem = new ThemeItem(theme.@name);
 				item.name = theme.name();
-				item.cPicker.selectedColor = theme.text();
+				item.cPicker.selectedColor = oXML[item.name].text();
 				var obj = mcHolder.addChild(item);
 				oLayout.addComponent(obj, "","theme");
 			}

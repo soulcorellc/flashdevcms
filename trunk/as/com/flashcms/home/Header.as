@@ -68,6 +68,7 @@
 				tempmenu.drawNow();
 				tempmenu.invalidate();
 			}
+			
 			oMenu.drawNow();
 			oMenu.invalidate();
 			
@@ -128,10 +129,10 @@
 		//USER
 		private function onProfile(e:Event)
 		{
-			oShell.showPopup("edit", { table:"users", section:"users" }, onEdit);
-			
-//			oShell.showPopup("", {table:tableName,section:sectionName,requiredata:true,data:xmlData,create:false,option:editoption,id:lbList.selectedItem[idcolumn]}, onFinishEdit);
-			
+			//oShell.showPopup("edit", { table:"users", section:"users" }, onEdit);
+			trace("onprofile");
+			oShell.showPopup("edit", {table:"user",section:"userprofile",requiredata:true,create:false,option:"edituser",id:oShell.oUser.sID}, onEdit);
+		
 		}
 		/**
 		 * 
