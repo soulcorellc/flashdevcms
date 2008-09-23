@@ -64,6 +64,7 @@
 		{
 			oXML= XML(e.target.data);
 			setToolBar(oXML.button, toolsPanel, onBarClick);
+			setToolBar(oXML.properties, optionsPanel, onBarClick);
 			sURLTemplates=oShell.getURL("main", "template")
 			showPicker();
 		}
@@ -85,6 +86,8 @@
 				oButton.name = component.type;
 				oButton.setStyle("upSkin", Shape);
 				oButton.setStyle("icon", component.icon);
+				if (component.toggle == "true")
+				oButton.toggle = true;
 				toolbar.addChild(oButton);
 			}
 			toolbar.setStyle( "skin", "ToolbarSkin" ); 
@@ -92,6 +95,8 @@
 			toolbar.verticalAlign = VerticalAlignment.MIDDLE;
 			toolbar.verticalGap = 10;
 			toolbar.horizontalGap = 10;
+			
+			
 		}
 		/**
 		 * 
@@ -109,9 +114,16 @@
 					showPicker();
 				break;
 				case "Save":
-				saveContent();
+					saveContent();
+				break;
+				case "Properties":
+					showBar(e.target.selected);
 				break;
 			}
+		}
+		private function showBar(state:Boolean)
+		{
+			
 		}
 		/**
 		 * 
