@@ -20,6 +20,12 @@
 		<editor>videoeditor</editor>
 	</components>
 	
+	<properties>
+		<type>Properties</type>
+		<icon>IconProperties</icon>
+		<toggle>true</toggle>
+	</properties>
+	
 	<button>
 		<type>New</type>
 		<icon>IconNew</icon>
