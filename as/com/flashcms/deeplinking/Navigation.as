@@ -15,6 +15,7 @@
 		}
 		public function onChange(event:SWFAddressEvent)
 		{
+			trace("deeplinking Changed on SWFADDRESS: " + SWFAddress.getValue());
 			var module:String = SWFAddress.getValue() == ""? "/":SWFAddress.getPath();
 			var oparams:Object = new Object();
 			

@@ -42,6 +42,7 @@
 		private var oImageBar:ImageBar;
 		private var currentBar:ToolBar;
 		private var sURLTemplates:String;
+		private var oSelected:ContentHolder;
 		/**
 		 * 
 		 */
@@ -123,7 +124,15 @@
 		}
 		private function showBar(state:Boolean)
 		{
-			
+			trace("state : " + state);
+			if (state==false)
+			{
+				showEditor();
+			}
+			else
+			{
+				hideBar();
+			}
 		}
 		/**
 		 * 
@@ -207,7 +216,7 @@
 			newcomponent.x = component.@x;
 			newcomponent.y = component.@y;
 			mcLayout.addChild(newcomponent);
-			newcomponent.addEventListener(MouseEvent.CLICK, onEditComponent);
+			newcomponent.addEventListener(MouseEvent.CLICK, onSelectComponent);
 			
 			
 		}
@@ -215,27 +224,35 @@
 		 * 
 		 * @param	e
 		 */
-		private function onEditComponent(e:MouseEvent)
+		private function onSelectComponent(e:MouseEvent)
 		{
-			showEditor(e.currentTarget)
+			if(e.currentTarget != oSelected)
+			hideBar();
+			
+			if(oSelected!=null)
+			oSelected.clearSelection();
+			ContentHolder(e.currentTarget).select();
+			oSelected = ContentHolder(e.currentTarget);
+			
+			
+			
+			//(e.currentTarget)
 		}
 		/**
 		 * 
 		 * @param	component
 		 */
-		private function showEditor(component:Object)
+		private function showEditor()
 		{
-			var editor:String = (oXML.components.(type == component.type).editor);
-			if (currentBar!= null){
-				removeChild(currentBar);
-				currentBar = null;
-			}
+			var editor:String = (oXML.components.(type == oSelected.type).editor);
+			hideBar();
+			
 			switch(editor)
 			{
 				case "texteditor":
 				if (currentBar  == null)
 				{
-					currentBar = new TextBar(component["txtMain"]);
+					currentBar = new TextBar(oSelected["txtMain"]);
 					currentBar.x = 0;
 					currentBar.y = 350;
 					addChild(currentBar);
@@ -243,12 +260,23 @@
 				break;
 				case "imageeditor":
 				case "videoeditor":
-					currentBar = new ImageBar(component);
+					currentBar = new ImageBar(oSelected);
 					currentBar.x = 0;
 					currentBar.y = 350;
 					addChild(currentBar);
 				break;
 				
+			}
+		}
+		/**
+		 * 
+		 */
+		private function hideBar()
+		{
+			if (currentBar!= null){
+				removeChild(currentBar);
+				currentBar = null;
+				Button(optionsPanel.getChildByName("Properties")).selected = true;
 			}
 		}
 		/**

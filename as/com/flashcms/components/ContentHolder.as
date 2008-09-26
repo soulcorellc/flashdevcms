@@ -37,6 +37,19 @@
 			mcBackground.graphics.endFill();
 		
 		}
+		
+		public function select()
+		{
+			this.graphics.beginFill(0xFF0000, 0);
+			this.graphics.lineStyle(1, 0xFF0000, 1);
+			this.graphics.drawRect( -1, -1, width+1, height+1);
+			this.graphics.endFill();
+		}
+		
+		public function clearSelection()
+		{
+			this.graphics.clear();
+		}
 	}
 	
 }
