@@ -67,6 +67,7 @@ public class ShellAdmin extends MovieClip {
 		 */
 		public function onModuleChange(event:NavigationEvent)
 		{
+			trace("deeplinking changed " + event.sModule);
 			if(!bHeaderLoaded){
 				//loadModule("background");	
 				loadModule("footer");
@@ -130,11 +131,12 @@ public class ShellAdmin extends MovieClip {
 				if (oNavigation == null) {
 					oNavigation = new Navigation(this);
 					oNavigation.addEventListener(NavigationEvent.ON_NAVIGATION, onModuleChange);
+					trace("deeplinking created : " + oNavigation);
 				}
 				else
 				{
-					onModuleChange(new NavigationEvent("/"));
-					oNavigation.reset();
+					//onModuleChange(new NavigationEvent("/"));
+					//oNavigation.reset();
 				}
 			}
 			catch (e:Error)
