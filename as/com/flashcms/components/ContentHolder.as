@@ -10,7 +10,7 @@
 	* @author David Barrios
 	*/
 	public class ContentHolder extends Sprite{
-		private var id:int;
+		public var id:int;
 		public var type:String;
 		private var mcBackground:Sprite;
 		

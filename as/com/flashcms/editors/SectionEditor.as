@@ -33,9 +33,8 @@
 		private var mcLayout:Sprite;
 		private var oXMLLoader:XMLLoader;
 		private var oXMLTemplate:XML;
-		private var oXMLContent:XML;
+		private var oXMLContent:XML=<content/>;
 		private var oXML:XML;
-		private var oContent:XML = <content/>;
 		private var xmlBar:XMLList;
 		private var xmlComponents:XMLList;
 		private var oTextBar:TextBar;
@@ -139,7 +138,8 @@
 		 */
 		private function saveContent()
 		{
-			
+			foreach(
+			trace(oXMLContent);
 		}
 		/**
 		 * 
@@ -190,7 +190,10 @@
 			for each(var component:XML in oXMLTemplate.component)
 			{
 				createComponent(component);
+				oXMLContent.component +=<component id = { component.@id } /> ;
+				
 			}
+			
 			scPanel.update();
 		}
 		/**
@@ -212,9 +215,10 @@
 					newcomponent = new ImageHolder(component.@width,component.@height);
 				break;
 			}
-			
+			newcomponent.id = component.@id;
 			newcomponent.x = component.@x;
 			newcomponent.y = component.@y;
+			
 			mcLayout.addChild(newcomponent);
 			newcomponent.addEventListener(MouseEvent.CLICK, onSelectComponent);
 			
@@ -231,12 +235,11 @@
 			
 			if(oSelected!=null)
 			oSelected.clearSelection();
+			
 			ContentHolder(e.currentTarget).select();
 			oSelected = ContentHolder(e.currentTarget);
 			
-			
-			
-			//(e.currentTarget)
+
 		}
 		/**
 		 * 
