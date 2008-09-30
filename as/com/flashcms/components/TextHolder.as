@@ -9,6 +9,7 @@
 	*/
 	public class TextHolder extends ContentHolder{
 		public var txtMain:TextField;
+		
 		public function TextHolder(nwidth:int,nheight:int) {
 			super("Text");
 			setSize(nwidth, nheight);
