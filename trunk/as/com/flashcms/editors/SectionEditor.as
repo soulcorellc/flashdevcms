@@ -2,6 +2,7 @@
 	
 	import com.flashcms.components.ContentHolder;
 	import com.flashcms.components.ImageHolder;
+	import com.flashcms.components.TextHolder;
 	import com.flashcms.components.ToolBar;
 	import com.flashcms.components.VideoHolder;
 	import flash.display.Sprite;
@@ -18,7 +19,6 @@
 	import com.yahoo.astra.fl.containers.HBoxPane;
 	import com.yahoo.astra.layout.modes.*;
 	import com.flashcms.components.Holder;
-	import com.flashcms.components.TextHolder;
 	import com.flashcms.components.TextBar;
 	import com.flashcms.components.ImageBar;
 	/**
@@ -33,6 +33,7 @@
 		private var mcLayout:Sprite;
 		private var oXMLLoader:XMLLoader;
 		private var oXMLTemplate:XML;
+		private var oXMLContentLoaded:XML;
 		private var oXMLContent:XML=<content/>;
 		private var oXML:XML;
 		private var xmlBar:XMLList;
@@ -42,6 +43,10 @@
 		private var currentBar:ToolBar;
 		private var sURLTemplates:String;
 		private var oSelected:ContentHolder;
+		private var aComponents:Array;
+		private var sURLContent:String;
+		private var idTemplate:String;
+		private var bLoaded:Boolean;
 		/**
 		 * 
 		 */
@@ -55,6 +60,9 @@
 		public override function init()
 		{
 			oXMLLoader = new XMLLoader(oShell.getURL("main", "editors"), onXMLLoaded);
+			aComponents = new Array();
+			sURLTemplates = oShell.getURL("main", "template");
+			sURLContent = oShell.getURL("main", "content")
 		}
 		/**
 		 * 
@@ -65,7 +73,6 @@
 			oXML= XML(e.target.data);
 			setToolBar(oXML.button, toolsPanel, onBarClick);
 			setToolBar(oXML.properties, optionsPanel, onBarClick);
-			sURLTemplates=oShell.getURL("main", "template")
 			showPicker();
 		}
 		/**
@@ -138,8 +145,29 @@
 		 */
 		private function saveContent()
 		{
-			foreach(
-			trace(oXMLContent);
+			for each(var component:ContentHolder in aComponents)
+			{
+				switch(component.type)
+				{
+					case "Text":
+						oXMLContent.component.(@id == component.id)[0]=(TextHolder(component).txtMain.htmlText);
+					break;
+					case "Video":
+						oXMLContent.component.(@id == component.id)[0]=(VideoHolder(component).sURL);
+					break;
+					case "Image":
+						oXMLContent.component.(@id == component.id)[0]=(ImageHolder(component).sURL);
+					break;
+					
+				}
+			}
+			
+			oXMLLoader = new XMLLoader(sURLContent, onContentSaved, null, null, {option:"setcontent",idTemplate:idTemplate,approved:"1",content:oXMLContent,name:"New Content"} );
+			
+		}
+		private function onContentSaved(e:Event)
+		{
+			trace("Saved!!");
 		}
 		/**
 		 * 
@@ -150,20 +178,32 @@
 			oparameters.type = parameters.type;
 			if(parameters.type=="create"){
 				oparameters.title="SELECT A TEMPLATE TO CREATE CONTENT";
-				oparameters.url = oShell.getURL("main", "template")+"?option=getall";
+				oparameters.url = sURLTemplates+"?option=getall";
 				oparameters.labelField = "name";
 				oparameters.idfield = "idTemplate";
 				oparameters.tableName = "template";
-				
+				oShell.showPopup("picker", oparameters, onTemplateSelected);	
 			}
 			if (parameters.type == "edit") {
 				oparameters.title = "SELECT A CONTENT TO EDIT";
-				oparameters.url = oShell.getURL("main", "content")+"?option=getall";
+				oparameters.url = sURLContent+"?option=getall";
 				oparameters.labelField = "name";
 				oparameters.idfield = "idContent";
 				oparameters.tableName = "content";
+				oShell.showPopup("picker", oparameters, onContentSelected);
 			}
-			oShell.showPopup("picker", oparameters, onTemplateSelected);
+			
+		}
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function onContentSelected(e:PopupEvent)
+		{
+			draw();
+			aComponents = new Array();
+			oXMLLoader = new XMLLoader(sURLContent, onContent, null, null, {option:"getcontent",idContent:e.parameters.selected } );
+			
 		}
 		/**
 		 * 
@@ -171,9 +211,24 @@
 		 */
 		private function onTemplateSelected(e:PopupEvent)
 		{
+			idTemplate = e.parameters.selected ;
 			draw();
-			//oXMLLoader = new XMLLoader(url, onTemplate, null, null, { id:e.parameters.selected } );
-			oXMLLoader = new XMLLoader(sURLTemplates, onTemplate, null, null, {option:"gettemplate",idTemplate:e.parameters.selected } );
+			aComponents = new Array();
+			oXMLLoader = new XMLLoader(sURLTemplates, onTemplate, null, null, {option:"gettemplate",idTemplate:idTemplate} );
+		}
+		/**
+		 * 
+		 * @param	event
+		 */
+		private function onContent(event:Event)
+		{
+			bLoaded = true;
+			oXMLContentLoaded = XML(event.target.data);
+			idTemplate = oXMLContentLoaded.content[0].idTemplate;
+			var contentstring:String = oXMLContentLoaded.content[0].content;
+			var oXMLTemp:XML = new XML(contentstring);
+			oXMLContent=new XML(oXMLTemp.toString());
+			oXMLLoader = new XMLLoader(sURLTemplates, onTemplate, null, null, {option:"gettemplate",idTemplate:idTemplate} );
 		}
 		/**
 		 * 
@@ -189,18 +244,47 @@
 			
 			for each(var component:XML in oXMLTemplate.component)
 			{
-				createComponent(component);
-				oXMLContent.component +=<component id = { component.@id } /> ;
-				
+				var holder:ContentHolder=createComponent(component);
+				oXMLContent.component +=<component id = { component.@id } /> ;	
 			}
 			
 			scPanel.update();
+			if (bLoaded)
+			{
+				setComponentsData();
+			}
+		}
+		/**
+		 * 
+		 */
+		private function setComponentsData()
+		{
+			
+			//trace(oXMLContent);
+			for each(var component:ContentHolder in aComponents)
+			{
+				switch(component.type)
+				{
+					case "Text":
+						TextHolder(component).txtMain.htmlText=oXMLContent.component.(@id==component.id).text();
+					break;
+					case "Video":
+						VideoHolder(component).sURL = oXMLContent.component.(@id == component.id).text();
+						VideoHolder(component).update();
+					break;
+					case "Image":
+						ImageHolder(component).sURL = oXMLContent.component.(@id==component.id).text();
+						ImageHolder(component).update();
+					break;
+				}
+			}
+			
 		}
 		/**
 		 * 
 		 * @param	component
 		 */
-		private function createComponent(component:XML)
+		private function createComponent(component:XML):ContentHolder
 		{
 			var newcomponent:ContentHolder;
 			switch(String(component.@type))
@@ -220,8 +304,9 @@
 			newcomponent.y = component.@y;
 			
 			mcLayout.addChild(newcomponent);
+			aComponents.push(newcomponent);
 			newcomponent.addEventListener(MouseEvent.CLICK, onSelectComponent);
-			
+			return newcomponent;
 			
 		}
 		/**
