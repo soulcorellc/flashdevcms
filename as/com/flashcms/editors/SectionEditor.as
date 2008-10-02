@@ -5,6 +5,7 @@
 	import com.flashcms.components.TextHolder;
 	import com.flashcms.components.ToolBar;
 	import com.flashcms.components.VideoHolder;
+	import com.flashcms.core.PopupManager;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -21,6 +22,7 @@
 	import com.flashcms.components.Holder;
 	import com.flashcms.components.TextBar;
 	import com.flashcms.components.ImageBar;
+	import flash.text.TextField;
 	/**
 	* ...
 	* @author Default
@@ -45,8 +47,12 @@
 		private var oSelected:ContentHolder;
 		private var aComponents:Array;
 		private var sURLContent:String;
+		private var sContentName:String;
 		private var idTemplate:String;
+		private var idContent:String;
 		private var bLoaded:Boolean;
+		private var edit:Boolean;
+		public var txtName:TextField;
 		/**
 		 * 
 		 */
@@ -63,6 +69,7 @@
 			aComponents = new Array();
 			sURLTemplates = oShell.getURL("main", "template");
 			sURLContent = oShell.getURL("main", "content")
+			edit = parameters.edit == undefined? false:true;
 		}
 		/**
 		 * 
@@ -115,6 +122,7 @@
 				case "New":
 					parameters.type = "create";
 					showPicker();
+					edit = false;
 				break;
 				case "Open":
 					parameters.type = "edit";
@@ -161,8 +169,14 @@
 					
 				}
 			}
-			
-			oXMLLoader = new XMLLoader(sURLContent, onContentSaved, null, null, {option:"setcontent",idTemplate:idTemplate,approved:"1",content:oXMLContent,name:"New Content"} );
+			if (edit == true)
+			{
+				oXMLLoader = new XMLLoader(sURLContent, onContentSaved, null, null, { option:"editcontent", idContent:idContent,idTemplate:idTemplate, approved:"1", content:oXMLContent, name:sContentName } );
+			}
+			else
+			{
+				oXMLLoader = new XMLLoader(sURLContent, onContentSaved, null, null, { option:"setcontent", idTemplate:idTemplate, approved:"1", content:oXMLContent, name:sContentName } );	
+			}
 			
 		}
 		private function onContentSaved(e:Event)
@@ -212,9 +226,25 @@
 		private function onTemplateSelected(e:PopupEvent)
 		{
 			idTemplate = e.parameters.selected ;
+			showNamePicker();	
+		}
+		
+		private function showNamePicker()
+		{
+			var oparameters = new Object();
+			oparameters.title="SELECT THE NAME OF THE NEW CONTENT";
+			oShell.showPopup("name", oparameters, onNameSelected);
+		}
+		private function onNameSelected(e:PopupEvent)
+		{
+			
+			sContentName = e.parameters.name!= null?e.parameters.name:"untitled content" ;
+			txtName.text = "Content : " + sContentName;
+			
 			draw();
 			aComponents = new Array();
-			oXMLLoader = new XMLLoader(sURLTemplates, onTemplate, null, null, {option:"gettemplate",idTemplate:idTemplate} );
+			oXMLLoader = new XMLLoader(sURLTemplates, onTemplate, null, null, { option:"gettemplate", idTemplate:idTemplate } );
+			
 		}
 		/**
 		 * 
@@ -222,9 +252,11 @@
 		 */
 		private function onContent(event:Event)
 		{
+			edit = true;
 			bLoaded = true;
 			oXMLContentLoaded = XML(event.target.data);
 			idTemplate = oXMLContentLoaded.content[0].idTemplate;
+			idContent= oXMLContentLoaded.content[0].idContent;
 			var contentstring:String = oXMLContentLoaded.content[0].content;
 			var oXMLTemp:XML = new XML(contentstring);
 			oXMLContent=new XML(oXMLTemp.toString());
