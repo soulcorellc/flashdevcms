@@ -33,7 +33,7 @@
 		 */
 		public override function init()
 		{
-			var url = oShell.getURL("main", "sections");
+			var url = oShell.getURL("main", "menu")+"?option=getall";
 			oXMLLoader = new XMLLoader(url, onXMLData, onDataError, onError);
 			btAdd.enabled = false;
 			btRemove.enabled = false;
@@ -46,11 +46,31 @@
 		{
 			oXML = XML(e.target.data);
 			
+			var treeXML:XML=new XML(<node label="root"></node>);
+			
+			for each(var oMenu:XML in oXML.Menu)
+			{
+				trace("." + oMenu.idParent + ".");
+				if (oMenu.idParent!="")
+				{
+					treeXML.node += <node id ={oMenu.idMenu} label = {oMenu.name} /> ;
+				}
+				else
+				{
+					var node = treeXML.node.(@id == oMenu.idParent);
+					node+= <node id = {oMenu.idMenu} label = {oMenu.name} /> ;
+				}
+				
+			}
+			
+			trace(treeXML);
+			//trace(treeXML.node.(@id == "7"));
 			treeSections.addEventListener(ListEvent.ITEM_CLICK,onClick);
-			treeSections.dataProvider = new TreeDataProvider(XML(oXML.section));
+			treeSections.dataProvider = new TreeDataProvider(treeXML);
+		
 			treeSections.openAllNodes();
 			
-			trace(oXML.content);
+			/*trace(oXML.content);
 			
 			for each (var item:XML in oXML.content)
 			{	
@@ -65,6 +85,7 @@
 			
 			btAdd.addEventListener(MouseEvent.CLICK, onCreate);
 			btRemove.addEventListener(MouseEvent.CLICK, onDelete);
+			*/
 		}
 		private function onCreate(e:Event)
 		{
