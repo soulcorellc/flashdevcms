@@ -22,7 +22,6 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	import flash.utils.getDefinitionByName;
@@ -138,6 +137,21 @@ The copyrights embodied in the content of this file are licensed under the BSD (
      * @default true
      */
     [Style(name="animationEnabled", type="Boolean")]
+	
+	/**
+	 * Indicates whether embedded font outlines are used to render the text
+	 * field. If this value is true, Flash Player renders the text field by
+	 * using embedded font outlines. If this value is false, Flash Player
+	 * renders the text field by using device fonts.
+	 * 
+	 * If you set the embedFonts property to true for a text field, you must
+	 * specify a font for that text by using the font property of a TextFormat
+	 * object that is applied to the text field. If the specified font is not
+	 * embedded in the SWF file, the text is not displayed.
+	 * 
+	 * @default false
+     */
+    [Style(name="embedFonts", type="Boolean")]
     
 	/**
 	 * Functionality common to most charts. Generally, a <code>Chart</code> object
@@ -173,7 +187,8 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 			dataTipBackgroundSkin: "ChartDataTipBackground",
 			dataTipContentPadding: 6,
 			dataTipTextFormat: new TextFormat("_sans", 11, 0x000000, false, false, false, '', '', TextFormatAlign.LEFT, 0, 0, 0, 0),
-			animationEnabled: true
+			animationEnabled: true,
+			embedFonts: false
 		};
 		
 		/**
@@ -198,7 +213,8 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 		{
 			backgroundSkin: "dataTipBackgroundSkin",
 			contentPadding: "dataTipContentPadding",
-			textFormat: "dataTipTextFormat"
+			textFormat: "dataTipTextFormat",
+			embedFonts: "embedFonts"
 		};
 		
 	//--------------------------------------
@@ -253,20 +269,6 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 		
 		/**
 		 * @private
-		 * Storage for the contentBounds property.
-		 */
-		protected var _contentBounds:Rectangle = new Rectangle();
-	
-		/**
-		 * @copy com.yahoo.astra.fl.charts.IPlotArea#contentBounds
-		 */
-		public function get contentBounds():Rectangle
-		{
-			return this._contentBounds;
-		}
-		
-		/**
-		 * @private
 		 * Storage for the data property. Saves a copy of the unmodified data.
 		 */
 		private var _dataProvider:Object;
@@ -279,7 +281,7 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 		
 		[Inspectable(type=Array)]
 		/**
-		 * The data the chart displays.
+		 * @inheritDoc
 		 */
 		public function get dataProvider():Object
 		{
@@ -305,8 +307,10 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 		private var _defaultSeriesType:Class;
 		
 		/**
-		 * When data is encountered where an ISeries is expected, it will be converted
-		 * to this default type. Accepts either a Class or a String referencing a class.
+		 * When raw data (like an Array of Numbers) is encountered where an
+		 * ISeries instance is expected, it will be converted to this default
+		 * type. Accepts either a Class instance or a String referencing a
+		 * fully-qualified class name.
 		 */
 		public function get defaultSeriesType():Object
 		{
@@ -349,6 +353,8 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 			//if the series have already been created, the user probably wanted it that way.
 			//we have no way to tell if the user chose a particular series' type or not anyway.
 		}
+		
+		private var _lastDataTipRenderer:ISeriesItemRenderer;
 		
 		/**
 		 * @private
@@ -573,11 +579,14 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 			if(modifiedData is ISeries)
 			{
 				//if the main data is a series, put it in an array
-				modifiedData = [ISeries(modifiedData).clone()];
+				modifiedData = [modifiedData];
 			}
 			
 			//if it's not an array, we have bad data, so ignore it
-			if(!(modifiedData is Array)) return;
+			if(!(modifiedData is Array))
+			{
+				return;
+			}
 			
 			arrayData = modifiedData as Array;
 			
@@ -677,7 +686,10 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 				var styleValues:Array = this.getStyleValue(styleMap[n]) as Array;
 				
 				//if it doesn't exist, ignore it and go with the defaults for this series
-				if(styleValues == null || styleValues.length == 0) continue;
+				if(styleValues == null || styleValues.length == 0)
+				{
+					continue;
+				}
 				
 				childComponent.setStyle(n, styleValues[index % styleValues.length])
 			}
@@ -695,7 +707,36 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 			return "";
 		}
 		
-		private var _lastDataTipRenderer:ISeriesItemRenderer;
+		/**
+		 * @private
+		 * Passes data to the data tip.
+		 */
+		protected function refreshDataTip():void
+		{
+			var item:Object = this._lastDataTipRenderer.data;
+			var series:ISeries = this._lastDataTipRenderer.series;
+			var index:int = series.itemRendererToIndex(this._lastDataTipRenderer);
+			
+			var dataTipText:String = "";
+			if(this.dataTipFunction != null)
+			{
+				dataTipText = this.dataTipFunction(item, index, series);
+			}
+			
+			var dataTipRenderer:IDataTipRenderer = this.dataTip as IDataTipRenderer;
+			dataTipRenderer.text = dataTipText;
+			dataTipRenderer.data = item;
+			
+			this.setChildIndex(this.dataTip, this.numChildren - 1);
+			if(this.dataTip is UIComponent)
+			{
+				UIComponent(this.dataTip).drawNow();
+			}
+		}
+		
+	//--------------------------------------
+	//  Protected Event Handlers
+	//--------------------------------------
 		
 		/**
 		 * @private
@@ -724,31 +765,28 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 			this.dataTip.visible = false;
 		}
 		
-		protected function refreshDataTip():void
+	//--------------------------------------
+	//  Private Methods
+	//--------------------------------------
+		
+		/**
+		 * @private
+		 * Determines the position for the data tip based on the mouse position
+		 * and the bounds of the chart. Attempts to keep the data tip within the
+		 * chart bounds so that it isn't hidden by any other display objects.
+		 */
+		private function mousePositionToDataTipPosition():Point
 		{
-			var item:Object = this._lastDataTipRenderer.data;
-			var series:ISeries = this._lastDataTipRenderer.series;
-			var index:int = series.itemRendererToIndex(this._lastDataTipRenderer);
-			
-			var dataTipText:String = "";
-			if(this.dataTipFunction != null)
-			{
-				dataTipText = this.dataTipFunction(item, index, series);
-			}
-			
-			var dataTipRenderer:IDataTipRenderer = this.dataTip as IDataTipRenderer;
-			dataTipRenderer.text = dataTipText;
-			dataTipRenderer.data = item;
-			
-			this.setChildIndex(this.dataTip, this.numChildren - 1);
-			if(this.dataTip is UIComponent)
-			{
-				UIComponent(this.dataTip).drawNow();
-			}
+			var position:Point = new Point();
+			position.x = this.mouseX + 2;
+			position.x = Math.min(this.width - this.dataTip.width, position.x);
+			position.y = this.mouseY - this.dataTip.height - 2;
+			position.y = Math.max(0, position.y);
+			return position;
 		}
 		
 	//--------------------------------------
-	//  Private Methods
+	//  Private Event Handlers
 	//--------------------------------------
 		
 		/**
@@ -773,22 +811,6 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 			var position:Point = this.mousePositionToDataTipPosition();
 			this.dataTip.x = position.x;
 			this.dataTip.y = position.y;
-		}
-		
-		/**
-		 * @private
-		 * Determines the position for the data tip based on the mouse position
-		 * and the bounds of the chart. Attempts to keep the data tip within the
-		 * chart bounds so that it isn't hidden by any other display objects.
-		 */
-		private function mousePositionToDataTipPosition():Point
-		{
-			var position:Point = new Point();
-			position.x = this.mouseX + 2;
-			position.x = Math.min(this.width - this.dataTip.width, position.x);
-			position.y = this.mouseY - this.dataTip.height - 2;
-			position.y = Math.max(0, position.y);
-			return position;
 		}
 	
 	}

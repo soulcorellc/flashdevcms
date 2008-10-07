@@ -19,6 +19,8 @@ package com.yahoo.astra.fl.controls
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	import flash.ui.Keyboard;
 
     //--------------------------------------
@@ -79,6 +81,19 @@ package com.yahoo.astra.fl.controls
      * @eventType flash.events.Event.CHANGE
 	 */
 	[Event(name="change", type="flash.events.Event")]
+
+    //--------------------------------------
+    //  Styles
+    //--------------------------------------
+
+    /**
+     *  The TextFormat object to use to render the component label when a tab is selected.
+     *
+     *  @default TextFormat("_sans", 11, 0x000000, false, false, false, '', '', TextFormatAlign.LEFT, 0, 0, 0, 0)
+     *
+     *  @see flash.text.TextFormat TextFormat
+     */
+	[Style(name="selectedTextFormat", type="flash.text.TextFormat")]
 	
 	/**
 	 * A collection of buttons, or tabs, that may be used for navigation.
@@ -95,11 +110,20 @@ package com.yahoo.astra.fl.controls
 		/**
 		 * @private
 		 */
+		private static var defaultStyles:Object = 
+		{
+			selectedTextFormat: null
+		};
+	
+		/**
+		 * @private
+		 */
 		private static const TAB_STYLES:Object = 
 		{
 			embedFonts: "embedFonts",
 			disabledTextFormat: "disabledTextFormat",
 			textFormat: "textFormat",
+			selectedTextFormat: "selectedTextFormat",
 			textPadding: "textPadding"
 		};
 		
@@ -113,6 +137,15 @@ package com.yahoo.astra.fl.controls
          * This method is called from UIComponent.
 		 */
 		public static var createAccessibilityImplementation:Function;
+	
+		/**
+		 * @private
+		 * @copy fl.core.UIComponent#getStyleDefinition()
+		 */
+		public static function getStyleDefinition():Object
+		{
+			return mergeStyles(defaultStyles, UIComponent.getStyleDefinition());
+		}
 		
 	//--------------------------------------
 	//  Constructor
@@ -153,10 +186,14 @@ package com.yahoo.astra.fl.controls
 		protected var buttons:Array = [];
 		
 		/**
+		 * @private
 		 * Storage for the renderer (tab) styles.
 		 */
 		protected var rendererStyles:Object = {};
 		
+		/**
+		 * @private
+		 */
 		protected var lastFocusIndex:int = -1;
 		
 		/**
@@ -592,7 +629,7 @@ package com.yahoo.astra.fl.controls
 		/**
 		 * @private
 		 * 
-		 * Updates the position and size of the buttons.
+		 * Updates properties of the buttons.
 		 */
 		protected function updateButtons():void
 		{
@@ -604,6 +641,8 @@ package com.yahoo.astra.fl.controls
 				
 				var item:Object = this._dataProvider.getItemAt(i);
 				button.label = this.itemToLabel(item);
+				button.buttonMode = this.buttonMode;
+				button.useHandCursor = this.useHandCursor;
 			}
 		}
 		

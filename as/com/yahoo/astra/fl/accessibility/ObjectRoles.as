@@ -4,6 +4,9 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 */
 package com.yahoo.astra.fl.accessibility
 {
+	/**
+	 * Constants for MSAA accessibility roles.
+	 */
 	public class ObjectRoles
 	{
 		public static const ROLE_SYSTEM_TITLEBAR:uint =            0x00000001;

@@ -982,25 +982,20 @@ public class Menu extends List {
 	 *  Sets everything back to normal when the hidden Menu's fade ends
 	 */
 	protected function onTweenEnd(event:TweenEvent):void {
-		try{
-			//set the menu back to normal, and off the display list
-			var m:Menu = event.currentTarget.obj as Menu;
-			m.visible=false;
-			// Now that the menu is no longer visible, it doesn't need
-			// to listen to mouseDown events anymore.
-			stage.removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownOutsideHandler);
-			m.alpha=1;
-			// Fire an event
-			//could be fired earlier, but it messes with the tween
-			var menEvent:MenuEvent=new MenuEvent(MenuEvent.MENU_HIDE);
-			menEvent.menu=m;
-			//menuEvent.menuBar = sourceMenuBar;
-			dispatchEvent(menEvent);
-		}
-		catch (event:Event)
-		{
-			trace("exception closing");
-		}
+		//set the menu back to normal, and off the display list
+		var m:Menu = event.currentTarget.obj as Menu;
+		m.visible=false;
+		// Now that the menu is no longer visible, it doesn't need
+		// to listen to mouseDown events anymore.
+		stage.removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownOutsideHandler);
+		m.alpha=1;
+		// Fire an event
+		//could be fired earlier, but it messes with the tween
+		var menEvent:MenuEvent=new MenuEvent(MenuEvent.MENU_HIDE);
+		menEvent.menu=m;
+		//menuEvent.menuBar = sourceMenuBar;
+		
+		dispatchEvent(menEvent);
 	}
 	
 	/**

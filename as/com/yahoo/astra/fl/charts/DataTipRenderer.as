@@ -49,7 +49,8 @@ package com.yahoo.astra.fl.charts
 		private static var defaultStyles:Object = 
 		{
 			contentPadding: 6,
-			backgroundSkin: "ChartDataTipBackground"
+			backgroundSkin: "ChartDataTipBackground",
+			embedFonts: false
 		}
 		
 	//--------------------------------------
@@ -184,7 +185,9 @@ package com.yahoo.astra.fl.charts
 				this.addChildAt(this.background, 0);
 				
 				var format:TextFormat = this.getStyleValue("textFormat") as TextFormat;
+				var embedFonts:Boolean = this.getStyleValue("embedFonts") as Boolean;
 				this.label.defaultTextFormat = format;
+				this.label.embedFonts = embedFonts;
 				
 				this.label.x = contentPadding;
 				this.label.y = contentPadding;

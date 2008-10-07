@@ -4,6 +4,9 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 */
 package com.yahoo.astra.fl.accessibility
 {
+	/**
+	 * Constants for MSAA accessibility event types.
+	 */
 	public class EventTypes
 	{
 		public static const EVENT_OBJECT_CREATE:uint =             0x00008000;
@@ -25,6 +28,5 @@ package com.yahoo.astra.fl.accessibility
 		public static const EVENT_OBJECT_HELPCHANGE:uint =         0x00008010;
 		public static const EVENT_OBJECT_DEFACTIONCHANGE:uint =    0x00008011;
 		public static const EVENT_OBJECT_ACCELERATORCHANGE:uint =  0x00008012;
-
 	}
 }

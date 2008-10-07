@@ -22,6 +22,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	import flash.utils.getDefinitionByName;
@@ -40,6 +41,18 @@ package com.yahoo.astra.fl.containers.layoutClasses
 	//--------------------------------------
 	//  Static Properties
 	//--------------------------------------
+	
+		/**
+		 * @private
+		 * New invalidation type to capture when debug mode changes.
+		 */
+		protected static const INVALIDATION_TYPE_DEBUG_MODE:String = "debugModeInvalid";
+	
+		/**
+		 * @private
+		 * New invalidation type to capture when something will affect the layout.
+		 */
+		protected static const INVALIDATION_TYPE_LAYOUT:String = "layoutInvalid";
 	
         /**
          * @private
@@ -145,7 +158,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 		public function set layoutMode(value:ILayoutMode):void
 		{
 			this._layoutMode = value;
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 		}
 		
 		/**
@@ -212,6 +225,65 @@ package com.yahoo.astra.fl.containers.layoutClasses
 			return container.numChildren;
 		}
 		
+		/**
+		 * @private
+		 * Storage for the autoSize property.
+		 */
+		private var _autoSize:Boolean = false;
+		
+		/**
+		 * If true, the container will automatically calculate the ideal width
+		 * and height for itself. Any attempts to set the width and height
+		 * values manually while autoSize is set to true will be ignored.
+		 * 
+		 * <p>Note: If you want only one dimension to automatically resize,
+		 * autoSize must be false, and you should set the width or height
+		 * property to the value of <code>NaN</code>.
+		 */
+		public function get autoSize():Boolean
+		{
+			return this._autoSize;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set autoSize(value:Boolean):void
+		{
+			this._autoSize = value;
+			this.invalidate(InvalidationType.SIZE);
+		}
+		
+		/**
+		 * @private
+		 * Used for displaying debug data.
+		 */
+		protected var debugCanvas:Sprite;
+		
+		/**
+		 * @private
+		 * Storage for the debug mode property.
+		 */
+		private var _debugMode:Boolean = false;
+		
+		/**
+		 * If true, a simple border around the layout pane will identify
+		 * its bounds.
+		 */
+		public function get debugMode():Boolean
+		{
+			return this._debugMode;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set debugMode(value:Boolean):void
+		{
+			this._debugMode = value;
+			this.invalidate(INVALIDATION_TYPE_DEBUG_MODE);
+		}
+		
 	//--------------------------------------
 	//  Public Methods
 	//--------------------------------------
@@ -230,7 +302,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 			
 			var container:DisplayObjectContainer = DisplayObjectContainer(this.layoutContainer);
 			child = container.addChild(child);
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 			return child;
 		}
 		
@@ -248,7 +320,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 			
 			var container:DisplayObjectContainer = DisplayObjectContainer(this.layoutContainer);
 			child = container.addChildAt(child, index);
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 			return child;
 		}
 		
@@ -266,7 +338,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 			
 			var container:DisplayObjectContainer = DisplayObjectContainer(this.layoutContainer);
 			child = container.removeChild(child);
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 			return child;
 		}
 		
@@ -284,7 +356,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 			
 			var container:DisplayObjectContainer = DisplayObjectContainer(this.layoutContainer);
 			var child:DisplayObject = container.removeChildAt(index);
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 			return child;
 		}
 		
@@ -301,7 +373,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 			}
 			var container:DisplayObjectContainer = DisplayObjectContainer(this.layoutContainer);
 			container.setChildIndex(child, index);
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 		}
 		
 		/**
@@ -333,8 +405,15 @@ package com.yahoo.astra.fl.containers.layoutClasses
 		}
 		
 		/**
-		 * @private
-		 * Allow NaN which will let the width and height be automatically calculated.
+		 * @inheritDoc
+		 * 
+		 * <p>Setting the width or height of the container to the value of <code>NaN</code>
+		 * will cause it to automatically determine the ideal size for that
+		 * dimension. Additionally, the <code>autoSize</code> property can be
+		 * set to <code>true</code> to force both the width and height values to
+		 * be automatically calculated based on the content.
+		 * 
+		 * @see autoSize
 		 */
 		override public function setSize(w:Number, h:Number):void
 		{
@@ -387,8 +466,15 @@ package com.yahoo.astra.fl.containers.layoutClasses
 				this.layoutContainer.addEventListener(LayoutEvent.LAYOUT_CHANGE, layoutChangeHandler);
 				var container:DisplayObject = DisplayObject(this.layoutContainer);
 				container.scrollRect = contentScrollRect;
+				container.visible = false;
 				this.addChild(container);
 			} 
+			
+			if(!this.debugCanvas)
+			{
+				this.debugCanvas = new Sprite();
+				this.addChild(this.debugCanvas);
+			}
 			
 			this._horizontalScrollPolicy = ScrollPolicy.AUTO;
 			this._verticalScrollPolicy = ScrollPolicy.AUTO;
@@ -401,17 +487,17 @@ package com.yahoo.astra.fl.containers.layoutClasses
 		 * @private
 		 */
 		override protected function draw():void
-		{
-			var sizeInvalid:Boolean = this.isInvalid(InvalidationType.SIZE);
-			var stateInvalid:Boolean = this.isInvalid(InvalidationType.STATE);
-				
+		{	
+			//fix for document class constructor/Event.RENDER bug in CS3 architecture
+			DisplayObject(this.layoutContainer).visible = true;
+			
 			//we have to draw all children once before layout
 			//to get initial sizing
 			this.redrawUIComponentChildren();
 				
 			//ensure that we only update the layout if the dimensions have changed
 			//or if one of the layout properties has changed. this is very, very expensive!
-			if(sizeInvalid || stateInvalid)
+			if(this.isInvalid(InvalidationType.SIZE, INVALIDATION_TYPE_LAYOUT))
 			{
 				var oldWidth:Number = this.width;
 				var oldHeight:Number = this.height;
@@ -422,7 +508,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 				
 				//the first measurement will be based on explicit values or autosizing (with NaN)
 				//this is the ideal sizing without scrollbars
-				if(isNaN(this.explicitWidth))
+				if(this.autoSize || isNaN(this.explicitWidth))
 				{
 					container.width = NaN;
 				}
@@ -430,7 +516,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 				{
 					container.width = this.explicitWidth;
 				}
-				if(isNaN(this.explicitHeight))
+				if(this.autoSize || isNaN(this.explicitHeight))
 				{
 					container.height = NaN;
 				}
@@ -463,7 +549,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 					
 					//if the width and height haven't been set explicitly,
 					//the layout pane will resize to fit its contents (no scrollbars, obviously).
-					if(isNaN(this.explicitWidth))
+					if(isNaN(this.explicitWidth) || this.autoSize)
 					{
 						var generatedWidth:Number = this.layoutContainer.contentWidth;
 						if(this.vScrollBar)
@@ -473,7 +559,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 						this._width = Math.round(generatedWidth);	
 					}
 					
-					if(isNaN(this.explicitHeight))
+					if(isNaN(this.explicitHeight) || this.autoSize)
 					{
 						var generatedHeight:Number = this.layoutContainer.contentHeight;
 						if(this.hScrollBar)
@@ -511,6 +597,14 @@ package com.yahoo.astra.fl.containers.layoutClasses
 					this.dispatchEvent(new ComponentEvent(ComponentEvent.RESIZE));
 				}
 			}
+			
+			if(this.debugMode && this.isInvalid(INVALIDATION_TYPE_DEBUG_MODE, InvalidationType.SIZE, INVALIDATION_TYPE_LAYOUT))
+			{
+				this.debugCanvas.graphics.clear();
+				this.debugCanvas.graphics.lineStyle(1, 0xff00ff);
+				this.debugCanvas.graphics.drawRect(0, 0, this.width, this.height);
+			}
+			this.debugCanvas.visible = this.debugMode;
 			
 			super.draw();
 		}
@@ -604,12 +698,12 @@ package com.yahoo.astra.fl.containers.layoutClasses
 			super.calculateAvailableSize();
 			
 			//if we're autosizing, available dimensions are the same as the content
-			if(isNaN(this.explicitWidth))
+			if(isNaN(this.explicitWidth) || this.autoSize)
 			{
 				this.availableWidth = this.layoutContainer.contentWidth;
 				this.hScrollBar = false;
 			}
-			if(isNaN(this.explicitHeight))
+			if(isNaN(this.explicitHeight) || this.autoSize)
 			{
 				this.availableHeight = this.layoutContainer.contentHeight;
 				this.vScrollBar = false;
@@ -630,7 +724,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 		 */
 		protected function layoutChangeHandler(event:LayoutEvent):void
 		{
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 		}
 	}
 }

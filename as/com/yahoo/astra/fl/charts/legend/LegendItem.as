@@ -40,7 +40,8 @@ package com.yahoo.astra.fl.charts.legend
 		private static var defaultStyles:Object = 
 		{
 			markerSkin: Sprite,
-			horizontalSpacing: 3
+			horizontalSpacing: 3,
+			embedFonts: false
 		};
 		
 	//--------------------------------------
@@ -160,8 +161,10 @@ package com.yahoo.astra.fl.charts.legend
 				}
 				
 				var textFormat:TextFormat = this.getStyleValue("textFormat") as TextFormat;
+				var embedFonts:Boolean = this.getStyleValue("embedFonts") as Boolean;
 				this.textField.setTextFormat(textFormat); //set format for existing text
 				this.textField.defaultTextFormat = textFormat; //set format for future text
+				this.textField.embedFonts = embedFonts;
 			}
 			
 			if(dataInvalid)

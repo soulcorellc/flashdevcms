@@ -199,6 +199,7 @@ package com.yahoo.astra.animation
 			var animation:Animation = new Animation(duration, startParameters, parameters, autoStart);
 			animation.addEventListener(AnimationEvent.UPDATE, tweenUpdateHandler);
 			animation.addEventListener(AnimationEvent.COMPLETE, tweenCompleteHandler);
+			animations.push(animation);
 			
 			//reference the target so that we may remove the animation later
 			animationToTarget[animation] = target;
@@ -467,6 +468,7 @@ package com.yahoo.astra.animation
 			this._startTime = getTimer();
 			this._active = true;
 			this.dispatchEvent(new AnimationEvent(AnimationEvent.START, this._startParameters));
+			this.dispatchEvent(new AnimationEvent(AnimationEvent.UPDATE, this._startParameters));
 		}
 		
 		/**

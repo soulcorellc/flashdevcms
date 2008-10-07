@@ -416,8 +416,8 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 			// Align text and add the indent derived from node's level
 			if (label.length > 0) {
 				textField.visible = true;
-				//var textWidth:Number =  Math.max(0, width - textFieldX - textPadding*2);
-				//textField.width = textWidth;
+				var textWidth:Number =  Math.max(0, width - textFieldX - textPadding*2);
+				textField.width = textWidth;
 				textField.height = textField.textHeight + 4;
 				textField.x = textFieldX;
 				textField.y = Math.round((height-textField.height)>>1);

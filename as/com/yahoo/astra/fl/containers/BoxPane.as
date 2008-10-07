@@ -91,7 +91,7 @@ package com.yahoo.astra.fl.containers
 		public function set direction(value:String):void
 		{
 			this._direction = value;
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 		}
 		
 		/**
@@ -115,7 +115,7 @@ package com.yahoo.astra.fl.containers
 		public function set verticalGap(value:Number):void
 		{
 			this._verticalGap = value;
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 		}
 		
 		/**
@@ -139,7 +139,7 @@ package com.yahoo.astra.fl.containers
 		public function set horizontalGap(value:Number):void
 		{
 			this._horizontalGap = value;
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 		}
 		
 		/**
@@ -164,7 +164,7 @@ package com.yahoo.astra.fl.containers
 		public function set verticalAlign(value:String):void
 		{
 			this._verticalAlign = value;
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 		}
 		
 		/**
@@ -189,7 +189,7 @@ package com.yahoo.astra.fl.containers
 		public function set horizontalAlign(value:String):void
 		{
 			this._horizontalAlign = value;
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 		}
 		
 	//--------------------------------------

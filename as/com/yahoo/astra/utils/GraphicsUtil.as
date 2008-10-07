@@ -5,6 +5,7 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 package com.yahoo.astra.utils
 {
 	import flash.display.Graphics;
+	import flash.geom.Point;
 	
 	/**
 	 * Utility functions for drawing to <code>Graphics</code> objects.

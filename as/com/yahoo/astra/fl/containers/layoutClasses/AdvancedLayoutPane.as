@@ -5,9 +5,8 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 package com.yahoo.astra.fl.containers.layoutClasses
 {
 	import com.yahoo.astra.layout.modes.BaseLayoutMode;
+	import com.yahoo.astra.layout.modes.IAdvancedLayoutMode;
 	import com.yahoo.astra.layout.modes.ILayoutMode;
-	
-	import fl.core.InvalidationType;
 	
 	import flash.display.DisplayObject;
 
@@ -61,7 +60,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 			if(this._paddingLeft != value)
 			{
 				this._paddingLeft = value;
-				this.invalidate(InvalidationType.STATE);
+				this.invalidate(INVALIDATION_TYPE_LAYOUT);
 			}
 		}
 		
@@ -88,7 +87,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 			if(this._paddingRight != value)
 			{
 				this._paddingRight = value;
-				this.invalidate(InvalidationType.STATE);
+				this.invalidate(INVALIDATION_TYPE_LAYOUT);
 			}
 		}
 		
@@ -115,7 +114,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 			if(this._paddingTop != value)
 			{
 				this._paddingTop = value;
-				this.invalidate(InvalidationType.STATE);
+				this.invalidate(INVALIDATION_TYPE_LAYOUT);
 			}
 		}
 		
@@ -142,7 +141,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 			if(this._paddingBottom != value)
 			{
 				this._paddingBottom = value;
-				this.invalidate(InvalidationType.STATE);
+				this.invalidate(INVALIDATION_TYPE_LAYOUT);
 			}
 		}
 		/**
@@ -179,15 +178,22 @@ package com.yahoo.astra.fl.containers.layoutClasses
 				{
 					var configItem:Object = this._configuration[i];
 					var child:DisplayObject = configItem.target as DisplayObject;
-					if(!child) continue;
+					if(!child)
+					{
+						continue;
+					}
 					
 					//remove from the display list
 					this.removeChild(child);
 					
 					//remove as a client
-					if(this.layoutMode is BaseLayoutMode)
+					if(this.layoutMode is IAdvancedLayoutMode)
 					{
-						BaseLayoutMode(this.layoutMode).removeClient(child);
+						var layoutWithClients:IAdvancedLayoutMode = IAdvancedLayoutMode(this.layoutMode)
+						if(layoutWithClients.hasClient(child))
+						{
+							layoutWithClients.removeClient(child);
+						}
 					}
 				}
 			}
@@ -214,7 +220,7 @@ package com.yahoo.astra.fl.containers.layoutClasses
 				}
 			}
 			this.configurationChanged = true;
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 		}
 		
 		/**
