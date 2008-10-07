@@ -98,7 +98,7 @@ package com.yahoo.astra.fl.containers
 		public function set verticalGap(value:Number):void
 		{
 			this._verticalGap = value;
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 		}
 		
 		/**
@@ -122,7 +122,7 @@ package com.yahoo.astra.fl.containers
 		public function set horizontalGap(value:Number):void
 		{
 			this._horizontalGap = value;
-			this.invalidate(InvalidationType.STATE);
+			this.invalidate(INVALIDATION_TYPE_LAYOUT);
 		}
 		
 	//--------------------------------------

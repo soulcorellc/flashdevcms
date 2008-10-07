@@ -118,7 +118,7 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 		public function findNode (fieldName:String, fieldValue:String) : TNode {
 			var visibleNodes:Array = dataProvider.toArray();
 			for each (var node:TNode in visibleNodes) {
-				if (!(node is LeafNode) && (node.nodeLevel == 0)) {
+				if (node.nodeLevel == 0) {
 					var foundNode:TNode = node.checkForValue(fieldName, fieldValue);
 					if (foundNode != null) {
 						return foundNode;

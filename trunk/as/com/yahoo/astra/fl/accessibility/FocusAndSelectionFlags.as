@@ -4,6 +4,9 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 */
 package com.yahoo.astra.fl.accessibility
 {
+	/**
+	 * Constants for MSAA accessibility focus and selection flags.
+	 */
 	public class FocusAndSelectionFlags
 	{
 		public static const SELFLAG_NONE:uint =                 0;

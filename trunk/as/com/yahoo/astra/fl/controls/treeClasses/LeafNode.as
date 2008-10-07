@@ -92,7 +92,7 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 				// If the node is at the top level, add it directly to the DataProvider at the right location
 				if (_parentNode is RootNode) {
 					if (_parentDataProvider.length > 0) {
-						_parentDataProvider.addItemAt(this, actualIndex + 1);
+						_parentDataProvider.addItemAt(this, actualIndex);
 					}
 					else {
 						_parentDataProvider.addItem(this);

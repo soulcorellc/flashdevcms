@@ -357,7 +357,6 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 			super.configUI();
 			//resize label to its contents
 			textField.autoSize = "left";
-			
 		}
 		
 		/**

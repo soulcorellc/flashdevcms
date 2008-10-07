@@ -4,6 +4,9 @@ The copyrights embodied in the content of this file are licensed under the BSD (
 */
 package com.yahoo.astra.fl.accessibility
 {
+	/**
+	 * Constants for MSAA accessibility states
+	 */
 	public class ObjectStates
 	{
 		public static const STATE_SYSTEM_NORMAL:uint =             0x00000000;

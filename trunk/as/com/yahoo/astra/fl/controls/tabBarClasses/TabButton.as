@@ -6,10 +6,8 @@ package com.yahoo.astra.fl.controls.tabBarClasses
 {
 	import fl.controls.Button;
 	import fl.core.InvalidationType;
-	import fl.core.UIComponent;
 	import fl.events.ComponentEvent;
 	
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextFieldAutoSize;
@@ -46,6 +44,7 @@ package com.yahoo.astra.fl.controls.tabBarClasses
 			
 			textFormat: null,
 			disabledTextFormat: null,
+			selectedTextFormat: null,
 			embedFonts: null,
 			textPadding: 10,
 			verticalTextPadding: 2
@@ -97,8 +96,15 @@ package com.yahoo.astra.fl.controls.tabBarClasses
 			this.dispatchEvent(new ComponentEvent(ComponentEvent.LABEL_CHANGE));
 		}
 		
+		/**
+		 * @private
+		 * The width explicitly set by the TabBar.
+		 */
 		protected var explicitWidth:Number = NaN;
 		
+		/**
+		 * @private
+		 */
 		override public function set width(value:Number):void
 		{
 			this.explicitWidth = value;
@@ -117,6 +123,7 @@ package com.yahoo.astra.fl.controls.tabBarClasses
 			if(!this.selected)
 			{
 				this.selected = true;
+				this.invalidate(InvalidationType.STATE);
 				this.dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
@@ -125,17 +132,16 @@ package com.yahoo.astra.fl.controls.tabBarClasses
 		 * @private
 		 */
 		override protected function draw():void
-		{
+		{	
 			this.textField.autoSize = TextFieldAutoSize.LEFT;
 			if(this.textField.text != this._label)
 			{
 				this.textField.text = this._label;
 			}
 			
-			if(this.isInvalid(InvalidationType.STYLES))
+			if(this.isInvalid(InvalidationType.STYLES, InvalidationType.STATE))
 			{
-				var textFormat:TextFormat = this.getStyleValue("textFormat") as TextFormat
-				this.textField.setTextFormat(textFormat);
+				this.drawTextFormat()
 			}
 			
 			if(isNaN(this.explicitWidth))
@@ -150,7 +156,47 @@ package com.yahoo.astra.fl.controls.tabBarClasses
 			}
 			this.textField.autoSize = TextFieldAutoSize.NONE;
 			
-			super.draw();
+			if(this.isInvalid(InvalidationType.STYLES, InvalidationType.STATE))
+			{
+				this.drawBackground();
+				this.drawIcon();
+				
+				this.invalidate(InvalidationType.SIZE,false);
+			}
+			
+			if(this.isInvalid(InvalidationType.SIZE))
+			{
+				this.drawLayout();
+			}
+			
+			if(this.isInvalid(InvalidationType.SIZE, InvalidationType.STYLES))
+			{
+				if(this.isFocused && this.focusManager.showFocusIndicator)
+				{
+					this.drawFocus(true);
+				}
+			}
+			
+			this.validate(); // because we're not calling super.draw
+		}
+		
+		override protected function drawTextFormat():void
+		{
+			var textFormat:TextFormat;
+			if(!this.enabled)
+			{
+				textFormat = this.getStyleValue("disabledTextFormat") as TextFormat;
+			}
+			else if(this.selected)
+			{
+				textFormat = this.getStyleValue("selectedTextFormat") as TextFormat;
+			}
+			
+			if(!this.selected || !textFormat)
+			{
+				textFormat = this.getStyleValue("textFormat") as TextFormat;
+			}
+			this.textField.setTextFormat(textFormat);
 		}
 	}
 }
