@@ -154,9 +154,9 @@
 		<password>
 			<schema><![CDATA[admin/xml/forms/password.xml]]></schema>
 		</password>
-		<sections>
-			<main><![CDATA[admin/xml/sections.xml]]></main>
-		</sections>
+		<menu>
+			<main><![CDATA[net/Menu.aspx]]></main>
+		</menu>
 		<template>
 			<main><![CDATA[net/templates.aspx]]></main>
 			<data><![CDATA[net/templates.aspx]]></data>
