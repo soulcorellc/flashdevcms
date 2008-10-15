@@ -63,7 +63,7 @@
 					//add to a node to 
 					trace("adding ", oMenu.name, " to ", oMenu.idParent);
 					trace("found node?", treeXML.node.(@id == oMenu.idParent).@id);
-					var node = treeXML.node.(@id == oMenu.idParent);
+					var node = treeXML..node.(@id == oMenu.idParent);
 					node.node+= <node id = {oMenu.idMenu} label = {oMenu.name} /> ;
 				}
 				
