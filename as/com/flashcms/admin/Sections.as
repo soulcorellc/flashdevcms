@@ -53,13 +53,16 @@
 			
 			for each(var oMenu:XML in oXML.Menu)
 			{
-				if (String(oMenu.idParent).length!=1)
+				if (String(oMenu.idParent).length<=0)
 				{
+					trace("adding ", oMenu.name, " to root ",oMenu.idMenu);
 					treeXML.node += <node id ={oMenu.idMenu} label = {oMenu.name} /> ;
 				}
 				else
 				{
 					//add to a node to 
+					trace("adding ", oMenu.name, " to ", oMenu.idParent);
+					trace("found node?", treeXML.node.(@id == oMenu.idParent).@id);
 					var node = treeXML.node.(@id == oMenu.idParent);
 					node.node+= <node id = {oMenu.idMenu} label = {oMenu.name} /> ;
 				}
@@ -98,7 +101,7 @@
 			for each (var item:XML in oXML.content)
 			{	
 				item.id+=<icon>{"Iconcontent"}</icon>
-				trace(item);
+				
 			}
 			lbContent.labelField = "name";
 			lbContent.iconField = "icon";
