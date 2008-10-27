@@ -37,9 +37,17 @@
 		{
 			sURLMenu = oShell.getURL("main", "menu") ;
 			sURLContent = oShell.getURL("main", "content") ;
-			oXMLLoader = new XMLLoader(sURLMenu+"?option=getall", onMenu, onDataError, onError);
+			oXMLLoader = new XMLLoader(sURLMenu+"?option=getall", onMenu, onMenuError, onError);
 			btAdd.enabled = false;
 			btRemove.enabled = false;
+		}
+		private function onMenuError(e:Event)
+		{
+			var treeXML:XML = new XML(<node/>);
+			treeSections.addEventListener(ListEvent.ITEM_CLICK,onClick);
+			treeSections.dataProvider = new TreeDataProvider(treeXML);
+		
+			oXMLLoader = new XMLLoader(sURLContent+"?option=getall", onContent, onDataError, onError);
 		}
 		/**
 		 * 
@@ -74,27 +82,11 @@
 		
 			oXMLLoader = new XMLLoader(sURLContent+"?option=getall", onContent, onDataError, onError);
 			
-			
-			//	treeSections.openAllNodes();
-			
-			/*trace(oXML.content);
-			
-			for each (var item:XML in oXML.content)
-			{	
-				item.id+=<icon>{"Iconcontent"}</icon>
-				trace(item);
-			}
-			
-			lbContent.labelField = "title";
-			lbContent.iconField = "icon";
-			lbContent.dataProvider = new DataProvider( < data > { oXML.content }</data>);
-			lbContent.addEventListener(ListEvent.ITEM_CLICK,onSelectContent);
-			
-			btAdd.addEventListener(MouseEvent.CLICK, onCreate);
-			btRemove.addEventListener(MouseEvent.CLICK, onDelete);
-			*/
 		}
-		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onContent(e:Event)
 		{
 			oXML = XML(e.target.data);
@@ -111,40 +103,38 @@
 			btRemove.addEventListener(MouseEvent.CLICK, onDelete);
 		}
 		
-		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onCreate(e:Event)
 		{
-			
-			showNamePicker();
-			//trace("section",treeSections.selectedItem.id,"content",lbContent.selectedItem.idContent);
-			//oXMLLoader = new XMLLoader(sURLMenu, onMenuCreated, onDataError, onError,{option:"setmenu",name:"name",idParent:treeSections.selectedItem.id,idContent:lbContent.selectedItem.idContent});
-			
-			
-			//oShell.setModule(new NavigationEvent("sectioneditor", {} ));
+			var idparent = treeSections.selectedItem? treeSections.selectedItem.id : "";
+			oXMLLoader = new XMLLoader(sURLMenu, onMenuCreated, onDataError, onError,{option:"setmenu",name:lbContent.selectedItem.name,idParent:idparent,idContent:lbContent.selectedItem.idContent,order:1});
 		}
-		private function showNamePicker()
-		{
-			var oparameters = new Object();
-			oparameters.title="SELECT A NAME FOR THE NEW SECTION";
-			oShell.showPopup("name", oparameters, onNameSelected);
-		}
-		private function onNameSelected(e:PopupEvent)
-		{
-			//sTemplateName = e.parameters.name!= null?e.parameters.name:"untitled template" ;
-			oXMLLoader = new XMLLoader(sURLMenu, onMenuCreated, onDataError, onError,{option:"setmenu",name:e.parameters.name,idParent:treeSections.selectedItem.id,idContent:lbContent.selectedItem.idContent,order:1});
-		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onMenuCreated(e:Event)
 		{
 			oShell.setStatusMessage("Menu item created");
-			oXMLLoader = new XMLLoader(sURLMenu+"?option=getall", onMenu, onDataError, onError);
+			onRefresh();
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onEdit(e:Event)
 		{
 			trace("edit");
-		}
+		}/**
+		 * 
+		 * @param	e
+		 */
 		private function onDelete(e:Event)
 		{
-			trace("delete");
+			oXMLLoader = new XMLLoader(sURLMenu, onRefresh, onDataError, onError,{option:"delete",idMenu:treeSections.selectedItem.id});
 		}
 		/**
 		 * 
@@ -161,6 +151,14 @@
 		private function onError(e:Event)
 		{
 			oShell.setStatusMessage("Error");
+		}
+		/**
+		 * 
+		 * @param	event
+		 */
+		private function onRefresh(e:Event=null)
+		{
+			oXMLLoader = new XMLLoader(sURLMenu+"?option=getall", onMenu, onDataError, onError);
 		}
 		/**
 		 * 

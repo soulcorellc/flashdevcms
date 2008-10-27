@@ -377,8 +377,8 @@
 			var node = xmlTemplate.component.(@id == target.id);
 			node.@x = target.x;
 			node.@y = target.y;
-			node.@width = target.width;
-			node.@height = target.height;
+			node.@width = target.realwidth;
+			node.@height = target.realheight;
 			trace(xmlTemplate);
 		}
 		/**
@@ -386,7 +386,7 @@
 		 */
 		private function insertXML()
 		{
-			xmlTemplate.component += <component id = { icon.id } type = { icon.type } x = { icon.x } y = { icon.y } width = { icon.width } height = { icon.height } /> 
+			xmlTemplate.component += <component id = { icon.id } type = { icon.type } x = { icon.x } y = { icon.y } width = { icon.realwidth } height = { icon.realheight } /> 
 		}
 		/**
 		 * 

@@ -117,7 +117,14 @@
 			mcGuide.height = mcResize.y;
 		}
 		
-		
+		public function get realwidth()
+		{
+			return mcBackground.width;
+		}
+		public function get realheight()
+		{
+			return mcBackground.height;
+		}
 		
 		
 	}
