@@ -11,6 +11,10 @@
 	import flash.display.StageAlign;
 	import com.flashcms.layout.StageManager;
 	import gs.TweenMax;
+	import com.yahoo.astra.fl.controls.Tree;
+	import fl.events.ListEvent;
+	import com.yahoo.astra.fl.controls.treeClasses.TreeDataProvider;
+	
 	/**
 	* ...
 	* @author David Barrios
@@ -28,6 +32,8 @@
 		private var oHeader:Header;
 		private var oFooter:Footer;
 		private var xURLs:XMLList;
+		public var treeMenu:Tree;
+		private var sURLMenu:String;
 		/**
 		 * 
 		 */
@@ -46,6 +52,8 @@
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			oXMLLoader = new XMLLoader(urlConfiguration, onConfiguration, onError);
+			treeMenu = new Tree();
+			treeMenu.setSize(300, 250);
 		}
 		/**
 		 * 
@@ -79,6 +87,41 @@
 			initModule(oHeader,0x006699);
 			initModule(oFooter, 0x006699);
 			oHeader.mcBackground.height = configuration.(property == "headerheight").val;
+			sURLMenu = getURL("main", "menu") ;
+			addChild(treeMenu);
+			treeMenu.x = 30;
+			treeMenu.y = oHeader.y+oHeader.height+20;
+			oXMLLoader = new XMLLoader(sURLMenu+"?option=getall", onMenu, null, onError);
+		}
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function onMenu(e:Event)
+		{
+			oXML = XML(e.target.data);
+			
+			var treeXML:XML=new XML(<node/>);
+			
+			for each(var oMenu:XML in oXML.Menu)
+			{
+				if (String(oMenu.idParent).length<=0)
+				{
+					treeXML.node += <node id ={oMenu.idMenu} label = {oMenu.name} /> ;
+				}
+				else
+				{
+					var node = treeXML..node.(@id == oMenu.idParent);
+					node.node+= <node id = {oMenu.idMenu} label = {oMenu.name} /> ;
+				}
+				
+			}
+		
+			//treeMenu.addEventListener(ListEvent.ITEM_CLICK,onClick);
+			treeMenu.dataProvider = new TreeDataProvider(treeXML);
+		
+
+			
 		}
 		/**
 		 * 
@@ -111,7 +154,7 @@
 		{
 			var url:String=section == null? xURLs[name] : xURLs[section][name];
 			var server:String = xURLs["server"];
-			trace(".."+url);
+			trace("geturl :",name,",",section,(server + url));
 			return server + url;
 		}
 		/**
