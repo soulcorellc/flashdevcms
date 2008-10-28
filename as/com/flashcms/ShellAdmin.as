@@ -344,10 +344,8 @@ public class ShellAdmin extends MovieClip {
 		 */
 		public function getURL(name:String,section:String=null):String
 		{
-			trace("getting " + name + " " + section); 
 			var url:String=section == null? xURLs[name] : xURLs[section][name];
 			var server:String = xURLs["server"];
-			trace("url " + url);
 			return server + url;
 		}
 		
