@@ -78,15 +78,14 @@
 		private function onRollOverItem(e:Event)
 		{
 
-			trace("level ", e.target.nLevel, " actual ", currentLevel, " abierto: ", currentSub);
-			
-			
-			
+			trace("level ", e.target.nLevel, " < ", currentLevel, " abierto: ", aOpen[aOpen.length-1]);
+				
 			if (e.target.nLevel < currentLevel)
 			{
-				if (currentSub != -1)
+				//if (currentSub != -1)
+				if (aOpen.length != 0 )
 				{
-					removeSubItems(currentSub);
+					removeSubItems(aOpen[aOpen.length-1]);
 				}
 			}
 			
@@ -134,7 +133,7 @@
 			}
 			currentLevel = level + 1;
 			currentSub = id;
-			aItems[]
+			aOpen.push(id);
 			
 		}
 		/**
@@ -150,6 +149,7 @@
 				//trace(item.@label, item.@id);
 			}
 			currentSub = -1;
+			aOpen.pop();
 		}
 		
 		
@@ -168,7 +168,7 @@
 			{
 				if (menuitem.sID == id)
 				{
-					trace("sid ", menuitem.sID, " = ", id);
+					//trace("sid ", menuitem.sID, " = ", id);
 					removeChild(menuitem);
 				}
 			}
