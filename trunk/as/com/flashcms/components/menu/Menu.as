@@ -17,6 +17,9 @@
 		public var nSpace:Number = 3;
 		public var aItems:Array;
 		public var aColors:Array;
+		public var currentLevel:Number = 0;
+		public var currentSub:Number = -1;
+		public var aOpen:Array;
 		
 		/**
 		 * 
@@ -33,6 +36,7 @@
 		public function init(data:XML)
 		{
 			aItems = new Array();
+			aOpen = new Array();
 			xmlData = data;
 			draw();
 			trace(xmlData);
@@ -74,6 +78,18 @@
 		private function onRollOverItem(e:Event)
 		{
 
+			trace("level ", e.target.nLevel, " actual ", currentLevel, " abierto: ", currentSub);
+			
+			
+			
+			if (e.target.nLevel < currentLevel)
+			{
+				if (currentSub != -1)
+				{
+					removeSubItems(currentSub);
+				}
+			}
+			
 			if (!e.target.isLeaf)
 			{
 				
@@ -106,7 +122,7 @@
 		 * @param	id
 		 * @param	level
 		 */
-		private function createSubItems(id,level)
+		private function createSubItems(id,level:Number)
 		{
 			
 			var childnodes:XMLList = xmlData..node.(@id == id).children();
@@ -116,6 +132,9 @@
 				createItem(item, nWidth * (level+1),level+1);
 				//trace(item.@label, item.@id);
 			}
+			currentLevel = level + 1;
+			currentSub = id;
+			aItems[]
 			
 		}
 		/**
@@ -130,6 +149,7 @@
 				aItems=removeItems(aItems, item.@id);
 				//trace(item.@label, item.@id);
 			}
+			currentSub = -1;
 		}
 		
 		
