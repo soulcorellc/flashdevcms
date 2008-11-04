@@ -13,17 +13,18 @@
 	public class MenuItem extends MovieClip
 	{
 		public var sID:String;
+		public var isOpen:Boolean=false;
+		public var isLeaf:Boolean;
+		public var mcArrow:MenuArrow;
+		public var nLevel:Number;
 		private var sLabel:String;
 		private var nColor:Number;
 		private var nW:Number;
 		private var nH:Number;
 		private var txtLabel:TextField;
-		public var isOpen:Boolean=false;
-		public var isLeaf:Boolean;
-		public var mcArrow:MenuArrow;
 		private var mcBackground:MovieClip;
 		private var txtFormat:TextFormat;
-		public var nLevel:Number;
+		
 		/**
 		 * 
 		 * @param	id
