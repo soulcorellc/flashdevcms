@@ -11,10 +11,7 @@
 	import flash.display.StageAlign;
 	import com.flashcms.layout.StageManager;
 	import gs.TweenMax;
-	import com.yahoo.astra.fl.controls.Tree;
-	import fl.events.ListEvent;
-	import com.yahoo.astra.fl.controls.treeClasses.TreeDataProvider;
-	
+	import com.flashcms.components.menu.Menu;
 	/**
 	* ...
 	* @author David Barrios
@@ -32,7 +29,7 @@
 		private var oHeader:Header;
 		private var oFooter:Footer;
 		private var xURLs:XMLList;
-		public var treeMenu:Tree;
+		public var mcMenu:Menu;
 		private var sURLMenu:String;
 		/**
 		 * 
@@ -48,12 +45,12 @@
 		private function init()
 		{
 			oHeader = new Header();
-			oFooter = new Footer;
+			oFooter = new Footer();
+			mcMenu = new Menu();
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			oXMLLoader = new XMLLoader(urlConfiguration, onConfiguration, onError);
-			treeMenu = new Tree();
-			treeMenu.setSize(300, 250);
+			
 		}
 		/**
 		 * 
@@ -88,9 +85,7 @@
 			initModule(oFooter, 0x006699);
 			oHeader.mcBackground.height = configuration.(property == "headerheight").val;
 			sURLMenu = getURL("main", "menu") ;
-			addChild(treeMenu);
-			treeMenu.x = 30;
-			treeMenu.y = oHeader.y+oHeader.height+20;
+			
 			oXMLLoader = new XMLLoader(sURLMenu+"?option=getall", onMenu, null, onError);
 		}
 		/**
@@ -100,6 +95,7 @@
 		private function onMenu(e:Event)
 		{
 			oXML = XML(e.target.data);
+			
 			
 			var treeXML:XML=new XML(<node/>);
 			
@@ -117,10 +113,15 @@
 				
 			}
 		
-			//treeMenu.addEventListener(ListEvent.ITEM_CLICK,onClick);
-			treeMenu.dataProvider = new TreeDataProvider(treeXML);
-		
+			mcMenu.init(treeXML);
+			addChild(mcMenu);
+			mcMenu.x = 30;
+			mcMenu.y = oHeader.y+oHeader.height+20;
+			skinMenu();
 
+		}
+		private function skinMenu()
+		{
 			
 		}
 		/**
