@@ -17,13 +17,18 @@
 		public var isLeaf:Boolean;
 		public var mcArrow:MenuArrow;
 		public var nLevel:Number;
-		private var sLabel:String;
+		public var sLabel:String;
 		private var nColor:Number;
 		private var nW:Number;
 		private var nH:Number;
 		private var txtLabel:TextField;
 		private var mcBackground:MovieClip;
 		private var txtFormat:TextFormat;
+		private var xmlColors:XML;
+		private var colormenuup:int;
+		private var colormenuover:int;
+		private var colormenutextup:int;
+		private var colormenutextover:int;
 		
 		/**
 		 * 
@@ -34,8 +39,9 @@
 		 * @param	color
 		 * @param	leaf
 		 */
-		public function MenuItem(id,label,width,height,color,leaf,level) 
+		public function MenuItem(id,label,width,height,leaf,level,colors) 
 		{
+			
 			mcBackground = new MovieClip();
 			addChild(mcBackground);
 			buttonMode = true;
@@ -43,13 +49,22 @@
 			sLabel = label;
 			nW = width;
 			nH = height;
-			nColor = color;
+			xmlColors= colors;
 			isLeaf = leaf;
 			nLevel = level;
+			setColors();
 			init();
 			createText();
 			addEventListener(MouseEvent.ROLL_OVER, doRollOver);
 			addEventListener(MouseEvent.ROLL_OUT, doRollOut);
+		}
+		private function setColors()
+		{
+			colormenuup = nLevel == 0? xmlColors.menu_up:xmlColors.submenu_up;
+			colormenuover = nLevel == 0? xmlColors.menu_over:xmlColors.submenu_over;
+			colormenutextup = nLevel == 0? xmlColors.menu_uptext:xmlColors.submenu_textup;
+			colormenutextover= nLevel == 0? xmlColors.menu_overtext:xmlColors.submenu_textover;
+			
 		}
 		/**
 		 * 
@@ -57,7 +72,9 @@
 		 */
 		private function doRollOver(e:Event)
 		{
-			TweenMax.to(mcBackground, 0.2, { tint:0x003388 } );
+			TweenMax.to(mcBackground, 0.2, { tint:colormenuover} );
+			txtFormat.color = colormenutextover;
+			txtLabel.setTextFormat(txtFormat);
 		}
 		/**
 		 * 
@@ -65,14 +82,16 @@
 		 */
 		private function doRollOut(e:Event)
 		{
-			TweenMax.to(mcBackground, 0.2, { tint:0x00FFFF } );
+			TweenMax.to(mcBackground, 0.2, { tint:colormenuup} );
+			txtFormat.color = colormenutextup;
+			txtLabel.setTextFormat(txtFormat);
 		}
 		/**
 		 * 
 		 */
 		public function init()
 		{
-			mcBackground.graphics.beginFill(nColor, 1);
+			mcBackground.graphics.beginFill(colormenuup, 1);
 			mcBackground.graphics.drawRect(0, 0, nW, nH);
 			mcBackground.graphics.endFill();
 			if (!isLeaf)
@@ -88,7 +107,7 @@
 		 */
 		public function createText()
 		{
-			txtFormat = new TextFormat("Verdana", 11, 0x000000);
+			txtFormat = new TextFormat("Verdana", 11, colormenutextup);
 			txtLabel = new TextField();
 			txtLabel.x = 10;
 			txtLabel.selectable = false;

@@ -24,7 +24,7 @@
 		private var urlConfiguration:String = "./admin/xml/site/configuration.xml";
 		private var oXML:XML;
 		private var oMainXML:XML;
-		private var themes:XMLList;
+		private var themesXML:XML;
 		private var configuration:XMLList;
 		private var oHeader:Header;
 		private var oFooter:Footer;
@@ -46,7 +46,7 @@
 		{
 			oHeader = new Header();
 			oFooter = new Footer();
-			mcMenu = new Menu();
+			
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			oXMLLoader = new XMLLoader(urlConfiguration, onConfiguration, onError);
@@ -69,7 +69,7 @@
 		{
 			oXML = XML(event.target.data);
 			xURLs = oXML.urls;
-			oXMLMainLoader = new XMLLoader(getURL("main", "core"), onMainData, null, null, { option:"getconfiguration" } );
+			oXMLMainLoader = new XMLLoader(getURL("main", "core"), onMainData, null, null, { option:"getmain" } );
 		}
 		/**
 		 * 
@@ -77,8 +77,13 @@
 		 */
 		private function onMainData(event:Event)
 		{
-			oMainXML=XML(event.target.data);
-			//themes = new XMLList(oXML.themes);
+			oMainXML = XML(event.target.data);
+			trace("data of themes ",oMainXML);
+			var contentstring:String = oMainXML.themes[0].data;
+			var oXMLTemp:XML = new XML(contentstring);
+			themesXML=new XML(oXMLTemp.toString());
+			//themesXML = new XMLList(oMainXML.themes);
+			//trace("menuup: "+themesXML.menu_up);
 			configuration = XMLList(oMainXML.configuration);
 			createBackground();
 			initModule(oHeader,0x006699);
@@ -112,7 +117,7 @@
 				}
 				
 			}
-		
+			mcMenu = new Menu(themesXML);
 			mcMenu.init(treeXML);
 			addChild(mcMenu);
 			mcMenu.x = 30;
