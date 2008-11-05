@@ -20,13 +20,13 @@
 		public var currentLevel:Number = 0;
 		public var currentSub:Number = -1;
 		public var aOpen:Array;
-		
+		public var xmlTheme:XML;
 		/**
 		 * 
 		 */
-		public function Menu() 
+		public function Menu(theme:XML) 
 		{
-			
+			xmlTheme = theme;
 		}
 		
 		/**
@@ -47,10 +47,11 @@
 		 */
 		private function draw()
 		{
+			var index = 1;
 			for each(var item:XML in xmlData.node)
 			{
-				
-				createItem(item,0,0);
+				createItem(item, 0, 0,index);
+				index++;
 			}
 		}
 		/**
@@ -58,14 +59,20 @@
 		 * @param	item
 		 * @param	xpos
 		 */
-		private function createItem(item:XML,xpos:Number,level:Number)
+		private function createItem(item:XML,xpos:Number,level:Number,index:Number)
 		{
+			//trace(item.@label," creado" );
 			var isLeaf = item.children().length() == 0? true : false;
-			var oItem:MenuItem = new MenuItem(item.@id, item.@label,nWidth,nHeight,0x00FFFF,isLeaf,level);
+			var oItem:MenuItem = new MenuItem(item.@id, item.@label,nWidth,nHeight,isLeaf,level,xmlTheme);
 			oItem.useHandCursor = true;
 			addChild(oItem);
 			oItem.x = xpos;
+			//oItem.x = xpos -nWidth;
 			oItem.y = nextY;
+			//oItem.y = nextY + 50;
+			oItem.alpha = 0;
+			oItem.scaleX = 0;
+			TweenMax.to(oItem, index*.2, { alpha:1,scaleX:1} );
 			nextY += nHeight + nSpace;
 			oItem.addEventListener(MouseEvent.ROLL_OVER, onRollOverItem);
 			oItem.addEventListener(MouseEvent.ROLL_OUT, onRollOutItem);
@@ -78,14 +85,16 @@
 		private function onRollOverItem(e:Event)
 		{
 
-			trace("level ", e.target.nLevel, " < ", currentLevel, " abierto: ", aOpen[aOpen.length-1]);
+			//trace("level del item ",e.target.sID," ",e.target.sLabel,": ", e.target.nLevel, " < ", currentLevel, " abierto: ", aOpen[aOpen.length-1]);
 				
 			if (e.target.nLevel < currentLevel)
 			{
 				//if (currentSub != -1)
 				if (aOpen.length != 0 )
 				{
-					removeSubItems(aOpen[aOpen.length-1]);
+					//trace("Eliminar : ", aOpen[aOpen.length - 1]);
+					removeSubItems(aOpen[aOpen.length - 1]);
+					currentLevel--;
 				}
 			}
 			
@@ -125,10 +134,11 @@
 		{
 			
 			var childnodes:XMLList = xmlData..node.(@id == id).children();
-			
+			var index = 1;
 			for each (var item:XML in childnodes)
 			{
-				createItem(item, nWidth * (level+1),level+1);
+				createItem(item, nWidth * (level+1),level+1,index);
+				index++;
 				//trace(item.@label, item.@id);
 			}
 			currentLevel = level + 1;
