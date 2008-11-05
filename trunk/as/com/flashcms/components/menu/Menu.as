@@ -75,6 +75,7 @@
 			TweenMax.to(oItem, index*.2, { alpha:1,scaleX:1} );
 			nextY += nHeight + nSpace;
 			oItem.addEventListener(MouseEvent.ROLL_OVER, onRollOverItem);
+			oItem.addEventListener(MouseEvent.CLICK, removeAll);
 			oItem.addEventListener(MouseEvent.ROLL_OUT, onRollOutItem);
 			aItems.push(oItem);
 		}
@@ -115,15 +116,22 @@
 				}
 			}
 		}
+		
+		private function removeAll(e:Event=null)
+		{
+			for (var i in aOpen)
+			{
+				removeSubItems(aOpen.pop())
+			}
+		}
+		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onRollOutItem(e:Event)
 		{
-			//trace("level",e.target.nLevel);
-			//if (!e.target.isLeaf) {
-				
 			e.target.isOpen = false;
-			//removeSubItems(e.target.sID);
-			//}
-			//trace(xmlData.node.(@id == e.target.sID).children().length(), " hijos");
 		}
 		/**
 		 * 
@@ -163,7 +171,12 @@
 		}
 		
 		
-		
+		/**
+		 * 
+		 * @param	array
+		 * @param	removeValue
+		 * @return
+		 */
 		function removeItems(array:Array, removeValue:Number):Array{
 			var outputArray:Array = array.filter(function (item:*, index:int,array:Array):Boolean
 			{
@@ -171,7 +184,10 @@
 			});
 			return outputArray;
 		}
-		
+		/**
+		 * 
+		 * @param	id
+		 */
 		private function deleteItem(id)
 		{
 			for each(var menuitem in aItems)
