@@ -1,5 +1,6 @@
 ﻿package com.flashcms.editors 
 {
+	import com.flashcms.cellrender.ButtonRenderer;
 	import com.flashcms.core.Module;
 	import com.flashcms.events.PopupEvent;
 	import com.yahoo.astra.fl.containers.BorderPane;
@@ -16,12 +17,14 @@
 	import com.flashcms.data.XMLLoader;
 	import flash.text.TextFieldAutoSize;
 	import gs.TweenMax;
+	import fl.controls.Button;
 	/**
 	* ...
 	* @author David Barrios
 	*/
 	public class Layout extends Module
 	{
+		public var btSave:Button;
 		public var dragStartWidth:int;
 		public var hdragStartWidth:int;
 		public var mcHeader:Sprite;
@@ -40,8 +43,11 @@
 		public var txtTitle:TextField;
 		private var oXMLLoader:XMLLoader;
 		private var oXML:XML;
+		private var themesXML:XML;
 		private var menuwidth:int;
 		private var headerheight:int;
+		private var sURL:String;
+		
 		public function Layout() 
 		{
 			
@@ -54,36 +60,55 @@
 			txtTitle.autoSize = TextFieldAutoSize.LEFT;
 			loadXML();
 		}
+		/**
+		 * 
+		 */
 		private function loadXML()
 		{
-			oXMLLoader = new XMLLoader(oShell.getURL("layout", "editors"), onXMLData);
+			sURL = oShell.getURL("layout", "editors");
+			oXMLLoader = new XMLLoader(sURL,onXMLData,null,null,{option:"getmain"});
 		}
-		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onXMLData(e:Event)
 		{
 			oXML = XML(e.target.data);
-			menutype = oXML.configuration.(name == "menutype").value;
-			menuwidth = oXML.configuration.(name == "menu").value;
-			headerheight = oXML.configuration.(name == "header").value;
-			txtTitle.text = oXML.configuration.(name == "headertext").value;
-			TweenMax.to(mcHeader, 0, { colorMatrixFilter: { colorize:oXML.configuration.(name == "headercolor").value }} );
-			TweenMax.to(mcMenu, 0, { colorMatrixFilter: { colorize:oXML.configuration.(name == "menucolor").value }} );
-			TweenMax.to(mcBar, 0, { colorMatrixFilter: { colorize:oXML.configuration.(name == "footercolor").value }} );
+			
+			menutype = oXML.configuration.(property == "menutype").val; 
+			menuwidth = oXML.configuration.(property == "menuwidth").val;
+			headerheight = oXML.configuration.(property == "headerheight").val;
+			txtTitle.text = oXML.configuration.(property == "title").val;
 			
 			
-			panel.setStyle("color", oXML.configuration.(name == "background").value);
+			
+			var contentstring:String = oXML.themes[0].data;
+			var oXMLTemp:XML = new XML(contentstring);
+			themesXML=new XML(oXMLTemp.toString());
+			
+			
+			TweenMax.to(mcHeader, 0, { tint: themesXML.header } );
+			TweenMax.to(mcMenu, 0, { tint: themesXML.menu_up} );
+			TweenMax.to(mcBar, 0, { tint: themesXML.footer} );
+			
+			
+			
+			panel.setStyle("color", oXML.configuration.(property == "background").val);
 			txtSizeH.text = String(headerheight);
 			txtSizeM.text = String(menuwidth);
 			mcHeader.height = headerheight;
 			mcMenu.width = menuwidth;
 			draw();
-			mcBar.setMenu(menutype);
+			//mcBar.setMenu(menutype);
+			btSave.addEventListener(MouseEvent.CLICK, onSave);
+			
 		}
 		
 		private function draw()
 		{
-			mcBar.addEventListener(Event.CHANGE, onMenuChange);
-			mcBar.addEventListener("save", onSave);
+			//mcBar.addEventListener(Event.CHANGE, onMenuChange);
+			//mcBar.addEventListener("save", onSave);
 			hresizeHandle = new ResizeHandle();
 			hresizeHandle.direction = "horizontal";
 			resizeHandle = new ResizeHandle();
@@ -140,7 +165,17 @@
 		}
 		private function onSave(e:Event)
 		{
-			oShell.setStatusMessage("Saved!");
+			
+			var datastring:String = "{id:4,val:" + txtSizeH.text +"};{id:6,val:" + txtSizeM.text + "};{id:8,val:"+txtTitle.text+"}";
+			oXMLLoader = new XMLLoader(sURL, onSaveComplete, null, null, { option:"setconfiguration",data:datastring} );
+		}
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function onSaveComplete(e:Event)
+		{
+			oShell.setStatusMessage("Layout Saved");
 		}
 		private function onClosePopup(e:PopupEvent)
 		{

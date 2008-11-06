@@ -167,7 +167,7 @@
 		</content>
 		<editors>
 			<main><![CDATA[admin/xml/editors.xml]]></main>
-			<layout><![CDATA[admin/xml/layout.xml]]></layout>
+			<layout><![CDATA[net/configuration.aspx]]></layout>
 		</editors>
 	</urls>
 </configuration>
