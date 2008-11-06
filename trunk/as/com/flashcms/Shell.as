@@ -57,7 +57,7 @@
 		 */
 		private function createBackground()
 		{
-			oBackground = new Background(0x003366, stage.stageWidth, stage.stageHeight);
+			oBackground = new Background(themesXML.background, stage.stageWidth, stage.stageHeight);
 			stage.addEventListener(Event.RESIZE, onStageResize);
 			addChild(oBackground);
 		}
@@ -82,12 +82,11 @@
 			var contentstring:String = oMainXML.themes[0].data;
 			var oXMLTemp:XML = new XML(contentstring);
 			themesXML=new XML(oXMLTemp.toString());
-			//themesXML = new XMLList(oMainXML.themes);
-			//trace("menuup: "+themesXML.menu_up);
+			
 			configuration = XMLList(oMainXML.configuration);
 			createBackground();
-			initModule(oHeader,0x006699);
-			initModule(oFooter, 0x006699);
+			initModule(oHeader,themesXML.header);
+			initModule(oFooter, themesXML.footer);
 			oHeader.mcBackground.height = configuration.(property == "headerheight").val;
 			sURLMenu = getURL("main", "menu") ;
 			

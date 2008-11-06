@@ -75,25 +75,29 @@
 			TweenMax.to(oItem, index*.2, { alpha:1,scaleX:1} );
 			nextY += nHeight + nSpace;
 			oItem.addEventListener(MouseEvent.ROLL_OVER, onRollOverItem);
-			oItem.addEventListener(MouseEvent.CLICK, removeAll);
 			oItem.addEventListener(MouseEvent.ROLL_OUT, onRollOutItem);
+			oItem.addEventListener(MouseEvent.CLICK, onClickItem);
 			aItems.push(oItem);
 		}
 		/**
 		 * 
 		 * @param	e
 		 */
-		private function onRollOverItem(e:Event)
+		private function onClickItem(e:Event)
 		{
-
-			//trace("level del item ",e.target.sID," ",e.target.sLabel,": ", e.target.nLevel, " < ", currentLevel, " abierto: ", aOpen[aOpen.length-1]);
-				
+			removeAll();	
+		}
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function onRollOverItem(e:Event)
+		{	
 			if (e.target.nLevel < currentLevel)
 			{
-				//if (currentSub != -1)
+				
 				if (aOpen.length != 0 )
 				{
-					//trace("Eliminar : ", aOpen[aOpen.length - 1]);
 					removeSubItems(aOpen[aOpen.length - 1]);
 					currentLevel--;
 				}
@@ -116,12 +120,17 @@
 				}
 			}
 		}
-		
-		private function removeAll(e:Event=null)
+		/**
+		 * 
+		 */
+		private function removeAll()
 		{
-			for (var i in aOpen)
+			if (aOpen.length > 0)
 			{
-				removeSubItems(aOpen.pop())
+				for (var i in aOpen)
+				{
+					removeSubItems(aOpen.pop())
+				}
 			}
 		}
 		

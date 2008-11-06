@@ -11,30 +11,30 @@
 	*/
 	public class Bar extends Sprite 
 	{
-		public var cbMenu:ComboBox;
-		public var menuType:int;
-		public var btSave:Button;
+		//public var cbMenu:ComboBox;
+		//public var menuType:int;
+		//public var btSave:Button;
 		public function Bar() 
 		{
-			init();
+			//init();
 		}
 		private function init()
 		{
-			cbMenu.addEventListener(Event.CHANGE, onMenuChange);
-			btSave.addEventListener(MouseEvent.CLICK, onSave);
+			//cbMenu.addEventListener(Event.CHANGE, onMenuChange);
+			//btSave.addEventListener(MouseEvent.CLICK, onSave);
 		}
 		public function setMenu(data:int)
 		{
-			cbMenu.selectedIndex = data;
+			//cbMenu.selectedIndex = data;
 		}
 		private function onMenuChange(e:Event)
 		{
-			menuType = cbMenu.selectedItem.data;
-			dispatchEvent(new Event(Event.CHANGE));
+			//menuType = cbMenu.selectedItem.data;
+			//dispatchEvent(new Event(Event.CHANGE));
 		}
 		private function onSave(e:Event)
 		{
-			dispatchEvent(new Event("save"));
+			//dispatchEvent(new Event("save"));
 		}
 		
 	}
