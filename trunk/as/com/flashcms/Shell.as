@@ -78,7 +78,6 @@
 		private function onMainData(event:Event)
 		{
 			oMainXML = XML(event.target.data);
-			trace("data of themes ",oMainXML);
 			var contentstring:String = oMainXML.themes[0].data;
 			var oXMLTemp:XML = new XML(contentstring);
 			themesXML=new XML(oXMLTemp.toString());
@@ -87,9 +86,10 @@
 			createBackground();
 			initModule(oHeader,themesXML.header);
 			initModule(oFooter, themesXML.footer);
+			
+			oHeader.setText(configuration.(property == "title").val);
 			oHeader.mcBackground.height = configuration.(property == "headerheight").val;
 			sURLMenu = getURL("main", "menu") ;
-			
 			oXMLLoader = new XMLLoader(sURLMenu+"?option=getall", onMenu, null, onError);
 		}
 		/**

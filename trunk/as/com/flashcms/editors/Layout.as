@@ -79,7 +79,7 @@
 			menutype = oXML.configuration.(property == "menutype").val; 
 			menuwidth = oXML.configuration.(property == "menuwidth").val;
 			headerheight = oXML.configuration.(property == "headerheight").val;
-			txtTitle.text = oXML.configuration.(property == "title").val;
+			txtTitle.htmlText = oXML.configuration.(property == "title").val;
 			
 			
 			
@@ -155,6 +155,10 @@
 			];
 			panel.configuration = config;
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onMenuChange(e:Event)
 		{
 			menutype = e.target.menuType ;
@@ -163,10 +167,13 @@
 			else
 			setRightConfig();
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onSave(e:Event)
 		{
-			
-			var datastring:String = "{id:4,val:" + txtSizeH.text +"};{id:6,val:" + txtSizeM.text + "};{id:8,val:"+txtTitle.text+"}";
+			var datastring:String = "{id:4,val:" + txtSizeH.text +"};{id:6,val:" + txtSizeM.text + "};{id:8,val:"+txtTitle.htmlText+"}";
 			oXMLLoader = new XMLLoader(sURL, onSaveComplete, null, null, { option:"setconfiguration",data:datastring} );
 		}
 		/**
@@ -177,6 +184,10 @@
 		{
 			oShell.setStatusMessage("Layout Saved");
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onClosePopup(e:PopupEvent)
 		{
 			if (e.parameters.saved)
