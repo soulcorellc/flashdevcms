@@ -19,6 +19,8 @@ import com.flashcms.deeplinking.Navigation;
 import com.flashcms.layout.StageManager;
 import com.flashcms.events.LoginEvent;
 import com.flashcms.data.XMLLoader;
+import flash.net.navigateToURL;
+import flash.net.URLRequest;
 import gs.TweenMax;
 		
 public class ShellAdmin extends MovieClip {
@@ -74,6 +76,7 @@ public class ShellAdmin extends MovieClip {
 				loadModule("header");
 				bHeaderLoaded = true;
 			}
+			
 			switch(event.sModule)
 			{
 				case "":
@@ -91,7 +94,14 @@ public class ShellAdmin extends MovieClip {
 		}
 		private function openURL(url:String)
 		{
-		
+			try {
+				navigateToURL(new URLRequest(url),"_self");	
+			}
+			catch(e:Error)
+			{
+				trace("ERROR LOADING " + url);
+			}
+			
 		}
 		/**
 		 * Add a SWF file to multiloader
@@ -145,19 +155,23 @@ public class ShellAdmin extends MovieClip {
 			}
 		}
 		/**
-		 * 
-		 * 
+		 *  
 		 * @param	event
 		 */
 		public function setModule(event:NavigationEvent)
 		{
-			if (event.sModule == "about")
+			
+			switch (event.sModule)
 			{
-				showPopup("about");
-			}
-			else
-			{
-				oNavigation.setURL(event.sModule, event.parameters);
+				case "about":
+					showPopup("about");
+				break;
+				case "site":
+					openURL("..\\index.html");
+				break;
+				default:
+					oNavigation.setURL(event.sModule, event.parameters);
+				break;	
 			}
 		}
 		/**

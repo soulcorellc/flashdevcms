@@ -192,7 +192,11 @@
 		{
 			if (e.parameters.saved)
 			{
+				if (e.parameters.text != "")
 				txtTitle.htmlText = e.parameters.text;
+				else
+				txtTitle.htmlText = "[Page Title]";
+				
 			}
 		}
 		function resizeDragStartHandler(event:DragEvent):void{
