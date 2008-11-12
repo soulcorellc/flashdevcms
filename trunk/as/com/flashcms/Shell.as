@@ -12,6 +12,7 @@
 	import com.flashcms.layout.StageManager;
 	import gs.TweenMax;
 	import com.flashcms.components.menu.Menu;
+	import fl.motion.easing.Elastic;
 	/**
 	* ...
 	* @author David Barrios
@@ -120,7 +121,7 @@
 			mcMenu.init(treeXML);
 			addChild(mcMenu);
 			mcMenu.x = 30;
-			mcMenu.y = oHeader.y+oHeader.height+20;
+			mcMenu.y = oHeader.y+oHeader.height+50;
 			skinMenu();
 
 		}
