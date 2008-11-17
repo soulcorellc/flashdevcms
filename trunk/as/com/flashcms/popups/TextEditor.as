@@ -2,6 +2,7 @@
 	import com.flashcms.components.TextBar;
 	import com.flashcms.core.Module;
 	import fl.controls.Button;
+	import fl.controls.TextInput;
 	import flash.text.TextField;
 	import com.flashcms.design.DynamicBG;
 	import flash.events.MouseEvent;
@@ -12,6 +13,8 @@
 	*/
 	public class TextEditor extends Module {
 		public var txtTitle:TextField;
+		public var txtHeader:TextInput;
+		public var txtLogo:TextInput;
 		public var mcEditor:TextBar;
 		public var btSave:Button;
 		public var btCancel:Button;
@@ -27,7 +30,9 @@
 		public override function init()
 		{
 			
-			txtTitle.htmlText= parameters.text;
+			txtTitle.htmlText = parameters.text;
+			txtHeader.text = parameters.header;
+			txtLogo.text = parameters.logo;
 			mcEditor.txtText = txtTitle;
 			mcEditor.init();
 			btSave.addEventListener(MouseEvent.CLICK, onSave);
@@ -35,7 +40,7 @@
 		}
 		private function onSave(e:MouseEvent)
 		{
-			dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{saved:true,text:txtTitle.htmlText}));
+			dispatchEvent(new PopupEvent(PopupEvent.CLOSE,{saved:true,text:txtTitle.htmlText,logo:txtLogo.text,header:txtHeader.text}));
 		}
 		private function onCancel(e:MouseEvent)
 		{

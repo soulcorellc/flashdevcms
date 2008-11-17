@@ -28,6 +28,7 @@
 				mcHeader.addEventListener(MouseEvent.MOUSE_UP, onStopDrag);
 			}
 			txtTitle.mouseEnabled = false;
+			 
 			btMinimize.addEventListener(MouseEvent.CLICK, minimize);
 		}
 		private function minimize(e:Event)

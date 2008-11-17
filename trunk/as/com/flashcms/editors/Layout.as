@@ -2,8 +2,12 @@
 {
 	import com.flashcms.cellrender.ButtonRenderer;
 	import com.flashcms.core.Module;
+	import com.flashcms.data.MultiLoader;
+	import com.flashcms.events.*;
 	import com.flashcms.events.PopupEvent;
 	import com.yahoo.astra.fl.containers.BorderPane;
+	import flash.display.Bitmap;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -15,6 +19,8 @@
 	import com.flashcms.layout.LayoutObject;
 	import com.flashcms.editors.utils.Bar;
 	import com.flashcms.data.XMLLoader;
+	import flash.display.Loader;
+	import flash.display.LoaderInfo;
 	import flash.text.TextFieldAutoSize;
 	import gs.TweenMax;
 	import fl.controls.Button;
@@ -30,6 +36,8 @@
 		public var mcHeader:Sprite;
 		public var mcFooter:Sprite;
 		public var mcMenu:Sprite;
+		public var mcLogo:Bitmap;
+		public var mcBroken:MovieClip;
 		public var mcBar:Bar;
 		public var resizeHandle:ResizeHandle;
 		public var hresizeHandle:ResizeHandle;
@@ -47,7 +55,8 @@
 		private var menuwidth:int;
 		private var headerheight:int;
 		private var sURL:String;
-		
+		private var sURLLogo:String;
+		private var oLogoLoader:MultiLoader;
 		public function Layout() 
 		{
 			
@@ -58,6 +67,9 @@
 		public override function init()
 		{
 			txtTitle.autoSize = TextFieldAutoSize.LEFT;
+			oLogoLoader = new MultiLoader();
+			oLogoLoader.addEventListener(LoadEvent.LOAD_EVENT, onLoadLogo);
+			oLogoLoader.addEventListener(LoadError.LOAD_ERROR, onErrorLogo);
 			loadXML();
 		}
 		/**
@@ -80,7 +92,7 @@
 			menuwidth = oXML.configuration.(property == "menuwidth").val;
 			headerheight = oXML.configuration.(property == "headerheight").val;
 			txtTitle.htmlText = oXML.configuration.(property == "title").val;
-			
+			sURLLogo = oXML.configuration.(property == "headerimage").val;
 			
 			
 			var contentstring:String = oXML.themes[0].data;
@@ -91,8 +103,7 @@
 			TweenMax.to(mcHeader, 0, { tint: themesXML.header } );
 			TweenMax.to(mcMenu, 0, { tint: themesXML.menu_up} );
 			TweenMax.to(mcBar, 0, { tint: themesXML.footer} );
-			
-			
+						
 			
 			panel.setStyle("color", oXML.configuration.(property == "background").val);
 			txtSizeH.text = String(headerheight);
@@ -102,9 +113,11 @@
 			draw();
 			//mcBar.setMenu(menutype);
 			btSave.addEventListener(MouseEvent.CLICK, onSave);
-			
+			loadLogo();
 		}
-		
+		/**
+		 * 
+		 */
 		private function draw()
 		{
 			//mcBar.addEventListener(Event.CHANGE, onMenuChange);
@@ -124,13 +137,48 @@
 			panel.verticalGap = 5;	
 			
 			txtTitle.addEventListener(MouseEvent.CLICK, onTitleClick);
-			
-			
+				
 		}
 		private function onTitleClick(e:MouseEvent)
 		{
-			oShell.showPopup("texteditor",{text:txtTitle.htmlText},onClosePopup);	
+			oShell.showPopup("texteditor",{text:txtTitle.htmlText,logo:sURLLogo,header:""},onClosePopup);	
 		}
+		
+		private function loadLogo()
+		{
+			oLogoLoader.add(sURLLogo);
+			oLogoLoader.start();
+		}
+		private function onErrorLogo(e:LoadError)
+		{
+			if (mcLogo != null){
+				removeChild(mcLogo);
+			}
+			if (mcBroken == null)
+			{
+				mcBroken = new ImageBroken();
+				mcBroken.x = 10;
+				mcBroken.y = 10;
+				addChild(mcBroken);
+			}
+		}
+		private function onLoadLogo(e:LoadEvent)
+		{
+			if (mcLogo != null){
+				removeChild(mcLogo);
+			}
+			if (mcBroken != null){
+				removeChild(mcBroken);
+				mcBroken = null;
+			}
+			mcLogo = Bitmap(LoaderInfo(e.loaderTarget).loader.content);
+			mcLogo.x = 10;
+			mcLogo.y = 10;
+			addChild(mcLogo);
+		}
+		/**
+		 * 
+		 */
 		private function setLeftConfig()
 		{
 			txtSizeM.x = 4;	
@@ -143,6 +191,9 @@
 			];
 			panel.configuration = config;
 		}
+		/**
+		 * 
+		 */
 		private function setRightConfig()
 		{
 			txtSizeM.x = 680;
@@ -173,9 +224,20 @@
 		 */
 		private function onSave(e:Event)
 		{
-			var datastring:String = "{id:4,val:" + txtSizeH.text +"};{id:6,val:" + txtSizeM.text + "};{id:8,val:"+txtTitle.htmlText+"}";
+			var datastring:String = getObject(4, txtSizeH.text) +";"+ getObject(6, txtSizeM.text) +";"+ getObject ( 8, txtTitle.htmlText) +";"+ getObject(11,sURLLogo);
+			
 			oXMLLoader = new XMLLoader(sURL, onSaveComplete, null, null, { option:"setconfiguration",data:datastring} );
 		}
+		/**
+		 * Format two values to be sent to backend
+		 * @param	id
+		 * @param	value
+		 */
+		private function getObject(id:Number,value:String):String
+		{
+			return "{id:" + id + ",val:" + value + "}";
+		}
+		
 		/**
 		 * 
 		 * @param	e
@@ -196,7 +258,9 @@
 				txtTitle.htmlText = e.parameters.text;
 				else
 				txtTitle.htmlText = "[Page Title]";
-				
+				trace("LOGO IS ", e.parameters.logo);
+				sURLLogo = e.parameters.logo;
+				loadLogo();
 			}
 		}
 		function resizeDragStartHandler(event:DragEvent):void{
