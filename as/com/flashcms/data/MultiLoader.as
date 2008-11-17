@@ -46,6 +46,7 @@
 			oLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoaded);
 			oLoader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onProgress);
 			oRequest = new URLRequest(aMovies[0]);
+			
 			oLoader.load(oRequest);
 			
 		}

@@ -3,6 +3,7 @@
 	import fl.controls.ColorPicker;
 	import fl.controls.ComboBox;
 	import fl.controls.NumericStepper;
+	import flash.display.MovieClip;
 	import flash.display.Shape;
 	import fl.controls.Button;
 	import com.yahoo.astra.fl.containers.HBoxPane;
@@ -21,7 +22,7 @@
 	* ...
 	* @author Default
 	*/
-	public class TextBar extends ToolBar{
+	public class TextBar extends MovieClip{
 		public var formatPanel:HBoxPane;
 		public var fontPanel:HBoxPane;
 		public var txtText:TextField;
@@ -70,7 +71,6 @@
 		}
 		public function init()
 		{
-			trace("init called");
 			oFormat = new TextFormat();
 			txtText.alwaysShowSelection = true;
 			setToolBar(xmlControls.controls, formatPanel, onClick);
