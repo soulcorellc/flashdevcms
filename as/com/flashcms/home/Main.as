@@ -21,7 +21,6 @@
 		 */
 		override public function init()
 		{
-			trace("init main");
 			for (var i in oShell.xMain)
 			{
 				var index:int = totalItems%columns;
