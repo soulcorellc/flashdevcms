@@ -95,7 +95,7 @@ public class ShellAdmin extends MovieClip {
 		private function openURL(url:String)
 		{
 			try {
-				navigateToURL(new URLRequest(url),"_self");	
+				navigateToURL(new URLRequest(url),"_blank");	
 			}
 			catch(e:Error)
 			{
@@ -127,7 +127,7 @@ public class ShellAdmin extends MovieClip {
 			loadMain();
 		}
 		/**
-		 * 
+		 * Create a new user and load user modules
 		 * @param	e
 		 */
 		private function onClose(e:PopupEvent)
@@ -135,23 +135,40 @@ public class ShellAdmin extends MovieClip {
 			try {
 				oUser.sID = e.parameters.sID;
 				oUser.sName = e.parameters.sName;
-				
 				oUser.bLogged = true;
-				//start navigation
-				if (oNavigation == null) {
-					oNavigation = new Navigation(this);
-					oNavigation.addEventListener(NavigationEvent.ON_NAVIGATION, onModuleChange);
-					trace("deeplinking created : " + oNavigation);
-				}
-				else
-				{
-					//onModuleChange(new NavigationEvent("/"));
-					//oNavigation.reset();
-				}
+				
+				oXMLLoader=new XMLLoader(getURL("usermodules","core"), onUserModules,onDataError, ioErrorHandler,{option:"getmodules",user:oUser.sID});
+				
 			}
 			catch (e:Error)
 			{
 				trace("ONLOGIN exception " + e);
+			}
+		}
+		/**
+		 * 
+		 */
+		private function onUserModules(e:Event)
+		{
+			
+			var oXMLModules = XML(e.target.data);
+			
+			for each(var item in oXMLModules..user)
+			{
+				xMenu..menuitem.(@module == item.idModule).@enabled = true;
+			}
+			for each(var item2 in xMenu..menuitem)
+			{
+				trace(item2.@id, item2.@enabled);	
+			}
+			//start navigation
+			if (oNavigation == null) {
+				oNavigation = new Navigation(this);
+				oNavigation.addEventListener(NavigationEvent.ON_NAVIGATION, onModuleChange);
+			}
+			else
+			{
+				
 			}
 		}
 		/**

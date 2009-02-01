@@ -120,6 +120,7 @@
 		<core>
 			<upload><![CDATA[xml/upload.xml]]></upload>
 			<login><![CDATA[net/users.aspx]]></login>
+			<usermodules><![CDATA[net/users.aspx]]></usermodules>
 		</core>
 		<user>
 			<main><![CDATA[net/users.aspx]]></main>
