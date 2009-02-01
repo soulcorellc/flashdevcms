@@ -36,10 +36,19 @@
 		{
 			oMessage.message.text = message;
 		}
+		public override function dispose()
+		{
+			removeChild(oBG);
+			removeChild(oMessage);
+			oMessage = null;
+			
+		}
+		
 		public override function onResize(event:Event)
 		{
 			oBG.update(stage.stageWidth);
 		}
+		
 		
 	}
 	

@@ -132,11 +132,12 @@ public class ShellAdmin extends MovieClip {
 		 */
 		private function onClose(e:PopupEvent)
 		{
+			trace("ONCLOSE : ",e.parameters.sID,e.parameters.sName);
 			try {
 				oUser.sID = e.parameters.sID;
 				oUser.sName = e.parameters.sName;
 				oUser.bLogged = true;
-				
+				trace("loading usermodules ", getURL("usermodules", "core"));
 				oXMLLoader=new XMLLoader(getURL("usermodules","core"), onUserModules,onDataError, ioErrorHandler,{option:"getmodules",user:oUser.sID});
 				
 			}
@@ -157,17 +158,20 @@ public class ShellAdmin extends MovieClip {
 			{
 				xMenu..menuitem.(@module == item.idModule).@enabled = true;
 			}
-			for each(var item2 in xMenu..menuitem)
-			{
-				trace(item2.@id, item2.@enabled);	
-			}
+			trace("menu started");
 			//start navigation
 			if (oNavigation == null) {
+				trace("navigation started");
 				oNavigation = new Navigation(this);
 				oNavigation.addEventListener(NavigationEvent.ON_NAVIGATION, onModuleChange);
 			}
 			else
 			{
+				//oNavigation.reset();
+				if(oNavigation.lastmodule=="")
+				oNavigation.forceupdate();
+				else
+				oNavigation.setURL("");
 				
 			}
 		}
@@ -255,6 +259,7 @@ public class ShellAdmin extends MovieClip {
 						initModule(oHeader);
 					break;
 					case "Footer":
+						
 						oFooter = Module(event.loaderTarget.content);
 						oFooter.sManager = new StageManager(oFooter, 0, 100, 0, 100, true)
 						initModule(oFooter,0);
@@ -289,8 +294,8 @@ public class ShellAdmin extends MovieClip {
 						removeChild(oSection.sManager);
 					}
 					if(oSection.stage != null){
-					removeChild(oSection);
-					stage.removeEventListener(Event.RESIZE, oSection.onResize);
+						removeChild(oSection);
+						stage.removeEventListener(Event.RESIZE, oSection.onResize);
 					}
 					oSection.sManager = null;
 					oSection = null;
@@ -335,8 +340,7 @@ public class ShellAdmin extends MovieClip {
 		 */
 		public function logout()
 		{
-			oUser.bLogged = false;
-			oUser.sID = "";
+			oUser = new User();
 			removeSection(oHeader);
 			removeSection(oMain);
 			removeSection(oFooter);
