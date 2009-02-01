@@ -983,19 +983,23 @@ public class Menu extends List {
 	 */
 	protected function onTweenEnd(event:TweenEvent):void {
 		//set the menu back to normal, and off the display list
-		var m:Menu = event.currentTarget.obj as Menu;
-		m.visible=false;
-		// Now that the menu is no longer visible, it doesn't need
-		// to listen to mouseDown events anymore.
-		stage.removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownOutsideHandler);
-		m.alpha=1;
-		// Fire an event
-		//could be fired earlier, but it messes with the tween
-		var menEvent:MenuEvent=new MenuEvent(MenuEvent.MENU_HIDE);
-		menEvent.menu=m;
-		//menuEvent.menuBar = sourceMenuBar;
+			var m:Menu = event.currentTarget.obj as Menu;
+			m.visible=false;
+			// Now that the menu is no longer visible, it doesn't need
+			// to listen to mouseDown events anymore.
+			trace("antes stage");
+			stage.removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownOutsideHandler);
+			trace("despues stage");
+			m.alpha=1;
+			// Fire an event
+			//could be fired earlier, but it messes with the tween
+			var menEvent:MenuEvent=new MenuEvent(MenuEvent.MENU_HIDE);
+			menEvent.menu=m;
+			//menuEvent.menuBar = sourceMenuBar;
+			dispatchEvent(menEvent);
 		
-		dispatchEvent(menEvent);
+		
+		
 	}
 	
 	/**

@@ -163,7 +163,9 @@
 		 */
 		public override function dispose()
 		{
-			removeChild(oMenu);
+			//removeChild(oMenu);
+			oMenu.dataProvider = new XML();
+			oMenu.removeEventListener(MenuEvent.ITEM_CLICK, onItemClick);
 			oMenu = null;
 		}
 	}

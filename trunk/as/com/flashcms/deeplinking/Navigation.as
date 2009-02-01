@@ -8,6 +8,7 @@
 	*/
 	public class Navigation extends EventDispatcher{
 		public var oController;
+		public var lastmodule:String;
 		public function Navigation(controller) {
 			oController = controller;
 			SWFAddress.setStrict(false);
@@ -35,10 +36,11 @@
 		public function setURL(module:String, parameters:Object=null)
 		{
 			//var sparams:String = "section=" + parameters.section;
+			lastmodule = module;
 			var sparams:String = "";
 			for (var i in parameters)
 			{
-				if(i != "id" && i!="label" && i!="selected" && i!="module"){
+				if(isVisibleParameter(i)){
 					sparams += i + "=" + parameters[i] + "&";
 				}
 			}
@@ -50,11 +52,31 @@
 			SWFAddress.setValue("/" + module+"?"+sparams);
 			SWFAddress.setTitle(":: " + module + " ::");
 		}
-		
+		public function isVisibleParameter(name:String):Boolean
+		{
+			switch(name)
+			{
+			case "id":
+			case "label":
+			case "selected":
+			case "module":
+			case "enabled":
+				return false;
+				break;
+			default:
+				return true;
+			break;
+			}
+			//i != "id" && i!="label" && i!="selected" && i!="module"
+		}
 		public function reset()
 		{
 			//SWFAddress.removeEventListener(SWFAddressEvent.CHANGE, onChange);
 			SWFAddress.setValue("");
+		}
+		public function forceupdate()
+		{
+			onChange(new SWFAddressEvent(""));
 		}
 	}
 }
