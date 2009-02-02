@@ -24,6 +24,7 @@
 		public var treeSections:Tree;
 		public var btAdd:Button;
 		public var btRemove:Button;
+		public var btDelete:Button;
 		public var lbContent:List;
 		private var sURLMenu:String;
 		private var sURLContent:String;
@@ -40,6 +41,7 @@
 			oXMLLoader = new XMLLoader(sURLMenu+"?option=getall", onMenu, onMenuError, onError);
 			btAdd.enabled = false;
 			btRemove.enabled = false;
+			btDelete.enabled = false;
 		}
 		private function onMenuError(e:Event)
 		{
@@ -100,7 +102,9 @@
 			lbContent.dataProvider = new DataProvider( < data > { oXML.content }</data>);
 			lbContent.addEventListener(ListEvent.ITEM_CLICK,onSelectContent);
 			btAdd.addEventListener(MouseEvent.CLICK, onCreate);
-			btRemove.addEventListener(MouseEvent.CLICK, onDelete);
+			btRemove.addEventListener(MouseEvent.CLICK, onDeleteMenu);
+			btDelete.addEventListener(MouseEvent.CLICK, onDelete);
+			
 		}
 		
 		/**
@@ -128,11 +132,20 @@
 		private function onEdit(e:Event)
 		{
 			trace("edit");
-		}/**
+		}
+		/**
 		 * 
 		 * @param	e
 		 */
 		private function onDelete(e:Event)
+		{
+			oXMLLoader = new XMLLoader(sURLContent, onRefreshContent, onDataError, onError,{option:"delete",idContent:lbContent.selectedItem.idContent});
+		}
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function onDeleteMenu(e:Event)
 		{
 			oXMLLoader = new XMLLoader(sURLMenu, onRefresh, onDataError, onError,{option:"delete",idMenu:treeSections.selectedItem.id});
 		}
@@ -164,6 +177,15 @@
 		 * 
 		 * @param	event
 		 */
+		private function onRefreshContent(e:Event=null)
+		{
+			
+			oXMLLoader = new XMLLoader(sURLContent+"?option=getall", onContent, onDataError, onError);
+		}
+		/**
+		 * 
+		 * @param	event
+		 */
 		private function onClick(event:ListEvent)
 		{
 			btRemove.enabled = true;
@@ -175,6 +197,7 @@
 		private function onSelectContent(event:ListEvent)
 		{
 			btAdd.enabled = true;
+			btDelete.enabled = true;
 		}
 		/**
 		 * 

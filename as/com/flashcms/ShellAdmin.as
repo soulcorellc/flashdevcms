@@ -137,6 +137,8 @@ public class ShellAdmin extends MovieClip {
 				oUser.sID = e.parameters.sID;
 				oUser.sName = e.parameters.sName;
 				oUser.bLogged = true;
+				oUser.nActive = 1;
+				oUser.idProfile=e.parameters.idProfile;
 				trace("loading usermodules ", getURL("usermodules", "core"));
 				oXMLLoader=new XMLLoader(getURL("usermodules","core"), onUserModules,onDataError, ioErrorHandler,{option:"getmodules",user:oUser.sID});
 				
@@ -145,6 +147,13 @@ public class ShellAdmin extends MovieClip {
 			{
 				trace("ONLOGIN exception " + e);
 			}
+		}
+		private function resetMenu()
+		{
+			for each(var item in xMenu..menuitem)
+			{
+				item.@enabled = false;
+			}	
 		}
 		/**
 		 * 
@@ -340,6 +349,7 @@ public class ShellAdmin extends MovieClip {
 		 */
 		public function logout()
 		{
+			resetMenu();
 			oUser = new User();
 			removeSection(oHeader);
 			removeSection(oMain);

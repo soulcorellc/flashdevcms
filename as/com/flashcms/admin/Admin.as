@@ -28,6 +28,7 @@
 		public var btDelete:Button;
 		
 		public var btPermissions:Button;
+		public var btTheme:Button;
 		
 		public var tableName:String;
 		public var sectionName:String;
@@ -97,7 +98,7 @@
 			btEdit.enabled = true;
 			btDelete.enabled = true;
 			btPermissions.enabled = true;
-			
+			btTheme.enabled = true;
 				
 		}
 		private function setUpButtons()
@@ -107,12 +108,24 @@
 			btDelete.addEventListener(MouseEvent.CLICK, onDelete);
 			if (tableName == "profile"){
 				btPermissions.visible = true;
-				
 				btPermissions.addEventListener(MouseEvent.CLICK, onPermissions);
-				
 			}
+			if (tableName == "themes") {
+				btTheme.visible = true;
+				btTheme.addEventListener(MouseEvent.CLICK, onTheme);
+			}
+			
+		}
+		private function onTheme(e:Event)
+		{
+			http://www.richboxcms.com/net/configuration.aspx?option=setconfiguration&data={_id_@13,_val_@1000};{_id_@14,_val_@http//:www.richboxcms.com/images/log.png}
+			oXMLLoader=new XMLLoader(oShell.getURL("layout","editors"), onSetTheme, onDataError, onError,{option:"setconfiguration",data:"{_id_@7,_val_@"+lbList.selectedItem.idTheme+"}"});
 		}
 		
+		private function onSetTheme(e:Event)
+		{
+			trace("Saved");
+		}
 		/**
 		 * 
 		 * @param	e

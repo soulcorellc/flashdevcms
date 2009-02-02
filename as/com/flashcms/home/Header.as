@@ -89,9 +89,9 @@
 		{
 			oUserInfo.txtUser.text = "Welcome, " + String(oShell.oUser.sName);
 			oUserInfo.btProfile.addEventListener(MouseEvent.CLICK, onProfile);
-			oUserInfo.btPassword.addEventListener(MouseEvent.CLICK, onPassword);
+			//oUserInfo.btPassword.addEventListener(MouseEvent.CLICK, onPassword);
 			oUserInfo.btLogout.addEventListener(MouseEvent.CLICK, onLogout);
-			oUserInfo.x = stage.stageWidth - (oUserInfo.width+50);
+			oUserInfo.x = stage.stageWidth - (oUserInfo.width+200);
 		}
 		/**
 		 * Called when stage is resized
@@ -100,7 +100,7 @@
 		override public function onResize(event:Event)
 		{
 			oBG.update(stage.stageWidth);
-			oUserInfo.x = stage.stageWidth - (oUserInfo.width+50);
+			oUserInfo.x = stage.stageWidth - (oUserInfo.width+200);
 		}
 		/**
 		 * 
@@ -134,14 +134,7 @@
 			oShell.showPopup("edit", {table:"user",section:"userprofile",requiredata:true,create:false,option:"edituser",id:oShell.oUser.sID}, onEdit);
 		
 		}
-		/**
-		 * 
-		 * @param	e
-		 */
-		private function onPassword(e:Event)
-		{
-			oShell.showPopup("edit",{table:"password",section:"password"},onEdit);
-		}
+	
 		/**
 		 * 
 		 * @param	e
