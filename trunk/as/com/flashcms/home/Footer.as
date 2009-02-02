@@ -36,6 +36,10 @@
 		{
 			oMessage.message.text = message;
 		}
+		public function showMessage(message)
+		{
+			
+		}
 		public override function dispose()
 		{
 			removeChild(oBG);
