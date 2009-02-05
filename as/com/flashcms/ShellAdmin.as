@@ -209,7 +209,7 @@ public class ShellAdmin extends MovieClip {
 		 */
 		private function loadMain()
 		{
-			oXMLLoader=new XMLLoader(getURL("main", "home"), onMainData, onDataError, ioErrorHandler);
+			oXMLLoader = new XMLLoader(getURL("main", "home"), onMainData, onDataError, ioErrorHandler);
 		}
 		/**
 		 * 
@@ -359,7 +359,10 @@ public class ShellAdmin extends MovieClip {
 			showPopup("login", null, onClose);
 			
 		}
-		
+		public function showMessageWindow(text:String)
+		{
+			MovieClip(oFooter).showMessage(text);
+		}
 		public function setStatusMessage(message:String)
 		{
 			oFooter.setData(message);

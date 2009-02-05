@@ -118,13 +118,16 @@
 		}
 		private function onTheme(e:Event)
 		{
-			http://www.richboxcms.com/net/configuration.aspx?option=setconfiguration&data={_id_@13,_val_@1000};{_id_@14,_val_@http//:www.richboxcms.com/images/log.png}
 			oXMLLoader=new XMLLoader(oShell.getURL("layout","editors"), onSetTheme, onDataError, onError,{option:"setconfiguration",data:"{_id_@7,_val_@"+lbList.selectedItem.idTheme+"}"});
 		}
-		
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function onSetTheme(e:Event)
 		{
 			trace("Saved");
+			oShell.showMessageWindow("Se ha cambiado el tema por defecto a <b>"+lbList.selectedItem["name"]+"</b>");
 		}
 		/**
 		 * 

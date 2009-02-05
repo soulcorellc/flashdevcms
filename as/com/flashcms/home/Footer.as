@@ -1,9 +1,13 @@
 ﻿package com.flashcms.home {
 	import com.flashcms.core.Module;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.text.TextField;
 	import com.flashcms.design.DynamicBG;
+	import flash.utils.Timer;
+	import gs.TweenMax;
+	import flash.events.TimerEvent;
 	/**
 	* ...
 	* @author Default
@@ -15,6 +19,8 @@
 		private var mcBackground:Sprite;
 		private var oMessage;
 		private var oBG:DynamicBG;
+		private var mcWindow:MovieClip;
+		private var oTimer:Timer;
 		public function Footer() {    
 			super("Footer");
 			
@@ -36,16 +42,28 @@
 		{
 			oMessage.message.text = message;
 		}
-		public function showMessage(message)
+		public function showMessage(message:String,duration:int=3000)
 		{
-			
+			oTimer = new Timer(duration,1);
+			oTimer.addEventListener(TimerEvent.TIMER, hideWindow);
+			oTimer.start();
+			mcWindow = new Window();
+			mcWindow.y = -115;
+			mcWindow.x = stage.stageWidth - 285;
+			mcWindow.alpha = 0;
+			addChild(mcWindow);
+			TweenMax.to(mcWindow, 0.5, { alpha:1 } );
+			mcWindow.txtTitle.htmlText= message;
+		}
+		public function hideWindow(e:TimerEvent)
+		{
+			TweenMax.to(mcWindow, 0.5, { alpha:0 } );
 		}
 		public override function dispose()
 		{
 			removeChild(oBG);
 			removeChild(oMessage);
 			oMessage = null;
-			
 		}
 		
 		public override function onResize(event:Event)
