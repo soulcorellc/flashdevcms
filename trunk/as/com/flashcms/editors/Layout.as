@@ -235,7 +235,7 @@
 		 */
 		private function getObject(id:Number,value:String):String
 		{
-			return "{id:" + id + ",val:" + value + "}";
+			return "{_id_@" + id + ",_val_@" + value + "}";
 		}
 		
 		/**

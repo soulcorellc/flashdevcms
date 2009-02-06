@@ -89,6 +89,8 @@
 			initModule(oFooter, themesXML.footer);
 			
 			oHeader.setText(configuration.(property == "title").val);
+			oHeader.setImage(configuration.(property == "headerimage").val);
+			
 			oHeader.mcBackground.height = configuration.(property == "headerheight").val;
 			sURLMenu = getURL("main", "menu") ;
 			oXMLLoader = new XMLLoader(sURLMenu+"?option=getall", onMenu, null, onError);
