@@ -13,6 +13,7 @@
 	public class MenuItem extends MovieClip
 	{
 		public var sID:String;
+		public var sIDContent:String;
 		public var isOpen:Boolean=false;
 		public var isLeaf:Boolean;
 		public var mcArrow:MenuArrow;
@@ -39,13 +40,14 @@
 		 * @param	color
 		 * @param	leaf
 		 */
-		public function MenuItem(id,label,width,height,leaf,level,colors) 
+		public function MenuItem(id,idcontent,label,width,height,leaf,level,colors) 
 		{
 			
 			mcBackground = new MovieClip();
 			addChild(mcBackground);
 			buttonMode = true;
 			sID = id;
+			sIDContent = idcontent;
 			sLabel = label;
 			nW = width;
 			nH = height;
