@@ -1,5 +1,6 @@
 ﻿package com.flashcms 
 {
+	import com.flashcms.site.SiteSection;
 	import com.flashcms.site.Footer;
 	import com.flashcms.site.Header;
 	import flash.display.MovieClip;
@@ -29,6 +30,7 @@
 		private var configuration:XMLList;
 		private var oHeader:Header;
 		private var oFooter:Footer;
+		private var oSection:SiteSection;
 		private var xURLs:XMLList;
 		public var mcMenu:Menu;
 		private var sURLMenu:String;
@@ -110,22 +112,31 @@
 			{
 				if (String(oMenu.idParent).length<=0)
 				{
-					treeXML.node += <node id ={oMenu.idMenu} label = {oMenu.name} /> ;
+					treeXML.node += <node id ={oMenu.idMenu} label = {oMenu.name} idContent={oMenu.idContent} /> ;
 				}
 				else
 				{
 					var node = treeXML..node.(@id == oMenu.idParent);
-					node.node+= <node id = {oMenu.idMenu} label = {oMenu.name} /> ;
+					node.node+= <node id = {oMenu.idMenu} label = {oMenu.name} idContent={oMenu.idContent} /> ;
 				}
 				
 			}
 			mcMenu = new Menu(themesXML);
 			mcMenu.init(treeXML);
+			mcMenu.addEventListener("ItemClick", onItemClick);
 			addChild(mcMenu);
 			mcMenu.x = 30;
 			mcMenu.y = oHeader.y+oHeader.height+50;
 			skinMenu();
+			
+			
+			oSection = new SiteSection();
+			oSection.oShell=this;
 
+		}
+		private function onItemClick(e:Event)
+		{
+			oSection.setSection(e.target.selectedID);
 		}
 		private function skinMenu()
 		{
@@ -162,7 +173,6 @@
 		{
 			var url:String=section == null? xURLs[name] : xURLs[section][name];
 			var server:String = xURLs["server"];
-			trace("geturl :",name,",",section,(server + url));
 			return server + url;
 		}
 		/**

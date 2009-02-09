@@ -9,10 +9,17 @@
 			<main><![CDATA[net/configuration.aspx]]></main>
 			<login><![CDATA[net/users.aspx]]></login>
 		</core>
+		
 		<menu>
 			<main><![CDATA[net/Menu.aspx]]></main>
 		</menu>
-
+		<content>
+			<main><![CDATA[net/content.aspx]]></main>
+		</content>
+		<template>
+			<main><![CDATA[net/templates.aspx]]></main>
+		</template>
+		
 	</urls>
 	
 </data>

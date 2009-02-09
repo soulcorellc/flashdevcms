@@ -21,6 +21,7 @@
 		public var currentSub:Number = -1;
 		public var aOpen:Array;
 		public var xmlTheme:XML;
+		public var selectedID:String;
 		/**
 		 * 
 		 */
@@ -63,7 +64,7 @@
 		{
 			//trace(item.@label," creado" );
 			var isLeaf = item.children().length() == 0? true : false;
-			var oItem:MenuItem = new MenuItem(item.@id, item.@label,nWidth,nHeight,isLeaf,level,xmlTheme);
+			var oItem:MenuItem = new MenuItem(item.@id,item.@idContent,item.@label,nWidth,nHeight,isLeaf,level,xmlTheme);
 			oItem.useHandCursor = true;
 			addChild(oItem);
 			oItem.x = xpos;
@@ -85,7 +86,9 @@
 		 */
 		private function onClickItem(e:Event)
 		{
-			removeAll();	
+			selectedID = e.target.parent.sIDContent;
+			dispatchEvent(new Event("ItemClick"));
+			removeAll();
 		}
 		/**
 		 * 
