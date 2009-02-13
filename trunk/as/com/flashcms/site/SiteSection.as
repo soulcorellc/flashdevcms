@@ -2,8 +2,13 @@
 {
 	import com.flashcms.core.Module;
 	import com.flashcms.data.XMLLoader;
+	import com.yahoo.astra.fl.controls.mediaPlayerClasses.IMediaController;
+	import flash.display.Sprite;
 	import flash.events.Event;
-	
+	import com.flashcms.components.ContentHolder;
+	import com.flashcms.components.VideoHolder;
+	import com.flashcms.components.ImageHolder;
+	import com.flashcms.components.TextHolder;
 	/**
 	 * ...
 	 * @author ...
@@ -17,10 +22,11 @@
 		private var xmlContent:XML;
 		private var xmlTemplate:XML;
 		private var idTemplate:String;
+		private var mcLayout:Sprite;
 		
 		public function SiteSection() 
 		{
-			
+			mcLayout = new Sprite();
 		}
 		/**
 		 * 
@@ -28,6 +34,7 @@
 		
 		public function setSection(id:String)
 		{
+			addChild(mcLayout);
 			sURLTemplates = oShell.getURL("main", "template");
 			sURLContent = oShell.getURL("main", "content")
 			oXMLLoader = new XMLLoader(sURLContent, onContent, null, null, {option:"getcontent",idContent:id} );
@@ -57,15 +64,40 @@
 			var templatestring:String = xmlTemplate.template[0].content;
 			var oXMLTemp:XML = new XML(templatestring);
 			xmlTemplate = new XML(oXMLTemp.toString());
-			trace(xmlTemplate);
-			/*
+			
+			
 			for each(var component:XML in xmlTemplate.component)
 			{
 				var holder:ContentHolder=createComponent(component);
 				//xmlContent.component +=<component id = { component.@id } /> ;	
 			}
-			scPanel.update();
-			*/
+			//scPanel.update();
+			
+			
+		}
+		private function createComponent(component:XML):ContentHolder
+		{
+			var newcomponent:ContentHolder;
+			switch(String(component.@type))
+			{
+				case "Text":
+					newcomponent = new TextHolder(component.@width,component.@height);
+				break;
+				case "Video":
+					newcomponent = new VideoHolder(component.@width,component.@height);
+				break;
+				case "Image":
+					newcomponent = new ImageHolder(component.@width,component.@height);
+				break;
+			}
+			newcomponent.id = component.@id;
+			newcomponent.x = component.@x;
+			newcomponent.y = component.@y;
+			
+			mcLayout.addChild(newcomponent);
+			//aComponents.push(newcomponent);
+			//newcomponent.addEventListener(MouseEvent.CLICK, onSelectComponent);
+			return newcomponent;
 			
 		}
 		

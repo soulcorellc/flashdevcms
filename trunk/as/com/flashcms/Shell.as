@@ -131,7 +131,11 @@
 			
 			
 			oSection = new SiteSection();
-			oSection.oShell=this;
+			oSection.oShell = this;
+			oSection.x = 200;
+			oSection.y = 200;
+			addChild(oSection);
+			
 
 		}
 		private function onItemClick(e:Event)
