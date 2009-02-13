@@ -13,6 +13,7 @@
 		public var id:int;
 		public var type:String;
 		private var mcBackground:Sprite;
+		public var editable:Boolean = true;
 		
 		
 		public function ContentHolder (type:String) {
@@ -40,10 +41,13 @@
 		
 		public function select()
 		{
-			this.graphics.beginFill(0xFF0000, 0);
-			this.graphics.lineStyle(1, 0xFF0000, 1);
-			this.graphics.drawRect( -1, -1, width+1, height+1);
-			this.graphics.endFill();
+			if (editable)
+			{
+				this.graphics.beginFill(0xFF0000, 0);
+				this.graphics.lineStyle(1, 0xFF0000, 1);
+				this.graphics.drawRect( -1, -1, width+1, height+1);
+				this.graphics.endFill();
+			}
 		}
 		
 		public function clearSelection()
