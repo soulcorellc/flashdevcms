@@ -1,8 +1,10 @@
 ﻿package com.flashcms.site 
 {
+	import com.flashcms.components.SiteText;
 	import com.flashcms.core.Module;
 	import com.flashcms.data.XMLLoader;
 	import com.yahoo.astra.fl.controls.mediaPlayerClasses.IMediaController;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import com.flashcms.components.ContentHolder;
@@ -68,26 +70,27 @@
 			
 			for each(var component:XML in xmlTemplate.component)
 			{
-				var holder:ContentHolder=createComponent(component);
+				createComponent(component);
 				//xmlContent.component +=<component id = { component.@id } /> ;	
 			}
 			//scPanel.update();
 			
 			
 		}
-		private function createComponent(component:XML):ContentHolder
+		private function createComponent(component:XML):MovieClip
 		{
-			var newcomponent:ContentHolder;
+			var newcomponent:MovieClip;
 			switch(String(component.@type))
 			{
 				case "Text":
-					newcomponent = new TextHolder(component.@width,component.@height);
+					newcomponent = new SiteText(component.@width, component.@height, xmlContent.component.(@id == component.@id).text());
+					
 				break;
 				case "Video":
-					newcomponent = new VideoHolder(component.@width,component.@height);
+//					newcomponent = new VideoHolder(component.@width,component.@height);
 				break;
 				case "Image":
-					newcomponent = new ImageHolder(component.@width,component.@height);
+//					newcomponent = new ImageHolder(component.@width,component.@height);
 				break;
 			}
 			newcomponent.id = component.@id;
