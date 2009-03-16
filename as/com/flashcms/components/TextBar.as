@@ -22,7 +22,7 @@
 	* ...
 	* @author Default
 	*/
-	public class TextBar extends MovieClip{
+	public class TextBar extends ToolBar{
 		public var formatPanel:HBoxPane;
 		public var fontPanel:HBoxPane;
 		public var txtText:TextField;
@@ -44,18 +44,7 @@
 				<type>Underline</type>
 				<icon>IconUnderline</icon>
 			</controls>
-			<controls>
-				<type>AlignLeft</type>
-				<icon>IconAlignLeft</icon>
-			</controls>
-			<controls>
-				<type>AlignCenter</type>
-				<icon>IconAlignCenter</icon>
-			</controls>
-			<controls>
-				<type>AlignRight</type>
-				<icon>IconAlignRight</icon>
-			</controls>
+			
 		</data>
 		;
 		/**
@@ -148,39 +137,6 @@
 			toolbar.verticalAlign = VerticalAlignment.MIDDLE;
 			toolbar.verticalGap = 10;
 			toolbar.horizontalGap = 10;
-			colorpicker = new ColorPicker();
-			colorpicker.setSize(18, 18);
-			colorpicker.name = "Color";
-			colorpicker.addEventListener(Event.CHANGE, onClick);
-			
-			cbSize = new NumericStepper();
-			cbSize.name = "Size";
-			cbSize.maximum = 90;
-			cbSize.minimum = 1;
-			cbSize.stepSize = 0.5;
-			cbSize.value = 12;
-			cbSize.addEventListener(Event.CHANGE, onClick);
-			
-			cbFonts = new ComboBox();
-			cbFonts.name = "Font";
-			cbFonts.width = 200;
-			var allFonts:Array = Font.enumerateFonts(true);
-			var fontsArray:Array=new Array();
-			allFonts.sortOn("fontName", Array.CASEINSENSITIVE);
-			for (var i:int = 0; i < allFonts.length; i++)
-			{
-			    fontsArray.push(new String(allFonts[i].fontName));
-			}
-			cbFonts.dataProvider = new DataProvider(fontsArray);
-			cbFonts.addEventListener(ListEvent.ITEM_CLICK, onClick);
-			fontPanel.setStyle( "skin", "ToolbarSkin" ); 
-			fontPanel.horizontalAlign = HorizontalAlignment.CENTER;
-			fontPanel.verticalAlign = VerticalAlignment.MIDDLE;
-			fontPanel.verticalGap = 10;
-			fontPanel.horizontalGap = 10;
-			fontPanel.addChild(cbSize);
-			fontPanel.addChild(cbFonts);
-			fontPanel.addChild(colorpicker);
 			
 		}
 		

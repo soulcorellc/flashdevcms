@@ -1,6 +1,8 @@
 ﻿package com.flashcms.site 
 {
+	import com.flashcms.components.SiteImage;
 	import com.flashcms.components.SiteText;
+	import com.flashcms.components.SiteVideo;
 	import com.flashcms.core.Module;
 	import com.flashcms.data.XMLLoader;
 	import com.yahoo.astra.fl.controls.mediaPlayerClasses.IMediaController;
@@ -11,6 +13,7 @@
 	import com.flashcms.components.VideoHolder;
 	import com.flashcms.components.ImageHolder;
 	import com.flashcms.components.TextHolder;
+	import gs.TweenMax;
 	/**
 	 * ...
 	 * @author ...
@@ -36,6 +39,7 @@
 		
 		public function setSection(id:String)
 		{
+			reset();
 			addChild(mcLayout);
 			sURLTemplates = oShell.getURL("main", "template");
 			sURLContent = oShell.getURL("main", "content")
@@ -47,6 +51,7 @@
 		 */
 		public function onContent(event:Event)
 		{
+			TweenMax.to(mcLayout, 1, {alpha:1} );
 			xmlContentLoaded = XML(event.target.data);
 			idTemplate = xmlContentLoaded.content[0].idTemplate;
 			//idContent= oXMLContentLoaded.content[0].idContent;
@@ -54,7 +59,7 @@
 			var oXMLTemp:XML = new XML(contentstring);
 			xmlContent=new XML(oXMLTemp.toString());
 			oXMLLoader = new XMLLoader(sURLTemplates, onTemplate, null, null, { option:"gettemplate", idTemplate:idTemplate } );
-			trace(xmlContent);
+			//trace(xmlContent);
 		}
 		/**
 		 * 
@@ -87,10 +92,12 @@
 					
 				break;
 				case "Video":
-//					newcomponent = new VideoHolder(component.@width,component.@height);
+					//newcomponent = new VideoHolder(component.@width,component.@height);
+					newcomponent = new SiteVideo();
 				break;
-				case "Image":
-//					newcomponent = new ImageHolder(component.@width,component.@height);
+				case "Image":	
+					newcomponent = new SiteImage();
+					//newcomponent = new ImageHolder(component.@width,component.@height);
 				break;
 			}
 			newcomponent.id = component.@id;
@@ -104,6 +111,16 @@
 			
 		}
 		
+		
+		public function reset()
+		{
+			TweenMax.to(mcLayout, 1, {alpha:0} );
+			var i:int = mcLayout.numChildren;
+			while( i -- )
+			{
+				mcLayout.removeChildAt( i );
+			}
+		}
 	}
-	
 }
+	

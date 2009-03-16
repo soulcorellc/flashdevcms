@@ -9,7 +9,7 @@
 	*/
 	public class TextHolder extends ContentHolder{
 		public var txtMain:TextField;
-		
+		private var sDefaultText:String="[Inserte Texto Aquí]";
 		public function TextHolder(nwidth:int,nheight:int) {
 			super("Text");
 			setSize(nwidth, nheight);
@@ -19,7 +19,7 @@
 		private function init()
 		{
 			txtMain = new TextField();
-			txtMain.text = "[Insert Text Here]";
+			txtMain.text = sDefaultText;
 			txtMain.width = this.width;
 			txtMain.height = this.height;
 			txtMain.addEventListener(FocusEvent.FOCUS_IN, onFocus);
@@ -30,7 +30,8 @@
 		}
 		private function onFocus(e:FocusEvent)
 		{
-			e.target.text = "";
+			if(e.target.text == sDefaultText)
+				e.target.text = "";
 			txtMain.removeEventListener(FocusEvent.FOCUS_IN, onFocus);
 		}
 		/**
