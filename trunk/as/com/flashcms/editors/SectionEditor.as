@@ -136,6 +136,10 @@
 				break;
 			}
 		}
+		/**
+		 * 
+		 * @param	state
+		 */
 		private function showBar(state:Boolean)
 		{
 			trace("state : " + state);
@@ -171,17 +175,19 @@
 			}
 			if (edit == true)
 			{
+				trace("edit is true, saving");
 				oXMLLoader = new XMLLoader(sURLContent, onContentSaved, null, null, { option:"editcontent", idContent:idContent,idTemplate:idTemplate, approved:"1", content:oXMLContent, name:sContentName } );
 			}
 			else
 			{
+				trace("edit is false, saving");
 				oXMLLoader = new XMLLoader(sURLContent, onContentSaved, null, null, { option:"setcontent", idTemplate:idTemplate, approved:"1", content:oXMLContent, name:sContentName } );	
 			}
 			
 		}
 		private function onContentSaved(e:Event)
 		{
-			trace("Saved!!");
+			oShell.showMessageWindow("Saved "+sContentName+" ("+new Date().toDateString()+")");
 		}
 		/**
 		 * 
@@ -237,10 +243,8 @@
 		}
 		private function onNameSelected(e:PopupEvent)
 		{
-			
 			sContentName = e.parameters.name!= null?e.parameters.name:"untitled content" ;
 			txtName.text = "Content : " + sContentName;
-			
 			draw();
 			aComponents = new Array();
 			oXMLLoader = new XMLLoader(sURLTemplates, onTemplate, null, null, { option:"gettemplate", idTemplate:idTemplate } );
@@ -259,7 +263,8 @@
 			idContent= oXMLContentLoaded.content[0].idContent;
 			var contentstring:String = oXMLContentLoaded.content[0].content;
 			var oXMLTemp:XML = new XML(contentstring);
-			oXMLContent=new XML(oXMLTemp.toString());
+			oXMLContent = new XML(oXMLTemp.toString());
+			sContentName = oXMLContentLoaded.content[0].name;
 			oXMLLoader = new XMLLoader(sURLTemplates, onTemplate, null, null, {option:"gettemplate",idTemplate:idTemplate} );
 		}
 		/**

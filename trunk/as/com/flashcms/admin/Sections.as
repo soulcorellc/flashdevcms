@@ -122,7 +122,7 @@
 		 */
 		private function onMenuCreated(e:Event)
 		{
-			oShell.setStatusMessage("Menu item created");
+			oShell.showMessageWindow("Menu item has been created");
 			onRefresh();
 		}
 		/**
@@ -155,7 +155,7 @@
 		 */
 		private function onDataError(e:Event)
 		{
-			oShell.setStatusMessage("data error");
+			oShell.showMessageWindow("Error loading data from Section");
 		}
 		/**
 		 * 
@@ -163,7 +163,7 @@
 		 */
 		private function onError(e:Event)
 		{
-			oShell.setStatusMessage("Error");
+			oShell.showMessageWindow("Error loading data from Section");
 		}
 		/**
 		 * 

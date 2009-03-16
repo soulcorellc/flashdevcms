@@ -276,7 +276,7 @@
 		 */
 		private function onSave(e:Event)
 		{
-			oShell.setStatusMessage("Template saved");
+			oShell.showMessageWindow("Template " + sName + " saved ("+new Date().toTimeString()+")"); 
 			idtemplate = edit==false? XML(e.target.data).template.idTemplate:idtemplate;
 			edit = true;
 			trace(idtemplate);
@@ -287,11 +287,11 @@
 		 */
 		private function onDataError(e:ErrorEvent)
 		{
-			oShell.setStatusMessage(e.message);
+			oShell.showMessageWindow(e.message);
 		}
 		private function onError(e:Event)
 		{
-			trace("error");
+			oShell.showMessageWindow("Error on template");
 		}
 		private function onTabChange(event:Event)
 		{
@@ -314,7 +314,7 @@
 		 */
 		private function showEditor()
 		{
-			trace("showEditor");
+			
 			scPanel.source = mcLayout;
 		}
 		/**
