@@ -30,8 +30,9 @@
 		}
 		private function onFocus(e:FocusEvent)
 		{
-			if(e.target.text == sDefaultText)
+			if(e.target.text == sDefaultText){
 				e.target.text = "";
+			}
 			txtMain.removeEventListener(FocusEvent.FOCUS_IN, onFocus);
 		}
 		/**
