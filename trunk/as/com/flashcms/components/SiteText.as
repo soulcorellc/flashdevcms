@@ -1,8 +1,13 @@
 ﻿package com.flashcms.components 
 {
 	import flash.display.MovieClip;
+	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
+	import flash.text.AntiAliasType;
+	import flash.text.TextFormatAlign;
+	
 	/**
 	 * ...
 	 * @author David Barrios
@@ -11,7 +16,6 @@
 	{
 		public var txtText:TextField;
 		public var id:String;
-		
 		public function SiteText(nwidth:int,nheight:int,text:String) 
 		{
 			txtText = new TextField();

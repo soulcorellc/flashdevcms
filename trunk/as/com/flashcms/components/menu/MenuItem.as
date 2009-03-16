@@ -109,13 +109,14 @@
 		 */
 		public function createText()
 		{
-			txtFormat = new TextFormat("Verdana", 11, colormenutextup);
+			txtFormat = new TextFormat(new fVerdana().fontName, 10, colormenutextup);
 			txtLabel = new TextField();
 			txtLabel.x = 10;
 			txtLabel.selectable = false;
 			txtLabel.mouseEnabled = false;
 			txtLabel.text = sLabel;
 			txtLabel.setTextFormat(txtFormat);
+			txtLabel.embedFonts = true;
 			addChild(txtLabel);
 		}
 	}

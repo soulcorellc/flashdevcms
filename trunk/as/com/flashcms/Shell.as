@@ -1,5 +1,6 @@
 ﻿package com.flashcms 
 {
+	import com.flashcms.data.MultiLoader;
 	import com.flashcms.site.SiteSection;
 	import com.flashcms.site.Footer;
 	import com.flashcms.site.Header;
@@ -13,7 +14,7 @@
 	import com.flashcms.layout.StageManager;
 	import gs.TweenMax;
 	import com.flashcms.components.menu.Menu;
-	import fl.motion.easing.Elastic;
+	import flash.text.StyleSheet;
 	/**
 	* ...
 	* @author David Barrios
@@ -33,7 +34,10 @@
 		private var oSection:SiteSection;
 		private var xURLs:XMLList;
 		public var mcMenu:Menu;
+		public var oCSS:StyleSheet;
 		private var sURLMenu:String;
+		private var oLoader:MultiLoader;
+			
 		/**
 		 * 
 		 */
@@ -53,7 +57,6 @@
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			oXMLLoader = new XMLLoader(urlConfiguration, onConfiguration, onError);
-			
 		}
 		/**
 		 * 
@@ -95,7 +98,27 @@
 			
 			oHeader.mcBackground.height = configuration.(property == "headerheight").val;
 			sURLMenu = getURL("main", "menu") ;
-			oXMLLoader = new XMLLoader(sURLMenu+"?option=getall", onMenu, null, onError);
+			oXMLLoader = new XMLLoader(sURLMenu + "?option=getall", onMenu, null, onError);
+			loadCSS();
+		}
+		private function loadCSS()
+		{
+			/*
+			var req:URLRequest = new URLRequest("example.css");
+            
+            loader = new URLLoader();
+            loader.addEventListener(Event.COMPLETE, onCSSFileLoaded);
+            loader.load(req);
+			*/
+		}
+		private function onLoadCSS(event:Event)
+		{
+			/*
+			var sheet:StyleSheet = new StyleSheet();
+            sheet.parseCSS(loader.data);
+            field.styleSheet = sheet;
+            field.htmlText = exampleText;
+			*/
 		}
 		/**
 		 * 
@@ -129,14 +152,13 @@
 			mcMenu.y = oHeader.y+oHeader.height+50;
 			skinMenu();
 			
-			
+		
 			oSection = new SiteSection();
 			oSection.oShell = this;
 			oSection.x = 200;
 			oSection.y = 200;
 			addChild(oSection);
 			
-
 		}
 		private function onItemClick(e:Event)
 		{
