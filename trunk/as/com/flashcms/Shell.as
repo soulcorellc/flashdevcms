@@ -15,6 +15,8 @@
 	import gs.TweenMax;
 	import com.flashcms.components.menu.Menu;
 	import flash.text.StyleSheet;
+	import flash.net.URLRequest;
+	import flash.net.URLLoader;
 	/**
 	* ...
 	* @author David Barrios
@@ -97,29 +99,34 @@
 			oHeader.setImage(configuration.(property == "headerimage").val);
 			
 			oHeader.mcBackground.height = configuration.(property == "headerheight").val;
-			sURLMenu = getURL("main", "menu") ;
-			oXMLLoader = new XMLLoader(sURLMenu + "?option=getall", onMenu, null, onError);
 			loadCSS();
 		}
+		/**
+		 * 
+		 */
 		private function loadCSS()
 		{
-			/*
-			var req:URLRequest = new URLRequest("example.css");
-            
-            loader = new URLLoader();
-            loader.addEventListener(Event.COMPLETE, onCSSFileLoaded);
+			var req:URLRequest = new URLRequest(getURL("css", "core") + "default.css");
+			trace("loading css: " + getURL("css", "core") + "default.css");
+            var loader = new URLLoader();
+            loader.addEventListener(Event.COMPLETE, onLoadCSS);
             loader.load(req);
-			*/
+			
 		}
+		/**
+		 * 
+		 * @param	event
+		 */
 		private function onLoadCSS(event:Event)
 		{
-			/*
-			var sheet:StyleSheet = new StyleSheet();
-            sheet.parseCSS(loader.data);
-            field.styleSheet = sheet;
-            field.htmlText = exampleText;
-			*/
-		}
+			oCSS = new StyleSheet();
+			trace(event.target.data);
+            oCSS.parseCSS(event.target.data);
+					
+			sURLMenu = getURL("main", "menu") ;
+			oXMLLoader = new XMLLoader(sURLMenu + "?option=getall", onMenu, null, onError);
+			
+        }
 		/**
 		 * 
 		 * @param	e

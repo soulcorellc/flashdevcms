@@ -119,7 +119,7 @@
 		 */
 		private function onNameSelected(e:PopupEvent)
 		{
-			sTemplateName = e.parameters.name!= null?e.parameters.name:"untitled template" ;
+			sTemplateName = e.parameters.name!= null?e.parameters.name:"noname" ;
 			txtName.text = "Template : " + sTemplateName;
 		}
 		/**
@@ -251,14 +251,7 @@
 			switch(e.target.name)
 			{
 				case "Save":
-					if (edit == true)
-					{
-						new XMLLoader(sURL, onSave, onDataError, onError, {option:"edittemplate",idTemplate:idtemplate,name:sTemplateName,content:xmlTemplate});
-					}
-					else
-					{
-						new XMLLoader(sURL, onSave, onDataError, onError, {option:"savetemplate",name:sTemplateName,content:xmlTemplate});
-					}
+					doSave();
 				break;
 				case "Open":
 					showPicker();
@@ -272,11 +265,39 @@
 		}
 		/**
 		 * 
+		 */
+		private function doSave(e:PopupEvent=null)
+		{
+			if (e != null)
+			{
+				sTemplateName = e.parameters.name;
+			}
+			if (sTemplateName != "noname")
+			{
+				if (edit == true)
+				{
+					new XMLLoader(sURL, onSave, onDataError, onError, {option:"edittemplate",idTemplate:idtemplate,name:sTemplateName,content:xmlTemplate});
+				}
+				else
+				{
+					new XMLLoader(sURL, onSave, onDataError, onError, {option:"savetemplate",name:sTemplateName,content:xmlTemplate});
+				}
+			}
+			else
+			{
+				var oparameters = new Object();
+				oparameters.title="WRITE A NAME FOR THE NEW TEMPLATE ";
+				oShell.showPopup("name", oparameters, doSave);
+			}
+			
+		}
+		/**
+		 * 
 		 * @param	e
 		 */
 		private function onSave(e:Event)
 		{
-			oShell.showMessageWindow("Template " + sName + " saved ("+new Date().toTimeString()+")"); 
+			oShell.showMessageWindow("Template " + sTemplateName + " saved ("+new Date().toTimeString()+")"); 
 			idtemplate = edit==false? XML(e.target.data).template.idTemplate:idtemplate;
 			edit = true;
 			trace(idtemplate);

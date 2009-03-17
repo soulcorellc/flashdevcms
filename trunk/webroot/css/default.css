@@ -1,0 +1,29 @@
+p{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:10px;
+color:#444444;
+text-align:justify;
+margin-left:12px;
+margin-right:12px;
+}
+h1{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:20px;
+text-align:center;
+text-decoration:underline;
+}
+
+.negrita{
+font-weight:bold;
+}
+.italica{
+font-style:italic;
+}
+a:link{
+text-decoration:none;
+color:#3B89B0;
+}
+a:hover{
+text-decoration:underline;
+}
+
