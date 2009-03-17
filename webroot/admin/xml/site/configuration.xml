@@ -8,6 +8,7 @@
 		<core>
 			<main><![CDATA[net/configuration.aspx]]></main>
 			<login><![CDATA[net/users.aspx]]></login>
+			<css><![CDATA[css/]]></css>
 		</core>
 		
 		<menu>

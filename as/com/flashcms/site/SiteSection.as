@@ -5,7 +5,6 @@
 	import com.flashcms.components.SiteVideo;
 	import com.flashcms.core.Module;
 	import com.flashcms.data.XMLLoader;
-	import com.yahoo.astra.fl.controls.mediaPlayerClasses.IMediaController;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -88,7 +87,7 @@
 			switch(String(component.@type))
 			{
 				case "Text":
-					newcomponent = new SiteText(component.@width, component.@height, xmlContent.component.(@id == component.@id).text());
+					newcomponent = new SiteText(component.@width, component.@height, xmlContent.component.(@id == component.@id).text(),oShell.oCSS);
 					
 				break;
 				case "Video":
