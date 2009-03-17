@@ -44,6 +44,15 @@
 				<type>Underline</type>
 				<icon>IconUnderline</icon>
 			</controls>
+			<controls>
+				<type>Bullets</type>
+				<icon>IconBullets</icon>
+			</controls>
+			<controls>
+			<type>Paragraph</type>
+				<icon>IconParagraph</icon>
+			</controls>
+			
 			
 		</data>
 		;
@@ -70,45 +79,29 @@
 		 */
 		function onClick(e:Event)
 		{
-		
+			var currentText = txtText.text.slice(txtText.selectionBeginIndex, txtText.selectionEndIndex);
 			switch(e.target.name)
 			{
 				case "Bold":
-					oFormat.bold = !txtText.getTextFormat(txtText.selectionBeginIndex, txtText.selectionEndIndex).bold;
+					//oFormat.bold = !txtText.getTextFormat(txtText.selectionBeginIndex, txtText.selectionEndIndex).bold;
+					txtText.replaceSelectedText("<b>"+currentText+"</b>")
 				break;
 				case "Underline":
-					oFormat.underline= !txtText.getTextFormat(txtText.selectionBeginIndex, txtText.selectionEndIndex).underline;
+					txtText.replaceSelectedText("<u>"+currentText+"</u>")
 				break;
 				case "Italic":
-					oFormat.italic= !txtText.getTextFormat(txtText.selectionBeginIndex, txtText.selectionEndIndex).italic;
+					txtText.replaceSelectedText("<i>"+currentText+"</i>")
 				break;
-				case "AlignLeft":
-					oFormat.align= TextFormatAlign.LEFT;
+				case "Bullets":
+					txtText.replaceSelectedText("<ol><li>"+currentText+"</li></ol>")
 				break;
-				case "AlignCenter":
-					oFormat.align= TextFormatAlign.CENTER;
+				case "Paragraph":
+					txtText.replaceSelectedText("<p>"+currentText+"</p>")
 				break;
-				case "AlignRight":
-					oFormat.align= TextFormatAlign.RIGHT;
+				case "Link":
+					txtText.replaceSelectedText("<a href='http://www.algo.com'>"+currentText+"</a>")
 				break;
-				case "Color":
-					oFormat.color=ColorPickerEvent(e).color;
-				break;
-				case "Size":
-					oFormat.size=e.target.value;
-				break;
-				case "Font":
-					oFormat.font=cbFonts.selectedItem.data;
-				break;
-			}
-			
-			try
-			{
-				txtText.setTextFormat(oFormat, txtText.selectionBeginIndex, txtText.selectionEndIndex);
-			}
-			catch(e:Event)
-			{
-			
+				
 			}
 			
 		}
