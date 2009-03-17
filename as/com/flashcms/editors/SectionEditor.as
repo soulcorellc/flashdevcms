@@ -162,7 +162,7 @@
 				switch(component.type)
 				{
 					case "Text":
-						oXMLContent.component.(@id == component.id)[0]=(TextHolder(component).txtMain.htmlText);
+						oXMLContent.component.(@id == component.id)[0]=(TextHolder(component).txtMain.text);
 					break;
 					case "Video":
 						oXMLContent.component.(@id == component.id)[0]=(VideoHolder(component).sURL);
@@ -240,7 +240,7 @@
 			var oparameters = new Object();
 			oparameters.title="SELECT THE NAME OF THE NEW CONTENT";
 			oShell.showPopup("name", oparameters, onNameSelected);
-		}
+		}04
 		private function onNameSelected(e:PopupEvent)
 		{
 			sContentName = e.parameters.name!= null?e.parameters.name:"untitled content" ;
@@ -303,7 +303,7 @@
 				switch(component.type)
 				{
 					case "Text":
-						TextHolder(component).txtMain.htmlText=oXMLContent.component.(@id==component.id).text();
+						TextHolder(component).txtMain.text=oXMLContent.component.(@id==component.id).text();
 					break;
 					case "Video":
 						VideoHolder(component).sURL = oXMLContent.component.(@id == component.id).text();

@@ -26,6 +26,7 @@
 			txtText.wordWrap = true;
 			txtText.autoSize = TextFieldAutoSize.NONE;			
 			txtText.styleSheet = css;
+			
 			txtText.htmlText = text;
 			trace(text);
 			addChild(txtText);
