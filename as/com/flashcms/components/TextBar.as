@@ -93,7 +93,7 @@
 					txtText.replaceSelectedText("<i>"+currentText+"</i>")
 				break;
 				case "Bullets":
-					txtText.replaceSelectedText("<ol><li>"+currentText+"</li></ol>")
+					txtText.replaceSelectedText("<li>"+currentText+"</li>")
 				break;
 				case "Paragraph":
 					txtText.replaceSelectedText("<p>"+currentText+"</p>")
