@@ -48,18 +48,21 @@
 		 */
 		function selectHandler(event:Event):void  
 		{  
-			var request:URLRequest = new URLRequest("http://www.[yourdomain].com/upload/");  
+			//var request:URLRequest = new URLRequest("http://localhost:51511/uploader.ashx?tipo=images");  
+			var request:URLRequest = new URLRequest("http://richboxcms.com/upload/uploader.ashx?tipo=images");  
 			var file:FileReference;  
 			var files:FileReferenceList = FileReferenceList(event.target);  
 			var selectedFileArray:Array = files.fileList;  
 			for (var i:uint = 0; i < selectedFileArray.length; i++)  
 			{  
-				file = FileReference(selectedFileArray[i]);  
+				file = FileReference(selectedFileArray[i]); 
+				
 				file.addEventListener(Event.COMPLETE, completeHandler); 
 				file.addEventListener(IOErrorEvent.IO_ERROR, onError); 
 				try  
 				{  
-				   file.upload(request);  
+				   
+					file.upload(request);  
 				}  
 				catch (error:Error)  
 				{  
@@ -71,9 +74,9 @@
 		 * 
 		 * @param	event
 		 */
-		function completeHandler(event:Event):void  
+		function completeHandler(e:Event):void  
 		{  
-			trace("uploaded");  
+			listFiles.addItem({label:"uploaded : "+e.target.name,icon:"iconSuccess"});
 		}  
 		function onError(e:IOErrorEvent)
 		{
