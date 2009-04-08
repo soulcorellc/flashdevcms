@@ -30,6 +30,7 @@
 		 */
 		public function XMLLoader(url:String,handler:Function,dataerrorhandler:Function=null,errorhandler:Function=null,variables:Object=null) {
 			
+			trace(url);
 			this.handler = handler;
 			this.errorhandler = errorhandler;
 			this.dataerrorhandler = dataerrorhandler;
@@ -66,6 +67,9 @@
 		{
 			try{
 				oXML = XML(event.target.data);
+				
+				
+				
 				if (oXML.result.success == "true")
 				{
 					handler.call(this,event);
