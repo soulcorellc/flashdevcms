@@ -385,9 +385,9 @@
 				break;
 				case "imageeditor":
 				case "videoeditor":
-					currentBar = new ImageBar(oSelected);
+					currentBar = new ImageBar(oSelected,oShell.getURL("files","core"),oShell.getURL("media", "core"));
 					currentBar.x = 0;
-					currentBar.y = 350;
+					currentBar.y = 150;
 					addChild(currentBar);
 				break;
 				

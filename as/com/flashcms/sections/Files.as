@@ -1,7 +1,9 @@
 ﻿package com.flashcms.sections {
+	import com.flashcms.components.FileExplorer;
 	import com.flashcms.core.Module;
 	import com.flashcms.data.XMLLoader;
 	import com.flashcms.events.ErrorEvent;
+	import com.yahoo.astra.fl.accessibility.EventTypes;
 	import com.yahoo.astra.fl.controls.Tree;
 	import fl.controls.List;
 	import flash.net.FileFilter;
@@ -16,7 +18,7 @@
 	import flash.events.ProgressEvent;
 	import com.flashcms.utils.FileUtil;
 	import flash.text.TextField;
-	import com.yahoo.astra.fl.controls.treeClasses.TreeDataProvider;
+	//import com.yahoo.astra.fl.controls.treeClasses.TreeDataProvider;
 	
 	/**
 	* ...
@@ -27,27 +29,39 @@
 		public var lsOutput:List;
 		private var fileRefList:FileReferenceList = new FileReferenceList();  
 		private var aFileTypes:Array = new Array();
-		public var treeFiles:Tree;
+		//public var treeFiles:Tree;
+		public var mcFileExplorer:FileExplorer;
 		public var btDelete:Button;
 		public var btClear:Button;
 		public var btUpdate:Button;
 		public var txtSalida:TextField;
 		public var oXMLLoader:XMLLoader;
 		public var oXML:XML;
+		private var sURLUpload:String;
+		//private var sURLFiles:String;
 		public function Files() {
-			//delete init 
-			init();	
+			
 		}
 		/**
 		 * 
 		 */
 		public override function init()
 		{
+			mcFileExplorer = new FileExplorer(oShell.getURL("files", "core"),oShell.getURL("media", "core"));
+			addChild(mcFileExplorer);
+			mcFileExplorer.x = 18;
+			mcFileExplorer.y = 41;
+			
+			mcFileExplorer.init(350,387);
+			sURLUpload = oShell.getURL("upload", "core");
+			//sURLFiles = oShell.getURL("files", "core");
+			
 			aFileTypes.push(new FileFilter("Images", "*.jpg;*.gif;*.png"));
 			aFileTypes.push(new FileFilter("Videos", "*.flv"));
-			treeFiles.setRendererStyle("closedBranchIcon", folderClosedIcon);
-			treeFiles.setRendererStyle("openBranchIcon", folderOpenIcon);
-			treeFiles.setRendererStyle("leafIcon", fileIcon);
+			
+			//treeFiles.setRendererStyle("closedBranchIcon", folderClosedIcon);
+			//treeFiles.setRendererStyle("openBranchIcon", folderOpenIcon);
+			//treeFiles.setRendererStyle("leafIcon", fileIcon);
 			
 			fileRefList.addEventListener(Event.SELECT, selectHandler); 
 			fileRefList.addEventListener(IOErrorEvent.IO_ERROR, onError); 
@@ -58,35 +72,11 @@
 			lsOutput.iconField = "icon";
 			update();
 		}
-		/**
-		 * 
-		 * @param	e
-		 */
-		private function onFiles(e:Event)
+		private function update(e:Event=null)
 		{
-			oXML = XML(e.target.data);
-			var treeXML:XML = new XML(<node><node label='images'/><node label='videos'/></node>);
-			
-			for each(var oItem:XML in oXML.images)
-			{
-				treeXML.node[0].node += <node id ={oItem.size} label = {oItem.name} tipo='images'/> ;
-			}
-			
-			for each(var oItemVideo:XML in oXML.videos)
-			{
-				treeXML.node[1].node += <node id ={oItemVideo.size} label = {oItemVideo.name} tipo='videos' /> ;
-			}
-			treeFiles.dataProvider = new TreeDataProvider(treeXML);
-			treeFiles.openAllNodes();
+			mcFileExplorer.update();	
 		}
-		/**
-		 * 
-		 * @param	e
-		 */
-		private function onErrorFiles(e:ErrorEvent)
-		{
-			trace(e.message);
-		}
+		
 		/**
 		 * 
 		 * @param	e
@@ -96,35 +86,26 @@
 			fileRefList.browse(aFileTypes);
 			
 		}
+		/**
+		 * 
+		 * @param	e
+		 */
 		private function deleteFile(e:Event)
 		{
 			
-			if (treeFiles.selectedItem.tipo)
-			{
-				trace(treeFiles.selectedItem.tipo);	
-				oXMLLoader = new XMLLoader("http://localhost:51511/files.ashx?action=delete&tipo="+treeFiles.selectedItem.tipo+"&filename="+treeFiles.selectedItem.label, onDelete,onErrorFiles);
-			}
+			mcFileExplorer.deleteFile();
 			
 		}
-		private function onDelete(e:Event)
-		{
-			update();
-		}
-		
+	
 		
 		/**
 		 * 
 		 * @param	e
 		 */
-		private function update(e:Event=null)
-		{
-			oXMLLoader = new XMLLoader("http://localhost:51511/files.ashx?action=getall", onFiles,onErrorFiles);
-		}
+		
 		private function clearOutput(e:Event)
 		{
-			//fileRefList.browse(aFileTypes);
 			lsOutput.removeAll();
-			
 			
 		}
 		/**
@@ -133,8 +114,6 @@
 		 */
 		function selectHandler(event:Event):void  
 		{  
-			
-			//var request:URLRequest = new URLRequest("http://richboxcms.com/upload/uploader.ashx?action=get&tipo=images");  
 			var file:FileReference;  
 			var files:FileReferenceList = FileReferenceList(event.target);  
 			var selectedFileArray:Array = files.fileList;  
@@ -150,7 +129,7 @@
 				try  
 				{  
 					txtSalida.text = "Uploading " + file.name;
-					file.upload(new URLRequest("http://localhost:51511/uploader.ashx?tipo="+type));  
+					file.upload(new URLRequest(sURLUpload+"?tipo="+type));  
 				}  
 				catch (error:Error)  
 				{  
@@ -179,9 +158,8 @@
 		private function progressHandler(event:ProgressEvent):void {
             var file:FileReference = FileReference(event.target);
 			var sLoaded:String = String(Math.round((event.bytesLoaded / event.bytesTotal)*100));
-            //trace("progressHandler name=" + file.name + " bytesLoaded=" + event.bytesLoaded + " bytesTotal=" + event.bytesTotal);
 			txtSalida.text = "Uploading " + file.name + " "+sLoaded+" %";
-			//lsOutput.addItemAt({label:file.name +" : "+ event.bytesLoaded},0);
+
         }
 
 	}
