@@ -118,7 +118,9 @@
 	<urls>
 		<server><![CDATA[http://www.richboxcms.com/]]></server>
 		<core>
-			<upload><![CDATA[xml/upload.xml]]></upload>
+			<upload><![CDATA[upload/uploader.ashx]]></upload>
+			<files><![CDATA[upload/files.ashx]]></files>
+			<media><![CDATA[upload/]]></media>
 			<login><![CDATA[net/users.aspx]]></login>
 			<usermodules><![CDATA[net/users.aspx]]></usermodules>
 		</core>
