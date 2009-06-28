@@ -95,7 +95,10 @@
 			this.errorhandler = null;
 			this.handler = null;
 		}
-		
+		/**
+		 * 
+		 * @param	event
+		 */
 		private function onError(event:IOErrorEvent)
 		{
 			trace("XMLERROR :"+event.text);

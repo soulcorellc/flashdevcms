@@ -22,6 +22,7 @@
 		public function Module(name:String=null) {
 			sName = name;
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			
 		}
 				
 		public function getURL(name:String, section:String = null):String

@@ -36,9 +36,9 @@
 			mcLogo.y = 10;
 			addChild(mcLogo);
 		}
-		public function onErrorLogo(e:LoadEvent)
+		public function onErrorLogo(e:LoadError)
 		{
-			
+			trace("error loading");
 		}
 		public function onResize(e:Event=null)
 		{
@@ -56,6 +56,8 @@
 		}
 		public function setImage(url:String)
 		{
+			
+			trace("loading URL : " + url);
 			oLogoLoader.add(url);
 			oLogoLoader.start();
 		}
