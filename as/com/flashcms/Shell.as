@@ -1,19 +1,19 @@
 ﻿package com.flashcms 
 {
+	import com.flashcms.layout.StageManager;
+	import com.flashcms.components.menu.Menu;
 	import com.flashcms.data.MultiLoader;
 	import com.flashcms.site.SiteSection;
 	import com.flashcms.site.Footer;
 	import com.flashcms.site.Header;
-	import flash.display.MovieClip;
 	import com.flashcms.site.Background;
 	import com.flashcms.data.XMLLoader;
-	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.display.StageScaleMode;
 	import flash.display.StageAlign;
-	import com.flashcms.layout.StageManager;
+	import flash.display.MovieClip;
+	import flash.display.Sprite;
+	import flash.events.Event;
 	import gs.TweenMax;
-	import com.flashcms.components.menu.Menu;
 	import flash.text.StyleSheet;
 	import flash.net.URLRequest;
 	import flash.net.URLLoader;

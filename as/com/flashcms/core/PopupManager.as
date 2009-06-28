@@ -74,6 +74,7 @@
 			mcHolder = new MovieClip();
 			addChild(mcMask);
 			preloader = new CubeLoader();
+			preloader.name = "mcPreloader";
 			preloader.scaleX = .25;
 			preloader.scaleY = .25;
 			
@@ -85,10 +86,10 @@
 		{
 			oManager = new StageManager(mcMask, 0, 0, 0, 0, true);
 			oManagerCenter = new StageManager(mcHolder, 50, 50, 0, 0, true);
-			preloaderManager = new StageManager(preloader, 50, 50, 50, 50, true);
+			
 			addChild(oManager);
 			addChild(oManagerCenter);
-			addChild(preloaderManager);
+			
 			oStage.addEventListener(Event.RESIZE, onResize);
 			mcMask.addEventListener(MouseEvent.CLICK, onMaskClick);
 			onResize();
@@ -235,6 +236,8 @@
 		}
 		private function showPreloader()
 		{
+			preloaderManager = new StageManager(preloader, 50, 50, 50, 50, true);
+			addChild(preloaderManager);
 			addChild(preloader);
 		}
 		/**
@@ -242,7 +245,12 @@
 		 */
 		private function hidePreloader()
 		{
-			removeChild(preloader);	
+			//removeChild(preloaderManager);
+			preloaderManager.remove();
+			removeChild(preloaderManager);
+			removeChild(preloader);
+			//preloaderManager = null;
+			
 		}
 	}
 	

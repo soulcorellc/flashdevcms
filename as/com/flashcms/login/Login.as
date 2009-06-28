@@ -57,7 +57,8 @@
 		 */
 		public function onEnter(e:Event)
 		{
-			if(txtUser.text!="" && txtPass.text != ""){ 
+			if (txtUser.text != "" && txtPass.text != "") { 
+				setState(false);
 				var url:String = oShell.getURL("login", "core");
 				oXMLLoader = new XMLLoader(url, onXMLData, onDataError, onError, { option:sOption, user:txtUser.text, password:txtPass.text } );
 			}
@@ -65,6 +66,12 @@
 			{
 				txtError.text="Escriba usuario y contraseña"
 			}
+		}
+		private function setState(status:Boolean)
+		{
+			btEnter.enabled = status;
+			txtUser.enabled = status;
+			txtPass.enabled = status;	
 		}
 		private function onXMLData(event:Event)
 		{
@@ -74,6 +81,7 @@
 		private function onDataError(event:ErrorEvent)
 		{
 			txtError.text = event.message;
+			setState(true);
 		}
 		
 		private function onError(event:IOErrorEvent)

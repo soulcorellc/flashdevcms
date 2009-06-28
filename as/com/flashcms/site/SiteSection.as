@@ -92,10 +92,10 @@
 				break;
 				case "Video":
 					//newcomponent = new VideoHolder(component.@width,component.@height);
-					newcomponent = new SiteVideo();
+					newcomponent = new SiteVideo(component.@width, component.@height,xmlContent.component.(@id == component.@id).text());
 				break;
 				case "Image":	
-					newcomponent = new SiteImage();
+					newcomponent = new SiteImage(component.@width, component.@height,xmlContent.component.(@id == component.@id).text());
 					//newcomponent = new ImageHolder(component.@width,component.@height);
 				break;
 			}
